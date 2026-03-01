@@ -55,6 +55,10 @@ app.get("/cool", (req, res) => {
   res.send(cool());
   console.log("New cool face delivered");
 });
+// --- RUTA index.html ---
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/static/index.html");
+});
 
 // --- (MRG) ---
 {
@@ -420,10 +424,6 @@ app.get("/samples/PGG", (req, res) => {
     }
   });
 }
-
-app.listen(port, () => {
-  console.log(`Servidor de grupo funcionando en puerto ${port}`);
-});
 
 
 //------------------FMM-----------------------------------------
