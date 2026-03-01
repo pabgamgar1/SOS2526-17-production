@@ -424,3 +424,44 @@ app.get("/samples/PGG", (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor de grupo funcionando en puerto ${port}`);
 });
+
+
+//------------------FMM-----------------------------------------
+
+let datosFMM = require("./datos-fmm.json") || [];
+
+let mediaLandAgriculture = datosFMM
+    .filter((d) => d.index >= 0 && d.index <= 0.5)
+    .map((d) => d.land_agriculture)
+    .reduce((a, b) => a + b, 0) / 
+  datosFMM.filter((d) => d.index >= 0 && d.index <= 0.5).length;
+
+
+
+
+app.get("/samples/FMM", (req, res) => {
+  res.send(
+    `<html><body><h1>Media de tierra que es apta para agricultura por indice de pulicion entre 0 y 0.5 :${mediaLandAgriculture}</h1></body></html>`,
+  );
+});
+
+  let BASE_URL_API = "/api/v1/agriculture-land";
+
+  app.get(BASE_URL_API + "/loadInitialData", async (req, res) => {
+    if (datosFMM.length === 0) {
+      datosFMM= require("./datos-fmm.json");
+      return res.send(layout(`<p>Array was empty: Added data</p>`));
+    }
+    res.send(layout(`<p>Array isn't empty</p>`));
+  });
+//GET todos 
+
+
+
+
+
+
+
+app.listen(port, () => {
+  console.log(`Servidor de grupo funcionando en puerto ${port}`);
+});

@@ -77,6 +77,8 @@ const datos  = [
 
 
 
+
+
 let mediaLandAgriculture = datos
     .filter((d) => d.index >= 0 && d.index <= 0.5)
     .map((d) => d.land_agriculture)
@@ -86,6 +88,14 @@ let mediaLandAgriculture = datos
 console.log(mediaLandAgriculture);
 
 const app =express();
+
+
+let BASE_URL_API ="/api/V1"
+
+app.use("/",express.static("./static"))
+
+
+
 
 app.get("/", (req, res) => {
   res.send(
