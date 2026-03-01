@@ -484,7 +484,7 @@ app.get(BASE_URL_API + "/:country/:country_code", (req, res) => {
     }
     // Comprobar 
     let exists = datosFMM.some(
-      (d) => d.country === newData.country && d.year == newData.country_code,
+      (d) => d.country === newData.country && d.country_code == newData.country_code,
     );
     if (exists) {
       res.sendStatus(409); // Conflict
@@ -514,6 +514,31 @@ app.get(BASE_URL_API + "/:country/:country_code", (req, res) => {
     } else {
       res.sendStatus(404);
     }
+  });
+
+
+  // DELETE
+  app.delete(BASE_URL_API + "/", (req, res) => {
+    if (req.query.admin !== "true") {
+      return res.sendStatus(401); // Unauthorized
+    }
+    datosFMM = [];
+    res.sendStatus(200);
+  });
+
+  // DELETE2
+  app.delete(BASE_URL_API + "/:country/:country_code", (req, res) => {
+    let { country, country_code } = req.params;
+    let index = datosFMM.findIndex(
+      (d) => d.country === country && d.country_code == country_code,
+    );
+    if (index !== -1) {
+      datosFMM.splice(index, 1); 
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(404); 
+    }
+
   });
 
 
