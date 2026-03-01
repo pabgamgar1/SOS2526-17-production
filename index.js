@@ -454,13 +454,45 @@ app.get("/samples/FMM", (req, res) => {
     }
     res.send(layout(`<p>Array isn't empty</p>`));
   });
-//GET todos 
+//GET ALL
 
+app.get(BASE_URL_API + "/", (req, res) => {
+    res.status(200).send(datosFMM);
+  });
 
+//GET 
 
+app.get(BASE_URL_API + "/:country/:country_code", (req, res) => {
+    let { country, country_code } = req.params;
+    let resource = datosFMM.find(
+      (d) => d.country === country && d.country_code == country_code,
+    );
+    if (resource) {
+      res.status(200).send(JSON.stringify(resource, null, 2));
+    } else {
+      res.sendStatus(404);
+    }
+  });
 
-
-
+  
+  // POST 
+  app.post(BASE_URL_API + "/", (req, res) => {
+    let newData = req.body;
+    // Comprobar campos obligatorios
+    if (!newData.country || newData.year === undefined) {
+      return res.sendStatus(400); // Bad Request
+    }
+    // Comprobar si ya existe un recurso con el mismo país y año
+    let exists = datosFMM.some(
+      (d) => d.country === newData.country && d.year == newData.year,
+    );
+    if (exists) {
+      res.sendStatus(409); // Conflict
+    } else {
+      datosPGG.push(newData);
+      res.sendStatus(201); // Created
+    }
+  });
 
 app.listen(port, () => {
   console.log(`Servidor de grupo funcionando en puerto ${port}`);
