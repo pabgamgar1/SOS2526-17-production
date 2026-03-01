@@ -479,12 +479,12 @@ app.get(BASE_URL_API + "/:country/:country_code", (req, res) => {
   app.post(BASE_URL_API + "/", (req, res) => {
     let newData = req.body;
     // Comprobar campos obligatorios
-    if (!newData.country || newData.year === undefined) {
+    if (!newData.country || newData.country_code === undefined) {
       return res.sendStatus(400); // Bad Request
     }
     // Comprobar si ya existe un recurso con el mismo país y año
     let exists = datosFMM.some(
-      (d) => d.country === newData.country && d.year == newData.year,
+      (d) => d.country === newData.country && d.year == newData.country_code,
     );
     if (exists) {
       res.sendStatus(409); // Conflict
@@ -493,6 +493,31 @@ app.get(BASE_URL_API + "/:country/:country_code", (req, res) => {
       res.sendStatus(201); // Created
     }
   });
+
+
+
+  // PUT (
+  app.put(BASE_URL_API + "/:country/:country_code", (req, res) => {
+    let { country, country_code } = req.params;
+    let updatedData = req.body;
+    // ERROR 400
+    if (country !== updatedData.country || country_code != updatedData.country_code) {
+      return res.sendStatus(400);
+    }
+    // Posición 
+    let index = datosFMM.findIndex(
+      (d) => d.country === country && d.country_code == country_code,
+    );
+    if (index !== -1) {
+      datosFMM[index] = updatedData;
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(404);
+    }
+  });
+
+  
+
 
 app.listen(port, () => {
   console.log(`Servidor de grupo funcionando en puerto ${port}`);
