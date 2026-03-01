@@ -450,9 +450,9 @@ app.get("/samples/FMM", (req, res) => {
   app.get(BASE_URL_API + "/loadInitialData", async (req, res) => {
     if (datosFMM.length === 0) {
       datosFMM= require("./datos-fmm.json");
-      return res.send(layout(`<p>Array was empty: Added data</p>`));
+      return res.send(layout(`<p>nope</p>`));
     }
-    res.send(layout(`<p>Array isn't empty</p>`));
+    res.send(layout(`<p>Creado con exito</p>`));
   });
 //GET ALL
 
