@@ -489,7 +489,7 @@ app.get(BASE_URL_API + "/:country/:country_code", (req, res) => {
     if (exists) {
       res.sendStatus(409); // Conflict
     } else {
-      datosPGG.push(newData);
+      datosFMM.push(newData);
       res.sendStatus(201); // Created
     }
   });
