@@ -64,7 +64,6 @@ app.get("/", (req, res) => {
 {
   let BASE_URL_API = "/api/v1/water-productivities";
 
-
   let dataMRG = require("./datos-mrg.json") || [];
 
   // Ruta dinámica /samples/MRG
@@ -254,7 +253,7 @@ app.get("/samples/PGG", (req, res) => {
       datosPGG = require("./datos-pgg.json");
       return res.status(201).send("Array was empty: Added data"); // Created
     }
-    res.status(400).send(layout(`<p>Array isn't empty</p>`)); // Bad Request
+    res.status(400).send("Array isn't empty"); // Bad Request
   });
 
   // GET todos
@@ -269,7 +268,7 @@ app.get("/samples/PGG", (req, res) => {
       (d) => d.country === country && d.year == year,
     );
     if (resource) {
-      res.status(200).send(JSON.stringify(resource, null, 2)); // OK
+      res.status(200).send(resource); // OK
     } else {
       res.sendStatus(404); // Not Found
     }
@@ -386,17 +385,19 @@ app.get(BASE_URL_API + "/", (req, res) => {
 
 //GET
 
-app.get(BASE_URL_API + "/:country/:country_code", (req, res) => {
-  let { country, country_code } = req.params;
-  let resource = datosFMM.find(
-    (d) => d.country === country && d.country_code == country_code,
-  );
+app.get(BASE_URL_API + "/:country/:year", (req, res) => {
+  let { country, year } = req.params;
+  let resource = datosFMM.find((d) => d.country === country && d.year == year);
   if (resource) {
-    res.status(200).send(JSON.stringify(resource, null, 2));
+    res.status(200).send(JSON.stringify(resource, null, 2)); // OK
   } else {
-    res.sendStatus(404);
+    res.sendStatus(404); // Not Found
   }
 });
+
+app.post(BASE_URL_API + "/:country/:country_code", (req, res) =>
+  res.sendStatus(405),
+);
 
 // POST
 app.post(BASE_URL_API + "/", (req, res) => {
@@ -416,6 +417,10 @@ app.post(BASE_URL_API + "/", (req, res) => {
     datosFMM.push(newData);
     res.sendStatus(201); // Created
   }
+});
+
+app.put(BASE_URL_API, (req, res) => {
+  res.sendStatus(405); // Method Not Allowed
 });
 
 // PUT (
