@@ -332,9 +332,9 @@ app.get("/samples/PGG", (req, res) => {
   app.get(BASE_URL_API + "/loadInitialData", async (req, res) => {
     if (datosPGG.length === 0) {
       datosPGG = require("./datos-pgg.json");
-      return res.send(layout(`<p>Array was empty: Added data</p>`));
+      return res.status(201).send("Array was empty: Added data"); // Created
     }
-    res.send(layout(`<p>Array isn't empty</p>`));
+    res.status(400).send(layout(`<p>Array isn't empty</p>`)); // Bad Request
   });
 
   // GET todos
@@ -349,11 +349,14 @@ app.get("/samples/PGG", (req, res) => {
       (d) => d.country === country && d.year == year,
     );
     if (resource) {
-      res.status(200).send(JSON.stringify(resource, null, 2));
+      res.status(200).send(JSON.stringify(resource, null, 2)); // OK
     } else {
-      res.sendStatus(404);
+      res.sendStatus(404); // Not Found
     }
   });
+
+  // POST (no permitido)
+  app.post(BASE_URL_API + "/:country/:year", (req, res) => res.sendStatus(405));
 
   // POST (añadir uno nuevo)
   app.post(BASE_URL_API + "/", (req, res) => {
@@ -362,7 +365,6 @@ app.get("/samples/PGG", (req, res) => {
     if (!newData.country || newData.year === undefined) {
       return res.sendStatus(400); // Bad Request
     }
-    // Comprobar si ya existe un recurso con el mismo país y año
     let exists = datosPGG.some(
       (d) => d.country === newData.country && d.year == newData.year,
     );
@@ -372,6 +374,11 @@ app.get("/samples/PGG", (req, res) => {
       datosPGG.push(newData);
       res.sendStatus(201); // Created
     }
+  });
+
+  // PUT sobre la lista (NO PERMITIDO)
+  app.put(BASE_URL_API, (req, res) => {
+    res.sendStatus(405); // Method Not Allowed
   });
 
   // PUT (sustituir info de uno)
@@ -425,19 +432,16 @@ app.get("/samples/PGG", (req, res) => {
   });
 }
 
-
 //------------------FMM-----------------------------------------
 
 let datosFMM = require("./datos-fmm.json") || [];
 
-let mediaLandAgriculture = datosFMM
+let mediaLandAgriculture =
+  datosFMM
     .filter((d) => d.index >= 0 && d.index <= 0.5)
     .map((d) => d.land_agriculture)
-    .reduce((a, b) => a + b, 0) / 
+    .reduce((a, b) => a + b, 0) /
   datosFMM.filter((d) => d.index >= 0 && d.index <= 0.5).length;
-
-
-
 
 app.get("/samples/FMM", (req, res) => {
   res.send(
@@ -445,104 +449,100 @@ app.get("/samples/FMM", (req, res) => {
   );
 });
 
-  let BASE_URL_API = "/api/v1/agriculture-land";
+let BASE_URL_API = "/api/v1/agriculture-land";
 
-  app.get(BASE_URL_API + "/loadInitialData", async (req, res) => {
-    if (datosFMM.length === 0) {
-      datosFMM= require("./datos-fmm.json");
-      return res.send(layout(`<p>nope</p>`));
-    }
-    res.send(layout(`<p>Creado con exito</p>`));
-  });
+app.get(BASE_URL_API + "/loadInitialData", async (req, res) => {
+  if (datosFMM.length === 0) {
+    datosFMM = require("./datos-fmm.json");
+    return res.send(layout(`<p>nope</p>`));
+  }
+  res.send(layout(`<p>Creado con exito</p>`));
+});
 //GET ALL
 
 app.get(BASE_URL_API + "/", (req, res) => {
-    res.status(200).send(datosFMM);
-  });
+  res.status(200).send(datosFMM);
+});
 
-//GET 
+//GET
 
 app.get(BASE_URL_API + "/:country/:country_code", (req, res) => {
-    let { country, country_code } = req.params;
-    let resource = datosFMM.find(
-      (d) => d.country === country && d.country_code == country_code,
-    );
-    if (resource) {
-      res.status(200).send(JSON.stringify(resource, null, 2));
-    } else {
-      res.sendStatus(404);
-    }
-  });
+  let { country, country_code } = req.params;
+  let resource = datosFMM.find(
+    (d) => d.country === country && d.country_code == country_code,
+  );
+  if (resource) {
+    res.status(200).send(JSON.stringify(resource, null, 2));
+  } else {
+    res.sendStatus(404);
+  }
+});
 
-  
-  // POST 
-  app.post(BASE_URL_API + "/", (req, res) => {
-    let newData = req.body;
-    // Comprobar campos obligatorios
-    if (!newData.country || newData.country_code === undefined) {
-      return res.sendStatus(400); // Bad Request
-    }
-    // Comprobar 
-    let exists = datosFMM.some(
-      (d) => d.country === newData.country && d.country_code == newData.country_code,
-    );
-    if (exists) {
-      res.sendStatus(409); // Conflict
-    } else {
-      datosFMM.push(newData);
-      res.sendStatus(201); // Created
-    }
-  });
+// POST
+app.post(BASE_URL_API + "/", (req, res) => {
+  let newData = req.body;
+  // Comprobar campos obligatorios
+  if (!newData.country || newData.country_code === undefined) {
+    return res.sendStatus(400); // Bad Request
+  }
+  // Comprobar
+  let exists = datosFMM.some(
+    (d) =>
+      d.country === newData.country && d.country_code == newData.country_code,
+  );
+  if (exists) {
+    res.sendStatus(409); // Conflict
+  } else {
+    datosFMM.push(newData);
+    res.sendStatus(201); // Created
+  }
+});
 
-
-
-  // PUT (
-  app.put(BASE_URL_API + "/:country/:country_code", (req, res) => {
-    let { country, country_code } = req.params;
-    let updatedData = req.body;
-    // ERROR 400
-    if (country !== updatedData.country || country_code != updatedData.country_code) {
-      return res.sendStatus(400);
-    }
-    // Posición 
-    let index = datosFMM.findIndex(
-      (d) => d.country === country && d.country_code == country_code,
-    );
-    if (index !== -1) {
-      datosFMM[index] = updatedData;
-      res.sendStatus(200);
-    } else {
-      res.sendStatus(404);
-    }
-  });
-
-
-  // DELETE
-  app.delete(BASE_URL_API + "/", (req, res) => {
-    if (req.query.admin !== "true") {
-      return res.sendStatus(401); // Unauthorized
-    }
-    datosFMM = [];
+// PUT (
+app.put(BASE_URL_API + "/:country/:country_code", (req, res) => {
+  let { country, country_code } = req.params;
+  let updatedData = req.body;
+  // ERROR 400
+  if (
+    country !== updatedData.country ||
+    country_code != updatedData.country_code
+  ) {
+    return res.sendStatus(400);
+  }
+  // Posición
+  let index = datosFMM.findIndex(
+    (d) => d.country === country && d.country_code == country_code,
+  );
+  if (index !== -1) {
+    datosFMM[index] = updatedData;
     res.sendStatus(200);
-  });
+  } else {
+    res.sendStatus(404);
+  }
+});
 
-  // DELETE2
-  app.delete(BASE_URL_API + "/:country/:country_code", (req, res) => {
-    let { country, country_code } = req.params;
-    let index = datosFMM.findIndex(
-      (d) => d.country === country && d.country_code == country_code,
-    );
-    if (index !== -1) {
-      datosFMM.splice(index, 1); 
-      res.sendStatus(200);
-    } else {
-      res.sendStatus(404); 
-    }
+// DELETE
+app.delete(BASE_URL_API + "/", (req, res) => {
+  if (req.query.admin !== "true") {
+    return res.sendStatus(401); // Unauthorized
+  }
+  datosFMM = [];
+  res.sendStatus(200);
+});
 
-  });
-
-
-
+// DELETE2
+app.delete(BASE_URL_API + "/:country/:country_code", (req, res) => {
+  let { country, country_code } = req.params;
+  let index = datosFMM.findIndex(
+    (d) => d.country === country && d.country_code == country_code,
+  );
+  if (index !== -1) {
+    datosFMM.splice(index, 1);
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(404);
+  }
+});
 
 app.listen(port, () => {
   console.log(`Servidor de grupo funcionando en puerto ${port}`);
