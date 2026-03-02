@@ -387,15 +387,20 @@ app.get(BASE_URL_API + "/", (req, res) => {
 //GET
 
 app.get(BASE_URL_API + "/:country/:country_code", (req, res) => {
-  let { country, country_code } = req.params;
-  let resource = datosFMM.find(
-    (d) => d.country === country && d.country_code == country_code,
-  );
-  if (resource) {
-    res.status(200).send(JSON.stringify(resource, null, 2));
-  } else {
-    res.sendStatus(404);
-  }
+    const { country, country_code } = req.params;
+    console.log(`Buscando: ${country} con código ${country_code}`);
+    console.log("Datos disponibles:", datosFMM.length);
+
+    const resource = datosFMM.find(d => 
+        d.country.toLowerCase() === country.toLowerCase() && 
+        d.country_code.toLowerCase() === country_code.toLowerCase()
+    );
+
+    if (resource) {
+        res.json(resource);
+    } else {
+        res.status(404).send("Resource not found in our database");
+    }
 });
 
 // POST
