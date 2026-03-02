@@ -386,22 +386,21 @@ app.get(BASE_URL_API + "/", (req, res) => {
 
 //GET
 
-app.get(BASE_URL_API + "/:country/:country_code", (req, res) => {
-    const { country, country_code } = req.params;
-    console.log(`Buscando: ${country} con código ${country_code}`);
-    console.log("Datos disponibles:", datosFMM.length);
-
-    const resource = datosFMM.find(d => 
-        d.country.toLowerCase() === country.toLowerCase() && 
-        d.country_code.toLowerCase() === country_code.toLowerCase()
+  app.get(BASE_URL_API + "/:country/:year", (req, res) => {
+    let { country, year } = req.params;
+    let resource = datosFMM.find(
+      (d) => d.country === country && d.year == year,
     );
-
     if (resource) {
-        res.json(resource);
+      res.status(200).send(JSON.stringify(resource, null, 2)); // OK
     } else {
-        res.status(404).send("Resource not found in our database");
+      res.sendStatus(404); // Not Found
     }
-});
+  });
+
+
+
+app.post(BASE_URL_API + "/:country/:country_code", (req,res) =>res.sendStatus(405));
 
 // POST
 app.post(BASE_URL_API + "/", (req, res) => {
@@ -422,6 +421,10 @@ app.post(BASE_URL_API + "/", (req, res) => {
     res.sendStatus(201); // Created
   }
 });
+
+  app.put(BASE_URL_API, (req, res) => {
+    res.sendStatus(405); // Method Not Allowed
+  });
 
 // PUT (
 app.put(BASE_URL_API + "/:country/:country_code", (req, res) => {
