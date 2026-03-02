@@ -89,10 +89,10 @@ app.get("/", (req, res) => {
       res.status(200).send("Datos iniciales cargados con éxito.");
     } else {
       res.status(400).send("Bad Request: Data already exists");
-    }
+    } 
   });
 
-  // B. GET a la lista de recursos
+  // GET a la lista de recursos
   app.get(BASE_URL_API, (req, res) => {
     // Si el usuario ha puesto ?country=XXX, lo guardamos, etc.
     const { country, year, from, to } = req.query;
