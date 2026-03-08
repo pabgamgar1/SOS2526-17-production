@@ -395,7 +395,7 @@ app.get(BASE_URL_API + "/:country/:year", (req, res) => {
   }
 });
 
-app.post(BASE_URL_API + "/:country/:country_code", (req, res) =>
+app.post(BASE_URL_API + "/:country/:year", (req, res) =>
   res.sendStatus(405),
 );
 
@@ -472,3 +472,12 @@ app.delete(BASE_URL_API + "/:country/:country_code", (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor de grupo funcionando en puerto ${port}`);
 });
+
+
+
+
+
+
+////////////////////////////////clase/06/03////////////////////////////////////////
+
+

@@ -106,3 +106,20 @@ app.get("/", (req, res) => {
 app.listen(3000, () => {
   console.log("Listening on port 3000...");
 });
+
+
+
+
+
+// clase 6 marzo  lo de hoy no es necesario para feedback del lunes
+//nebd base de datos para javaScript relaciona facil y facil con mongodb
+
+//   "type": "module", luego cambia los require a una forma diferente usando import 
+//import  express from 'express'
+// function loadbackend(app {el codigo esta dentro de esta funcion })
+// export {loadBackend}
+//hay que dividir index.js , cada api en una carpeta y el index.js como conector 
+
+//nedb
+//https://github.com/pafmon/SOS2526-labs/blob/L06/index.js
+//
