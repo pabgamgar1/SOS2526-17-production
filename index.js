@@ -384,40 +384,63 @@ app.get(BASE_URL_API + "/", (req, res) => {
 });
 
 //GET
-
 app.get(BASE_URL_API + "/:country/:year", (req, res) => {
+    const { country, year } = req.params;
+
+    const resource = datosFMM.find((d) => {
+        // Comprobamos que 'd' y 'd.country' existan para evitar el error 500
+        if (d && d.country) {
+            return d.country.toLowerCase() === country.toLowerCase() && 
+                   d.year == year; // El '==' permite comparar "1961" con 1961
+        }
+        return false;
+    });
+
+    if (resource) {
+        // Usamos res.json para que Postman lo reciba correctamente como objeto
+        res.status(200).json(resource); 
+    } else {
+        res.sendStatus(404);
+    }
+});
+/*app.get(BASE_URL_API + "/:country/:year", (req, res) => {
   let { country, year } = req.params;
-  let resource = datosFMM.find((d) => d.country === country && d.year == year);
+  let resource = datosFMM.find((d) => d.country === country && d.year === parseInt(year));
   if (resource) {
     res.status(200).send(JSON.stringify(resource, null, 2)); // OK
   } else {
     res.sendStatus(404); // Not Found
   }
 });
-
+*/
 app.post(BASE_URL_API + "/:country/:year", (req, res) =>
   res.sendStatus(405),
 );
 
 // POST
 app.post(BASE_URL_API + "/", (req, res) => {
-  let newData = req.body;
-  // Comprobar campos obligatorios
-  if (!newData.country || newData.country_code === undefined) {
-    return res.sendStatus(400); // Bad Request
-  }
-  // Comprobar
-  let exists = datosFMM.some(
-    (d) =>
-      d.country === newData.country && d.country_code == newData.country_code,
-  );
-  if (exists) {
-    res.sendStatus(409); // Conflict
-  } else {
-    datosFMM.push(newData);
-    res.sendStatus(201); // Created
-  }
+    let newData = req.body;
+
+    // Validación campos obligatorios (Evita el error 400 y 500)
+    if (!newData || !newData.country || !newData.year) {
+        return res.status(400).send("Bad Request: Faltan campos obligatorios");
+    }
+
+    // Comprobar si ya existe (Para devolver 409)
+    let exists = datosFMM.some((d) => {
+        // Comparamos país y año para identificar el recurso único
+        return d.country === newData.country && d.year === newData.year;
+    });
+
+    if (exists) {
+        return res.sendStatus(409); // Conflict: El recurso ya existe
+    } else {
+        datosFMM.push(newData);
+        return res.sendStatus(201); // Created
+    }
 });
+//////
+
 
 app.put(BASE_URL_API, (req, res) => {
   res.sendStatus(405); // Method Not Allowed
