@@ -5,6 +5,7 @@ import cool from "cool-ascii-faces";
 import path from 'path';
 
 import { loadBackendMRG } from "./src/back-MRG/index.js";
+import { loadBackendFMM } from "./src/back-FMM/index.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -66,7 +67,7 @@ app.get("/", (req, res) => {
 
  
 loadBackendMRG(app);
-
+loadBackendFMM(app);
 
 // --- (PGG) ---
 

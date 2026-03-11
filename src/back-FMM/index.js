@@ -16,7 +16,6 @@ app.get("/samples/FMM", (req, res) => {
   );});
 
 
-
   app.get(BASE_URL_API + "/loadInitialData", async (req, res) => {
   if (datosFMM.length === 0) {
     datosFMM = require("./datos-fmm.json");
