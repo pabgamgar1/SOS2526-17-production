@@ -301,7 +301,11 @@ app.delete(BASE_URL_API + "/:country/:year", (req, res) => {
 });
 
 
-
+// documentación
+app.get(BASE_URL_API + "/docs", (req, res) => {
+    // Aquí pegas el enlace que te dio Postman al darle a "Publish"
+    res.redirect("https://documenter.getpostman.com/view/52395584/2sBXigMDSm");
+});
 
 }
 
