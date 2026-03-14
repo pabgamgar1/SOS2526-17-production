@@ -1,6 +1,6 @@
 //import dataMRG from "../../datos-mrg.json" with { type: "json" };
 import Datastore from 'nedb';
-import fs from 'fs'; 
+import fs from 'fs';
 
 let BASE_URL_API = "/api/v1/water-productivities";
 
@@ -166,6 +166,12 @@ function loadBackendMRG(app) {
                 res.sendStatus(200);
             }
         });
+    });
+
+    // documentación
+    app.get(BASE_URL_API + "/docs", (req, res) => {
+        // POSTMAN
+        res.redirect("https://documenter.getpostman.com/view/52393924/2sBXigMDbc");
     });
 }
 

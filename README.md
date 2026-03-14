@@ -19,3 +19,7 @@ Our project is going to analyse the impact of water and renewable energy on agri
 ## Deployment
 
 - Render: [https://sos2526-17.onrender.com](https://sos2526-17.onrender.com)
+
+## APIs
+
+- http://sos2526-17.onrender.com/api/v1/water-productivities/docs (developed by Mario Ramírez García)
