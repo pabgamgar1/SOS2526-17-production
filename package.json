@@ -16,8 +16,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "npx newman run test-fmm.json",
-    "test-agriculture-land": "npx newman run test-fmm.json"
+    "test": "npx newman run test-agriculture-land.json",
+    "test-agriculture-land": "npx newman run test-agriculture-land.json"
   },
   "dependencies": {
     "body-parser": "^2.2.2",
