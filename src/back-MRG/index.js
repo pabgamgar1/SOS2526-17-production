@@ -39,6 +39,11 @@ function loadBackendMRG(app) {
         });
     });
 
+    // GET a la documentación (Debe coincidir con el Readme)
+    app.get(BASE_URL_API + "/docs", (req, res) => {
+        res.redirect("https://documenter.getpostman.com/view/52393924/2sBXigMDbc");
+    });
+
     // GET a la lista de recursos (con filtros, limpieza de _id y PAGINACIÓN)
     app.get(BASE_URL_API, (req, res) => {
         const { country, year, countryCode, waterProductivity, waterStress, annualFreshwater, from, to } = req.query;
@@ -166,12 +171,6 @@ function loadBackendMRG(app) {
                 res.sendStatus(200);
             }
         });
-    });
-
-    // documentación
-    app.get(BASE_URL_API + "/docs", (req, res) => {
-        // POSTMAN
-        res.redirect("https://documenter.getpostman.com/view/52393924/2sBXigMDbc");
     });
 }
 
