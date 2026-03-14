@@ -193,6 +193,10 @@ app.get("/samples/PGG", (req, res) => {
   });
 }*/
 
+// ------------------PGG-------------------
+const { pgg } = require("./index-PGG.js");
+pgg(app);
+
 //------------------FMM-----------------------------------------
 
 app.listen(port, () => {
