@@ -32,7 +32,7 @@ function loadBackendMRG(app) {
         db.find({}, (err, stats) => {
             if (stats.length === 0) {
                 db.insert(dataMRG);
-                res.status(201).send("Datos iniciales cargados con éxito.");
+                res.status(200).send("Datos iniciales cargados con éxito.");
             } else {
                 res.status(400).send("Bad Request: Data already exists");
             }
