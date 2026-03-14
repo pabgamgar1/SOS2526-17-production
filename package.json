@@ -18,11 +18,8 @@
     "start": "node index.js",
     "test": "npx newman run test-agriculture-land.json",
     "test-agriculture-land": "npx newman run test-agriculture-land.json",
-    "test-api-MRG-local": "npx newman run tests/api-MRG/api-tests.json -e tests/api-MRG/api-test-env-local.json",
-    "test-api-MRG-render": "npx newman run tests/api-MRG/api-tests.json -e tests/api-MRG/api-test-env-render.json",
-    "test-local-MRG": "start-server-and-test start http://localhost:3000 test-api-MRG-local",
-    "test-render-MRG": "start-server-and-test start https://sos2526-17.onrender.com test-api-MRG-render",
-    "test-MRG": "npm run test-local-MRG"
+    "test-local-MRG": "npx newman run tests/api-MRG/api-tests.json -e tests/api-MRG/api-test-env-local.json",
+    "test-water-productivities": "start-server-and-test start http://localhost:3000 test-local-MRG"
   },
   "dependencies": {
     "body-parser": "^2.2.2",
