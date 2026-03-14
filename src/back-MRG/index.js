@@ -1,8 +1,15 @@
-import dataStore from "nedb";
-import dataMRG from "../../datos-mrg.json" with { type: "json" };
+//import dataMRG from "../../datos-mrg.json" with { type: "json" };
+import Datastore from 'nedb';
+import fs from 'fs'; 
 
 let BASE_URL_API = "/api/v1/water-productivities";
-let db = new dataStore();
+
+// 1. Creamos la DB con persistencia en la carpeta /db
+const db = new Datastore({ filename: './src/db/water-productivities.db', autoload: true });
+
+// 2. Leemos los datos iniciales (Asegúrate de que la ruta al archivo .json es correcta)
+const jsonRawData = fs.readFileSync('./datos-mrg.json', 'utf8');
+const dataMRG = JSON.parse(jsonRawData);
 
 function loadBackendMRG(app) {
     /* Ruta dinámica /samples/MRG
