@@ -100,11 +100,21 @@ function loadBackendMRG(app) {
     // POST: Crear nuevo recurso
     app.post(BASE_URL_API, (req, res) => {
         let newData = req.body;
-        if (!newData.country || !newData.year) return res.sendStatus(400);
+
+        if (!newData.country ||
+            !newData.year ||
+            !newData.countryCode ||
+            newData.waterProductivity === undefined ||
+            newData.waterStress === undefined ||
+            newData.annualFreshwater === undefined ||
+            Object.keys(newData).length !== 6) {
+
+            return res.sendStatus(400);
+        }
 
         db.find({ country: newData.country, year: parseInt(newData.year) }, (err, stats) => {
             if (stats.length > 0) {
-                res.sendStatus(409); // Conflict
+                res.sendStatus(409);
             } else {
                 db.insert(newData);
                 res.status(201).send("CREATED");
@@ -149,11 +159,24 @@ function loadBackendMRG(app) {
         let updatedData = req.body;
 
         if (country !== updatedData.country || year != updatedData.year) {
-            return res.sendStatus(400);
+            return res.status(400).send("URL and Body inconsistent");
+        }
+
+        if (!updatedData.country ||
+            !updatedData.year ||
+            !updatedData.countryCode ||
+            updatedData.waterProductivity === undefined ||
+            updatedData.waterStress === undefined ||
+            updatedData.annualFreshwater === undefined ||
+            Object.keys(updatedData).length !== 6) {
+
+            return res.status(400).send("Invalid JSON structure");
         }
 
         db.update({ country: country, year: parseInt(year) }, updatedData, {}, (err, numReplaced) => {
-            if (numReplaced === 0) {
+            if (err) {
+                res.sendStatus(500);
+            } else if (numReplaced === 0) {
                 res.sendStatus(404);
             } else {
                 res.sendStatus(200);

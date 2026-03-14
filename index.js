@@ -56,10 +56,11 @@ app.get("/about", (req, res) => {
 });
 
 // --- RUTA COOL ---
+/*
 app.get("/cool", (req, res) => {
   res.send(cool());
   console.log("New cool face delivered");
-});
+});*/
 // --- RUTA index.html ---
 app.get("/", (req, res) => {
   res.sendFile(path.join(process.cwd(), "static", "index.html"));
