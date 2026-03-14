@@ -5,7 +5,7 @@ let BASE_URL_API = "/api/v1/water-productivities";
 let db = new dataStore();
 
 function loadBackendMRG(app) {
-    // Ruta dinámica /samples/MRG
+    /* Ruta dinámica /samples/MRG
     app.get("/samples/MRG", (req, res) => {
         let avrgWaterProductAFG =
             dataMRG
@@ -16,7 +16,7 @@ function loadBackendMRG(app) {
         res.send(
             `<html><body><h3>The average water productivity for Afghanistan is ${avrgWaterProductAFG.toString()}</h3></body></html>`,
         );
-    });
+    });*/
 
     // API RESTful
 
