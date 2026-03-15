@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cool from "cool-ascii-faces";
 
-import path from 'path';
+import path from "path";
 
 import { loadBackendMRG } from "./src/back-MRG/index.js";
 import { loadBackendFMM } from "./src/back-FMM/index.js";
@@ -56,18 +56,11 @@ app.get("/about", (req, res) => {
   res.sendFile(path.join(process.cwd(), "static", "about.html"));
 });
 
-// --- RUTA COOL ---
-/*
-app.get("/cool", (req, res) => {
-  res.send(cool());
-  console.log("New cool face delivered");
-});*/
 // --- RUTA index.html ---
 app.get("/", (req, res) => {
   res.sendFile(path.join(process.cwd(), "static", "index.html"));
 });
 
- 
 loadBackendMRG(app);
 loadBackendFMM(app);
 loadBackendPGG(app);
@@ -77,7 +70,3 @@ loadBackendPGG(app);
 app.listen(port, () => {
   console.log(`Servidor de grupo funcionando en puerto ${port}`);
 });
-
-
-
-

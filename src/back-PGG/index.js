@@ -5,16 +5,6 @@ import fs from "fs";
 
 const BASE_URL_API = "/api/v1/renewable-energy-consumptions";
 
-const REQUIRED_FIELDS = [
-  "country",
-  "code",
-  "year",
-  "wind",
-  "hydro",
-  "solar",
-  "other",
-];
-
 const db = new Datastore({
   filename: "./src/db/renewable-energy-consumptions.db",
   autoload: true,
@@ -23,110 +13,20 @@ const db = new Datastore({
 const jsonRawData = fs.readFileSync("./datos-pgg.json", "utf8");
 const initialData = JSON.parse(jsonRawData);
 
-function compositeId(country, year) {
-  return `${country}__${year}`;
-}
-
-function sanitize(doc) {
-  if (!doc) return doc;
-  const { _id, ...rest } = doc;
-  return rest;
-}
-
-function hasOnlyRequiredFields(obj) {
-  if (!obj || typeof obj !== "object" || Array.isArray(obj)) return false;
-  const keys = Object.keys(obj);
-  if (keys.length !== REQUIRED_FIELDS.length) return false;
-  for (const key of keys) {
-    if (!REQUIRED_FIELDS.includes(key)) return false;
-  }
-  return true;
-}
-
-function isValidPayload(obj) {
-  if (!hasOnlyRequiredFields(obj)) return false;
-  if (typeof obj.country !== "string" || obj.country.trim() === "")
-    return false;
-  if (typeof obj.code !== "string" || obj.code.trim() === "") return false;
-  if (!Number.isInteger(obj.year)) return false;
-  if (typeof obj.wind !== "number" || Number.isNaN(obj.wind)) return false;
-  if (typeof obj.hydro !== "number" || Number.isNaN(obj.hydro)) return false;
-  if (typeof obj.solar !== "number" || Number.isNaN(obj.solar)) return false;
-  if (typeof obj.other !== "number" || Number.isNaN(obj.other)) return false;
-  return true;
-}
-
-function escapeRegExp(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function getQueryValue(query, key) {
-  const value = query[key];
-  if (value === undefined) return { ok: true, present: false };
-  if (Array.isArray(value)) return { ok: false };
-  return { ok: true, present: true, value };
-}
-
-function parseNumericParam(raw, { integer = false } = {}) {
-  if (raw === undefined) return { ok: true, present: false };
-  const num = Number(raw);
-  if (!Number.isFinite(num)) return { ok: false };
-  if (integer && !Number.isInteger(num)) return { ok: false };
-  return { ok: true, present: true, value: num };
-}
-
-function parsePagination(query) {
-  const hasLimit = query.limit !== undefined;
-  const hasOffset = query.offset !== undefined;
-  const hasPage = query.page !== undefined;
-
-  if ((hasOffset || hasPage) && !hasLimit) {
-    return { ok: false };
-  }
-  if (hasOffset && hasPage) {
-    return { ok: false };
-  }
-
-  if (!hasLimit) {
-    return { ok: true, limit: null, offset: 0 };
-  }
-
-  const limit = Number(query.limit);
-  if (!Number.isInteger(limit) || limit <= 0) {
-    return { ok: false };
-  }
-
-  let offset = 0;
-  if (hasOffset) {
-    const off = Number(query.offset);
-    if (!Number.isInteger(off) || off < 0) return { ok: false };
-    offset = off;
-  }
-
-  if (hasPage) {
-    const page = Number(query.page);
-    if (!Number.isInteger(page) || page <= 0) return { ok: false };
-    offset = (page - 1) * limit;
-  }
-
-  return { ok: true, limit, offset };
-}
-
 function loadBackendPGG(app) {
-  /* Ruta dinámica /samples/PGG
-  app.get("/samples/PGG", (req, res) => {
-    const averageHydroAfghanistan =
-      initialData
-        .filter((d) => d.country === "Afghanistan")
-        .map((d) => d.hydro)
-        .reduce((a, b) => a + b) /
-      initialData.filter((d) => d.country === "Afghanistan").length;
+  // Cargar datos iniciales
+  app.get(BASE_URL_API + "/loadInitialData", (req, res) => {
+    db.find({}, (err, stats) => {
+      if (stats.length === 0) {
+        db.insert(initialData);
+        res.status(200).send("Datos iniciales cargados con éxito.");
+      } else {
+        res.status(400).send("Bad Request: Data already exists");
+      }
+    });
+  });
 
-    res.send(
-      `<p>Media de electridad renovable hidráulica producida por Afghanistan: ${averageHydroAfghanistan}</p>`,
-    );
-  });*/
-
+  // Documentación
   app.get(BASE_URL_API + "/docs", (req, res) => {
     const target =
       process.env.PGG_DOCS_URL ||
@@ -134,192 +34,175 @@ function loadBackendPGG(app) {
     res.redirect(target);
   });
 
-  app.get(BASE_URL_API + "/loadInitialData", (req, res) => {
-    db.count({}, (err, count) => {
-      if (err) {
-        return res.status(500).json({ error: "Database error" });
+  // GET colección (con filtros y paginación básica)
+  app.get(BASE_URL_API, (req, res) => {
+    const {
+      country,
+      code,
+      year,
+      wind,
+      hydro,
+      solar,
+      other,
+      from,
+      to,
+      limit,
+      offset,
+    } = req.query;
+
+    let lim = parseInt(limit);
+    let off = parseInt(offset);
+
+    db.find({}, (err, stats) => {
+      let filteredData = stats;
+
+      if (country)
+        filteredData = filteredData.filter(
+          (d) => d.country.toLowerCase() === country.toLowerCase(),
+        );
+      if (code)
+        filteredData = filteredData.filter(
+          (d) => d.code.toLowerCase() === code.toLowerCase(),
+        );
+      if (year) filteredData = filteredData.filter((d) => d.year == year);
+      if (wind) filteredData = filteredData.filter((d) => d.wind == wind);
+      if (hydro) filteredData = filteredData.filter((d) => d.hydro == hydro);
+      if (solar) filteredData = filteredData.filter((d) => d.solar == solar);
+      if (other) filteredData = filteredData.filter((d) => d.other == other);
+      if (from)
+        filteredData = filteredData.filter((d) => d.year >= parseInt(from));
+      if (to) filteredData = filteredData.filter((d) => d.year <= parseInt(to));
+
+      if (!isNaN(lim) && !isNaN(off)) {
+        filteredData = filteredData.slice(off, off + lim);
       }
-      if (count > 0) {
-        return res.status(409).json({ error: "Data already initialized" });
-      }
-      const docs = initialData.map((d) => ({
-        ...d,
-        _id: compositeId(d.country, d.year),
-      }));
-      db.insert(docs, (insertErr, newDocs) => {
-        if (insertErr) {
-          return res.status(500).json({ error: "Failed to load initial data" });
-        }
-        return res
-          .status(201)
-          .json({ message: "Initial data loaded", count: newDocs.length });
-      });
+
+      res.status(200).json(
+        filteredData.map((d) => {
+          delete d._id;
+          return d;
+        }),
+      );
     });
   });
 
-  // GET todos
-  app.get(BASE_URL_API, (req, res) => {
-    const pagination = parsePagination(req.query);
-    if (!pagination.ok) return res.sendStatus(400);
+  // GET recurso específico
+  app.get(BASE_URL_API + "/:country/:year", (req, res) => {
+    const { country, year } = req.params;
 
-    const countryParam = getQueryValue(req.query, "country");
-    const codeParam = getQueryValue(req.query, "code");
-    const yearParam = parseNumericParam(req.query.year, { integer: true });
-    const windParam = parseNumericParam(req.query.wind);
-    const hydroParam = parseNumericParam(req.query.hydro);
-    const solarParam = parseNumericParam(req.query.solar);
-    const otherParam = parseNumericParam(req.query.other);
-    const fromParam = parseNumericParam(req.query.from, { integer: true });
-    const toParam = parseNumericParam(req.query.to, { integer: true });
+    db.find({ country: country, year: parseInt(year) }, (err, stats) => {
+      if (stats.length > 0) {
+        const resource = stats[0];
+        delete resource._id;
+        res.status(200).json(resource);
+      } else {
+        res.sendStatus(404);
+      }
+    });
+  });
+
+  // POST recurso específico (no permitido)
+  app.post(BASE_URL_API + "/:country/:year", (req, res) => res.sendStatus(405));
+
+  // POST colección
+  app.post(BASE_URL_API, (req, res) => {
+    const newData = req.body;
 
     if (
-      !countryParam.ok ||
-      !codeParam.ok ||
-      !yearParam.ok ||
-      !windParam.ok ||
-      !hydroParam.ok ||
-      !solarParam.ok ||
-      !otherParam.ok ||
-      !fromParam.ok ||
-      !toParam.ok
+      !newData.country ||
+      !newData.code ||
+      newData.year === undefined ||
+      newData.wind === undefined ||
+      newData.hydro === undefined ||
+      newData.solar === undefined ||
+      newData.other === undefined ||
+      Object.keys(newData).length !== 7
     ) {
       return res.sendStatus(400);
     }
 
-    const filters = [];
-
-    if (countryParam.present) {
-      const regex = new RegExp(`^${escapeRegExp(countryParam.value)}$`, "i");
-      filters.push({ country: regex });
-    }
-
-    if (codeParam.present) {
-      const regex = new RegExp(`^${escapeRegExp(codeParam.value)}$`, "i");
-      filters.push({ code: regex });
-    }
-
-    if (yearParam.present) {
-      filters.push({ year: yearParam.value });
-    }
-
-    if (fromParam.present || toParam.present) {
-      const range = {};
-      if (fromParam.present) range.$gte = fromParam.value;
-      if (toParam.present) range.$lte = toParam.value;
-      filters.push({ year: range });
-    }
-
-    if (windParam.present) filters.push({ wind: windParam.value });
-    if (hydroParam.present) filters.push({ hydro: hydroParam.value });
-    if (solarParam.present) filters.push({ solar: solarParam.value });
-    if (otherParam.present) filters.push({ other: otherParam.value });
-
-    const query = filters.length ? { $and: filters } : {};
-
-    let cursor = db.find(query);
-    if (pagination.limit !== null) {
-      cursor = cursor.skip(pagination.offset).limit(pagination.limit);
-    }
-
-    cursor.exec((err, docs) => {
-      if (err) return res.status(500).json({ error: "Database error" });
-      const sanitized = docs.map(sanitize);
-      return res.status(200).json(sanitized);
-    });
+    db.find(
+      { country: newData.country, year: parseInt(newData.year) },
+      (err, stats) => {
+        if (stats.length > 0) {
+          res.sendStatus(409);
+        } else {
+          db.insert(newData);
+          res.status(201).send("CREATED");
+        }
+      },
+    );
   });
 
-  // GET dato específico
-  app.get(BASE_URL_API + "/:country/:year", (req, res) => {
-    const { country, year } = req.params;
-    const yearNum = Number(year);
-    if (!Number.isInteger(yearNum)) return res.sendStatus(400);
-
-    db.findOne({ _id: compositeId(country, year) }, (err, doc) => {
-      if (err) return res.status(500).json({ error: "Database error" });
-      if (!doc) return res.sendStatus(404);
-      return res.status(200).json(sanitize(doc));
-    });
-  });
-
-  // POST (no permitido)
-  app.post(BASE_URL_API + "/:country/:year", (req, res) =>
-    res.sendStatus(405),
-  );
-
-  // POST (añadir uno nuevo)
-  app.post(BASE_URL_API, (req, res) => {
-    const newData = req.body;
-    if (!isValidPayload(newData)) {
-      return res.sendStatus(400);
-    }
-
-    const id = compositeId(newData.country, newData.year);
-
-    db.findOne({ _id: id }, (findErr, existing) => {
-      if (findErr) return res.status(500).json({ error: "Database error" });
-      if (existing) return res.sendStatus(409);
-
-      const doc = { ...newData, _id: id };
-      db.insert(doc, (insertErr) => {
-        if (insertErr) return res.status(500).json({ error: "Database error" });
-        return res.sendStatus(201);
-      });
-    });
-  });
-
-  // PUT sobre la lista (NO PERMITIDO)
+  // PUT colección (no permitido)
   app.put(BASE_URL_API, (req, res) => {
     res.sendStatus(405);
   });
 
-  // PUT (sustituir info de uno)
+  // PUT recurso específico
   app.put(BASE_URL_API + "/:country/:year", (req, res) => {
     const { country, year } = req.params;
-    const yearNum = Number(year);
-    if (!Number.isInteger(yearNum)) return res.sendStatus(400);
-
     const updatedData = req.body;
-    if (!isValidPayload(updatedData)) {
-      return res.sendStatus(400);
+
+    if (country !== updatedData.country || year != updatedData.year) {
+      return res.status(400).send("URL and Body inconsistent");
     }
 
-    if (country !== updatedData.country || yearNum !== updatedData.year) {
-      return res.sendStatus(400);
+    if (
+      !updatedData.country ||
+      !updatedData.code ||
+      updatedData.year === undefined ||
+      updatedData.wind === undefined ||
+      updatedData.hydro === undefined ||
+      updatedData.solar === undefined ||
+      updatedData.other === undefined ||
+      Object.keys(updatedData).length !== 7
+    ) {
+      return res.status(400).send("Invalid JSON structure");
     }
 
-    const id = compositeId(country, year);
-    const doc = { ...updatedData, _id: id };
-
-    db.update({ _id: id }, doc, {}, (err, numUpdated) => {
-      if (err) return res.status(500).json({ error: "Database error" });
-      if (numUpdated === 0) return res.sendStatus(404);
-      return res.sendStatus(200);
-    });
+    db.update(
+      { country: country, year: parseInt(year) },
+      updatedData,
+      {},
+      (err, numReplaced) => {
+        if (err) {
+          res.sendStatus(500);
+        } else if (numReplaced === 0) {
+          res.sendStatus(404);
+        } else {
+          res.sendStatus(200);
+        }
+      },
+    );
   });
 
-  // DELETE todos
+  // DELETE colección
   app.delete(BASE_URL_API, (req, res) => {
     if (req.query.admin !== "true") {
       return res.sendStatus(401);
     }
 
-    db.remove({}, { multi: true }, (err) => {
-      if (err) return res.status(500).json({ error: "Database error" });
-      return res.sendStatus(200);
+    db.remove({}, { multi: true }, (err, numRemoved) => {
+      res.sendStatus(200);
     });
   });
 
-  // DELETE dato específico
+  // DELETE recurso específico
   app.delete(BASE_URL_API + "/:country/:year", (req, res) => {
     const { country, year } = req.params;
-    const yearNum = Number(year);
-    if (!Number.isInteger(yearNum)) return res.sendStatus(400);
 
-    db.remove({ _id: compositeId(country, year) }, {}, (err, numRemoved) => {
-      if (err) return res.status(500).json({ error: "Database error" });
-      if (numRemoved === 0) return res.sendStatus(404);
-      return res.sendStatus(200);
-    });
+    db.remove(
+      { country: country, year: parseInt(year) },
+      {},
+      (err, numRemoved) => {
+        if (numRemoved === 0) {
+          res.sendStatus(404);
+        } else {
+          res.sendStatus(200);
+        }
+      },
+    );
   });
 }
 
