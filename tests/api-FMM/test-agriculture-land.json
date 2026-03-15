@@ -9,17 +9,29 @@
   "item": [
     {
       "name": "Load",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Carga inicial exitosa - 201\", () => pm.response.to.have.status(201));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land/loadInitialData",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -32,17 +44,32 @@
     },
     {
       "name": "Get all",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+              "pm.test(\"Es un array\", () => pm.expect(pm.response.json()).to.be.an('array'));\r",
+              "pm.test(\"Sin campo _id\", () => pm.expect(pm.response.json()[0]).to.not.have.property('_id'));\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -54,17 +81,39 @@
     },
     {
       "name": "Get",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Es un objeto\", () => {\r",
+              "    pm.expect(pm.response.json()).to.be.an('object');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"No contiene el campo _id\", () => {\r",
+              "    pm.expect(pm.response.json()).to.not.have.property('_id');\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land/bahamas/1989",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -78,17 +127,29 @@
     },
     {
       "name": "404 Get",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Recurso no encontrado - 404\", () => pm.response.to.have.status(404));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land/pais-inventado/9999",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -102,17 +163,31 @@
     },
     {
       "name": "Get Filtro pais",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+              "pm.test(\"Es un array\", () => pm.expect(pm.response.json()).to.be.an('array'));\r",
+              "pm.test(\"Sin campo _id\", () => pm.expect(pm.response.json()[0]).to.not.have.property('_id'));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land?country",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -130,17 +205,31 @@
     },
     {
       "name": "Get filtro año",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+              "pm.test(\"Es un array\", () => pm.expect(pm.response.json()).to.be.an('array'));\r",
+              "pm.test(\"Sin campo _id\", () => pm.expect(pm.response.json()[0]).to.not.have.property('_id'));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land?year",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -158,17 +247,31 @@
     },
     {
       "name": "Get Filtro",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+              "pm.test(\"Es un array\", () => pm.expect(pm.response.json()).to.be.an('array'));\r",
+              "pm.test(\"Sin campo _id\", () => pm.expect(pm.response.json()[0]).to.not.have.property('_id'));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land?country=bolivia&year=1981",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -190,17 +293,31 @@
     },
     {
       "name": "Paginación 5 primero",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+              "pm.test(\"Es un array\", () => pm.expect(pm.response.json()).to.be.an('array'));\r",
+              "pm.test(\"Sin campo _id\", () => pm.expect(pm.response.json()[0]).to.not.have.property('_id'));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land?limit=5&offset=0",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -222,17 +339,31 @@
     },
     {
       "name": "Paginación 5 siguientes",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+              "pm.test(\"Es un array\", () => pm.expect(pm.response.json()).to.be.an('array'));\r",
+              "pm.test(\"Sin campo _id\", () => pm.expect(pm.response.json()[0]).to.not.have.property('_id'));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land?limit=5&offset=5",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -254,6 +385,19 @@
     },
     {
       "name": "Post Bueno",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Creado con éxito - 201\", () => pm.response.to.have.status(201));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "POST",
         "header": [],
@@ -268,12 +412,11 @@
         },
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -285,6 +428,19 @@
     },
     {
       "name": "Post conflicto",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Recurso duplicado - 409\", () => pm.response.to.have.status(409));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "POST",
         "header": [],
@@ -299,12 +455,11 @@
         },
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -316,6 +471,19 @@
     },
     {
       "name": "Post 400",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Estructura incorrecta - 400\", () => pm.response.to.have.status(400));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "POST",
         "header": [],
@@ -330,12 +498,11 @@
         },
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -347,6 +514,19 @@
     },
     {
       "name": "Post 400 v2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Estructura incorrecta - 400\", () => pm.response.to.have.status(400));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "POST",
         "header": [],
@@ -361,12 +541,11 @@
         },
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -378,6 +557,19 @@
     },
     {
       "name": "Put Bueno",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Actualizado con éxito - 200\", () => pm.response.to.have.status(200));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "PUT",
         "header": [],
@@ -392,12 +584,11 @@
         },
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land/angola/1969",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -411,6 +602,19 @@
     },
     {
       "name": "Put 400",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"URL no coincide con Body - 400\", () => pm.response.to.have.status(400));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "PUT",
         "header": [],
@@ -425,12 +629,11 @@
         },
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land/angola/1969",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -444,6 +647,19 @@
     },
     {
       "name": "Delete Bueno",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Borrado con éxito - 200\", () => pm.response.to.have.status(200));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "DELETE",
         "header": [],
@@ -453,12 +669,11 @@
         },
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land/tests/2026",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -472,17 +687,29 @@
     },
     {
       "name": "Delete 404",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"No existe para borrar - 404\", () => pm.response.to.have.status(404));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "DELETE",
         "header": [],
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land/tests/2026",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -496,17 +723,29 @@
     },
     {
       "name": "Post 405",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Método no permitido en recurso - 405\", () => pm.response.to.have.status(405));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "POST",
         "header": [],
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land/angola/1960",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -520,17 +759,29 @@
     },
     {
       "name": "Put 405",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Método no permitido en colección - 405\", () => pm.response.to.have.status(405));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "PUT",
         "header": [],
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -542,17 +793,29 @@
     },
     {
       "name": "Delete 401",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Falta admin - 401\", () => pm.response.to.have.status(401));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "DELETE",
         "header": [],
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -564,17 +827,32 @@
     },
     {
       "name": "Get array vacio",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Búsqueda vacía - 200\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "    pm.expect(pm.response.json()).to.be.an('array').and.empty;\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
         "url": {
           "raw": "http://localhost:3000/api/v1/agriculture-land?country=Atlantida",
-          "protocol": "https",
+          "protocol": "http",
           "host": [
-            "sos2526-17",
-            "onrender",
-            "com"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "api",
             "v1",
@@ -589,6 +867,30 @@
         }
       },
       "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
     }
   ]
 }
