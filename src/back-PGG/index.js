@@ -46,10 +46,15 @@ function loadBackendPGG(app) {
       to,
       limit,
       offset,
+      page,
     } = req.query;
 
     let lim = parseInt(limit);
     let off = parseInt(offset);
+    let pg = parseInt(page);
+    const hasLimit = limit !== undefined;
+    const hasPage = page !== undefined;
+    const hasOffset = offset !== undefined;
 
     db.find({}, (err, stats) => {
       let filteredData = stats;
@@ -71,8 +76,14 @@ function loadBackendPGG(app) {
         filteredData = filteredData.filter((d) => d.year >= parseInt(from));
       if (to) filteredData = filteredData.filter((d) => d.year <= parseInt(to));
 
-      if (!isNaN(lim) && !isNaN(off)) {
-        filteredData = filteredData.slice(off, off + lim);
+      if (hasLimit && !isNaN(lim)) {
+        let start = 0;
+        if (hasPage && !isNaN(pg) && pg > 0) {
+          start = (pg - 1) * lim;
+        } else if (hasOffset && !isNaN(off)) {
+          start = off;
+        }
+        filteredData = filteredData.slice(start, start + lim);
       }
 
       res.status(200).json(
