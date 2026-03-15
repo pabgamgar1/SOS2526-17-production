@@ -28,9 +28,7 @@ function loadBackendPGG(app) {
 
   // Documentación
   app.get(BASE_URL_API + "/docs", (req, res) => {
-    const target =
-      process.env.PGG_DOCS_URL ||
-      "https://sos2526-XX.onrender.com/api/v1/FFFFF/docs";
+    const target = "https://documenter.getpostman.com/view/52407239/2sBXigMYvk";
     res.redirect(target);
   });
 
