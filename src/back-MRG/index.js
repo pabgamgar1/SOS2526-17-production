@@ -12,19 +12,6 @@ const jsonRawData = fs.readFileSync('./datos-mrg.json', 'utf8');
 const dataMRG = JSON.parse(jsonRawData);
 
 function loadBackendMRG(app) {
-    /* Ruta dinámica /samples/MRG
-    app.get("/samples/MRG", (req, res) => {
-        let avrgWaterProductAFG =
-            dataMRG
-                .filter((d) => d.country === "Afghanistan")
-                .map((d) => d.waterProductivity)
-                .reduce((a, b) => a + b) /
-            dataMRG.filter((d) => d.country === "Afghanistan").length;
-        res.send(
-            `<html><body><h3>The average water productivity for Afghanistan is ${avrgWaterProductAFG.toString()}</h3></body></html>`,
-        );
-    });*/
-
     // API RESTful
 
     // Cargar datos iniciales
