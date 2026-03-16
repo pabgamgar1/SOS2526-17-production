@@ -17,8 +17,7 @@
   "scripts": {
     "start": "node index.js",
     "test-all-apis": "npm run test-agriculture-land && npm run test-water-productivities && npm run test-renewable-energy-consumptions  --reporters cli",
-    "test-agriculture-land": "start-server-and-test start http://localhost:3000 test-agriculture-land-v2",
-    "test-agriculture-land-v2": "npx newman run tests/api-FMM/test-agriculture-land.json --reporters cli",
+    "test-agriculture-land": "npx newman run tests/api-FMM/test-agriculture-land.json --reporters cli",
     "test-renewable-energy-consumptions": "npx newman run tests/api-PGG/api-tests.json -e tests/api-PGG/api-test-env-local.json",
     "test-water-productivities": "npx newman run tests/api-MRG/api-tests.json -e tests/api-MRG/api-test-env-local.json",
     "test": "start-server-and-test start http://localhost:3000 test-all-apis"
