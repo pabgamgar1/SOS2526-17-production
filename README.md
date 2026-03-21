@@ -1,4 +1,4 @@
-**Milestone actual:** F06
+**Milestone actual:** F07
 
 # SOS2526-17
 
