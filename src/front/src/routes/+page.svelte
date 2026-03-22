@@ -1,140 +1,201 @@
-<div class="container">
-    <h1>SOS2526-17 API Dashboard</h1>
-    
-    <div class="description">
-        <strong>Descripción del Proyecto:</strong> Nuestro proyecto analizará el impacto del agua y las energías renovables en la productividad agrícola de los países.
-    </div>
+<script>
+    const team = [
+        { 
+            name: "Mario Ramírez García", 
+            resource: "water-productivities", 
+            frontend: "/water-productivities",
+            api: "/api/v1/water-productivities",
+            postman: "https://sos2526-17.onrender.com/api/v1/water-productivities/docs"
+        },
+        { 
+            name: "Compañero 2", 
+            resource: "agriculture-land", 
+            frontend: "/agriculture-land",
+            api: "/api/v1/agriculture-land",
+            postman: "LINK_POSTMAN_2" 
+        },
+        { 
+            name: "Compañero 3", 
+            resource: "renewable-energy", 
+            frontend: "/renewable-energy",
+            api: "/api/v1/renewable-energy",
+            postman: "LINK_POSTMAN_3" 
+        }
+    ];
 
-    <div class="team-section">
-        <p>Desarrollado por nuestro equipo de 3 miembros.</p>
-        <a href="https://github.com/gti-sos/SOS2526-17" target="_blank">Repositorio de GitHub</a>
-    </div>
+    const githubRepo = "https://github.com/gti-sos/SOS2526-17";
+</script>
 
-    <h3>API Endpoints (v1)</h3>
-    <div class="api-grid">
-        <div class="api-card">
-            <h4>Water Productivities</h4>
-            <p>Análisis de la eficiencia del uso del agua por país.</p>
-            <div class="links">
-                <a href="https://sos2526-17.onrender.com/api/v1/water-productivities" class="btn" target="_blank">Ver API (v1)</a>
-                <a href="/water-productivities" class="btn btn-front">Ver Front-end</a>
-            </div>
+<main>
+    <header>
+        <h1>SOS2526-17 - Gestión de Recursos</h1>
+        <p class="subtitle">Proyecto de la asignatura Sistemas de Operación y Servicios (SOS)</p>
+    </header>
+
+    <section class="team-section">
+        <h2>Componentes del Equipo y Fuentes de Datos</h2>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Integrante</th>
+                        <th>Fuente de Datos (Recurso)</th>
+                        <th>Enlaces</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#each team as member}
+                        <tr>
+                            <td class="member-name">{member.name}</td>
+                            <td class="resource-cell"><code>{member.resource}</code></td>
+                            <td class="actions-cell">
+                                <a href={member.frontend} class="btn btn-frontend">Front-end</a>
+                                <a href={member.api} target="_blank" class="btn btn-api">API (v1)</a>
+                                <a href={member.postman} target="_blank" class="btn btn-postman">Postman</a>
+                            </td>
+                        </tr>
+                    {/each}
+                </tbody>
+            </table>
         </div>
+    </section>
 
-        <div class="api-card">
-            <h4>Renewable Energy</h4>
-            <p>Estadísticas de consumo de energía renovable.</p>
-            <div class="links">
-                <a href="https://sos2526-17.onrender.com/api/v1/renewable-energy-consumptions" class="btn" target="_blank">Ver API (v1)</a>
-                <a href="/renewable-energy" class="btn btn-front">Ver Front-end</a>
+    <section class="global-links">
+        <h2>Enlaces Globales del Proyecto</h2>
+        <div class="links-row">
+            <a href={githubRepo} target="_blank" class="btn-github">
+                <span class="icon">📦</span> Repositorio de GitHub
+            </a>
             </div>
-        </div>
-
-        <div class="api-card">
-            <h4>Agriculture Land</h4>
-            <p>Distribución y uso de tierras agrícolas.</p>
-            <div class="links">
-                <a href="https://sos2526-17.onrender.com/api/v1/agriculture-land" class="btn" target="_blank">Ver API (v1)</a>
-                <a href="/agriculture-land" class="btn btn-front">Ver Front-end</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-links">
-        <a href="/about" class="btn btn-about">Sobre el Proyecto (About)</a>
-    </div>
-
-    <footer>
-        <p>&copy; 2026 Equipo SOS2526-17 | Desplegado en Render</p>
-    </footer>
-</div>
+    </section>
+</main>
 
 <style>
-    :global(body) {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
+    /* Estilos Globales y Reset */
+    :global(body) { 
+        background-color: #f4f7f6; /* Gris muy suave de fondo */
+        margin: 0; 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
         color: #333;
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #f0f2f5;
     }
 
-    .container {
+    main { 
+        max-width: 1000px; 
+        margin: 0 auto; 
+        padding: 40px 20px; 
+    }
+
+    /* Cabecera */
+    header { 
+        text-align: center; 
+        margin-bottom: 50px; 
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 20px;
+    }
+    h1 { 
+        color: #2c3e50; 
+        font-size: 2.5rem; 
+        margin-bottom: 5px;
+    }
+    .subtitle {
+        color: #7f8c8d;
+        font-size: 1.1rem;
+        margin-top: 0;
+    }
+
+    /* Secciones */
+    section { margin-bottom: 40px; }
+    h2 { color: #2c3e50; border-left: 5px solid #34495e; padding-left: 15px; margin-bottom: 25px; }
+
+    /* Estilo de la Tabla */
+    .table-container {
         background: white;
-        padding: 40px;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        text-align: center;
-    }
-
-    h1 { color: #1a3a5a; margin-bottom: 10px; }
-
-    .description {
-        font-style: italic;
-        color: #444;
-        background: #eef9fe;
-        padding: 15px;
-        border-left: 5px solid #3498db;
-        margin: 20px 0;
-        text-align: left;
-    }
-
-    .team-section { 
-        margin: 25px 0; 
-        padding: 15px; 
-        border-top: 1px solid #eee; 
-    }
-    
-    .api-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-        margin-top: 30px;
-    }
-
-    .api-card {
-        background: #f8f9fa;
-        padding: 20px;
+        padding: 10px;
         border-radius: 8px;
-        border: 1px solid #e1e4e8;
-        transition: transform 0.2s;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        border: 1px solid #e0e0e0;
     }
 
-    .api-card:hover { 
-        transform: translateY(-5px); 
-        border-color: #3498db; 
+    table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        background: white; 
+    }
+    th, td { 
+        border: 1px solid #eee; 
+        padding: 15px; 
+        text-align: left; 
     }
     
-    .api-card h4 { margin-top: 0; color: #2980b9; }
+    /* Cabecera Oscura */
+    th { 
+        background-color: #34495e; 
+        color: white; 
+        text-transform: uppercase; 
+        font-size: 0.85rem; 
+        letter-spacing: 1px;
+    }
 
-    .links {
+    
+    tr:nth-child(even) { background-color: #f8f9fa; } 
+    tr:hover { background-color: #eaeaea; } 
+
+    
+    .member-name { font-weight: bold; color: #2c3e50; }
+    .resource-cell code { 
+        background-color: #ecf0f1; 
+        padding: 4px 8px; 
+        border-radius: 4px; 
+        color: #c0392b; 
+        font-size: 0.9rem;
+    }
+    .actions-cell {
         display: flex;
-        gap: 10px;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .btn { 
+        padding: 8px 12px; 
+        border-radius: 4px; 
+        text-decoration: none; 
+        font-size: 0.85rem;
+        font-weight: bold;
+        transition: background-color 0.2s;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-frontend { background-color: #27ae60; color: white; } /* Verde como "Añadir" */
+    .btn-frontend:hover { background-color: #219150; }
+
+    .btn-api { background-color: #2980b9; color: white; } /* Azul como "Cargar" */
+    .btn-api:hover { background-color: #216a9a; }
+
+    .btn-postman { background-color: #ef5b25; color: white; } /* Color Postman */
+    .btn-postman:hover { background-color: #d35400; }
+
+    /* Enlaces Globales */
+    .links-row {
+        display: flex;
         justify-content: center;
-        margin-top: 15px;
+        margin-top: 20px;
     }
-    
-    .btn {
-        display: inline-block;
-        text-decoration: none;
-        color: white;
-        background: #3498db;
-        padding: 8px 12px;
-        border-radius: 4px;
-        font-size: 0.85em;
+    .btn-github { 
+        display: inline-block; 
+        padding: 12px 24px; 
+        color: #34495e; 
+        text-decoration: none; 
+        font-weight: bold; 
+        border: 2px solid #34495e; 
+        border-radius: 8px; 
+        font-size: 1.1rem;
+        transition: 0.3s;
     }
-
-    .btn-front { background: #2ecc71; }
-
-    .btn-about { 
-        background: #7f8c8d; 
-        margin-top: 20px; 
+    .btn-github:hover { 
+        background: #34495e; 
+        color: white; 
     }
-
-    footer { 
-        margin-top: 40px; 
-        font-size: 0.85em; 
-        color: #95a5a6; 
-    }
+    .btn-github .icon { margin-right: 8px; }
 </style>
