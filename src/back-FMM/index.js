@@ -4,40 +4,28 @@ import Datastore from 'nedb';
 import fs from 'fs';
 let BASE_URL_API = "/api/v1/agriculture-land";
 
-const db = new Datastore({ filename: './db/agriculture-land.db', autoload: true });
+const db = new Datastore({ filename: './src/db/agriculture-land.db', autoload: true });
 const jsonRawData = fs.readFileSync('./datos-fmm.json', 'utf8');
 const initialAgricultureData = JSON.parse(jsonRawData);
 
-import util from 'util';
-
-// Parche 
-if (typeof util.isDate !== 'function') {
-    util.isDate = function (obj) {
-        return Object.prototype.toString.call(obj) === '[object Date]';
-    };
-}
-
 function loadBackendFMM(app) {
 
+
 app.get(BASE_URL_API + "/loadInitialData", (req, res) => {
-    // 1. Primero borramos
+    // 1. Borramos todo
     db.remove({}, { multi: true }, (err, numRemoved) => {
         if (err) {
-            console.error("Error limpiando DB:", err);
-            return res.status(500).send("Error limpiando la base de datos");
+            res.status(500).send("Error limpiando la base de datos");
+        } else {
+            // 2. Insertamos los datos
+            db.insert(initialAgricultureData, (err, newDocs) => {
+                if (err) {
+                    res.status(500).send("Error insertando datos iniciales");
+                } else {
+                    res.status(201).send(`Cargados ${newDocs.length} recursos del archivo JSON.`);
+                }
+            });
         }
-
-        console.log("Insertando datos:", initialAgricultureData);
-
-        // 2. Insertamos
-        db.insert(initialAgricultureData, (err, newDocs) => {
-            if (err) {
-                console.error("Error detallado de NeDB:", err); // MIRA ESTO EN LA TERMINAL
-                return res.status(500).send("Error insertando datos iniciales: " + err);
-            } else {
-                return res.status(200).send(`✅ Éxito: Se han insertado ${newDocs.length} registros.`);
-            }
-        });
     });
 });
 
