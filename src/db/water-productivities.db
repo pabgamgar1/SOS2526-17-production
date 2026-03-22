@@ -1,10 +1,23 @@
-{"country":"Afghanistan","year":2000,"countryCode":"AFG","waterProductivity":0.3,"waterStress":28.68,"annualFreshwater":22.69,"_id":"ZY6i4ccvtxEfhPU9"}
-{"country":"Angola","year":1988,"countryCode":"AGO","waterProductivity":63.2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"wBFB2P6QKKbnXZgD"}
-{"country":"Albania","year":1991,"countryCode":"ALB","waterProductivity":4.6,"waterStress":28.68,"annualFreshwater":22.69,"_id":"QyHbqD3LyTLSuKrO"}
-{"country":"Argentina","year":1977,"countryCode":"ARG","waterProductivity":9.1,"waterStress":28.68,"annualFreshwater":22.69,"_id":"UWqYHwznEUXunBRJ"}
-{"country":"United Arab Emirates","year":1981,"countryCode":"ARE","waterProductivity":132.1,"waterStress":28.68,"annualFreshwater":22.69,"_id":"AXXgtVeGUovtj5vJ"}
-{"country":"Afghanistan","year":2014,"countryCode":"AFG","waterProductivity":1.2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"XgeR0q0TFSBivMiX"}
-{"country":"Barbados","year":1963,"countryCode":"BRB","waterProductivity":74.2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"6P0J7t0nLPoN4qiO"}
-{"country":"Denmark","year":1971,"countryCode":"DNK","waterProductivity":180.4,"waterStress":28.68,"annualFreshwater":22.69,"_id":"4lYybn4vodpx7Vx4"}
-{"country":"Spain","year":2000,"countryCode":"ESP","waterProductivity":14,"waterStress":28.68,"annualFreshwater":22.69,"_id":"HnBjCAweBgNaqp2d"}
-{"country":"Afghanistan","year":2016,"countryCode":"AFG","waterProductivity":2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"M8eBB3eFotZlYVNC"}
+{"country":"Afghanistan","year":2000,"countryCode":"AFG","waterProductivity":0.3,"waterStress":28.68,"annualFreshwater":22.69,"_id":"IveUYYP7XYbME4e5"}
+{"country":"Angola","year":1988,"countryCode":"AGO","waterProductivity":63.2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"WXF6VdDFNVzUjhJI"}
+{"country":"Albania","year":1991,"countryCode":"ALB","waterProductivity":4.6,"waterStress":28.68,"annualFreshwater":22.69,"_id":"eLUGcL95fgllGULe"}
+{"country":"Argentina","year":1977,"countryCode":"ARG","waterProductivity":9.1,"waterStress":28.68,"annualFreshwater":22.69,"_id":"BSJ5swOKhjPEBgro"}
+{"country":"United Arab Emirates","year":1981,"countryCode":"ARE","waterProductivity":132.1,"waterStress":28.68,"annualFreshwater":22.69,"_id":"gTCa0h5d3ZFEEFqM"}
+{"country":"Afghanistan","year":2014,"countryCode":"AFG","waterProductivity":1.2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"9eXOMdhjNUC8rLuH"}
+{"country":"Barbados","year":1963,"countryCode":"BRB","waterProductivity":74.2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"WI3vHhUYadPf3SDv"}
+{"country":"Denmark","year":1971,"countryCode":"DNK","waterProductivity":180.4,"waterStress":28.68,"annualFreshwater":22.69,"_id":"403GSzI4AdSePKmq"}
+{"country":"Spain","year":2000,"countryCode":"ESP","waterProductivity":14,"waterStress":28.68,"annualFreshwater":22.69,"_id":"BdljCb3sqcUKJ0YN"}
+{"country":"Afghanistan","year":2016,"countryCode":"AFG","waterProductivity":2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"ggHw2rlW0SX8J2Qk"}
+{"country":"Macedonia","year":2000,"countryCode":"AGO","waterProductivity":63.2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"pjKngsBnn9OnoxUp"}
+{"country":"Spain","year":2000,"countryCode":"ESP","waterProductivity":10,"waterStress":25.68,"annualFreshwater":22.69,"_id":"BdljCb3sqcUKJ0YN"}
+{"$$deleted":true,"_id":"9eXOMdhjNUC8rLuH"}
+{"$$deleted":true,"_id":"403GSzI4AdSePKmq"}
+{"$$deleted":true,"_id":"BSJ5swOKhjPEBgro"}
+{"$$deleted":true,"_id":"BdljCb3sqcUKJ0YN"}
+{"$$deleted":true,"_id":"IveUYYP7XYbME4e5"}
+{"$$deleted":true,"_id":"WI3vHhUYadPf3SDv"}
+{"$$deleted":true,"_id":"WXF6VdDFNVzUjhJI"}
+{"$$deleted":true,"_id":"eLUGcL95fgllGULe"}
+{"$$deleted":true,"_id":"gTCa0h5d3ZFEEFqM"}
+{"$$deleted":true,"_id":"ggHw2rlW0SX8J2Qk"}
+{"$$deleted":true,"_id":"pjKngsBnn9OnoxUp"}

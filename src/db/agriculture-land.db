@@ -1,11 +1,33 @@
-{"country":"bolivia","year":1981,"country_code":"bol"," land_agriculture":33.0779055731558,"types_land":0,"index":1,"_id":"36q1pWUsWuakh9Jy"}
-{"country ":"australia","year":1973,"country_code":"aus","land_agriculture":41.2748424624333,"types_land":0,"index":0.1,"_id":"3n81K1FHRGVreYEK"}
-{"country":"Andorra","year":1999,"country_code":"n/a","land_agriculture":55.3383,"types_land":1,"index":1,"_id":"KZ8CbCR28trvL1qN"}
-{"country ":"Afghanistan","year":1968,"country_code":"afg","land_agriculture":57.9550158686353,"types_land":0,"index":1,"_id":"MmrAJ76UvCyknnqh"}
-{"country":"argentina","year":1972,"country_code":"arg","land_agriculture":52.1739130434783,"types_land":1,"index":0.2,"_id":"N6azqzjiFitqooHe"}
-{"country":"angola","year":1969,"country_code2":"ago","land_agriculture":27.8634119805249,"types_land":0,"index":0.5,"_id":"ZSBPS3q0O5ejBBCs"}
-{"country":"bahamas","year":1989,"country_code":"bhs","land_agriculture":0.999000999000999,"types_land":3,"index":0.5,"_id":"bdVvf72RqBIuvcNK"}
-{"country ":"albania ","year":1970,"country_code":"alb","land_agriculture":20.4545454545455,"types_land":0,"index":0.3,"_id":"iz3wTFF58jtpVEJb"}
-{"country ":"bermuda "," year":1986,"country_code":"bhs","land_agriculture":58.123668031216,"types_land":2,"index":1,"_id":"l70i2T3c2WtPOJGU"}
-{"country ":"Afghanistan","year":1967,"country_code":"afg","land_agriculture":58.1550158686353,"types_land":0,"index":1.5,"_id":"oa7tJn8ryMmeHTFk"}
-{"country ":"afghanistan","year":1961,"country_code":"afg","land_agriculture":57.87835579,"types_land":0,"index":1,"_id":"opQH9NVKBODhhkYR"}
+{"country":"angola","year":1969,"country_code2":"ago","land_agriculture":69.4,"types_land":2,"index":0.99,"_id":"3Xd191Xd5mnMCwrm","country_code":"esp"}
+{"country":"bolivia","year":1981,"country_code":"bol"," land_agriculture":33.0779055731558,"types_land":0,"index":1,"_id":"79oLSJDePJAP5wZY"}
+{"country ":"australia","year":1973,"country_code":"aus","land_agriculture":41.2748424624333,"types_land":0,"index":0.1,"_id":"9KninmXkNTFiWnOw"}
+{"country":"bahamas","year":1989,"country_code":"bhs","land_agriculture":0.999000999000999,"types_land":3,"index":0.5,"_id":"EPoEQ65HA1ugGUDL"}
+{"country ":"albania ","year":1970,"country_code":"alb","land_agriculture":20.4545454545455,"types_land":0,"index":0.3,"_id":"EbTmMEAkfMaMJeJd"}
+{"country ":"bermuda "," year":1986,"country_code":"bhs","land_agriculture":58.123668031216,"types_land":2,"index":1,"_id":"FcbGmiCDnWhOcjdk"}
+{"country ":"Afghanistan","year":1968,"country_code":"afg","land_agriculture":57.9550158686353,"types_land":0,"index":1,"_id":"TnJBDiAwUAslkj2C"}
+{"country":"argentina","year":1972,"country_code":"arg","land_agriculture":52.1739130434783,"types_land":1,"index":0.2,"_id":"cmcfuzzkFtmX4X5v"}
+{"country ":"afghanistan","year":1961,"country_code":"afg","land_agriculture":57.87835579,"types_land":0,"index":1,"_id":"mKsqwmmaZA9v3M3I"}
+{"country ":"Afghanistan","year":1967,"country_code":"afg","land_agriculture":58.1550158686353,"types_land":0,"index":1.5,"_id":"rNN6OHTkxIzwStgB"}
+{"$$deleted":true,"_id":"3Xd191Xd5mnMCwrm"}
+{"$$deleted":true,"_id":"79oLSJDePJAP5wZY"}
+{"$$deleted":true,"_id":"9KninmXkNTFiWnOw"}
+{"$$deleted":true,"_id":"EPoEQ65HA1ugGUDL"}
+{"$$deleted":true,"_id":"EbTmMEAkfMaMJeJd"}
+{"$$deleted":true,"_id":"FcbGmiCDnWhOcjdk"}
+{"$$deleted":true,"_id":"TnJBDiAwUAslkj2C"}
+{"$$deleted":true,"_id":"cmcfuzzkFtmX4X5v"}
+{"$$deleted":true,"_id":"mKsqwmmaZA9v3M3I"}
+{"$$deleted":true,"_id":"rNN6OHTkxIzwStgB"}
+{"country ":"afghanistan","year":1961,"country_code":"afg","land_agriculture":57.87835579,"types_land":0,"index":1,"_id":"MJDDOyx3QHyz71wm"}
+{"country":"angola","year":1969,"country_code2":"ago","land_agriculture":27.8634119805249,"types_land":0,"index":0.5,"_id":"4EpJaccqeFupyvPs"}
+{"country ":"albania ","year":1970,"country_code":"alb","land_agriculture":20.4545454545455,"types_land":0,"index":0.3,"_id":"n2uRztGXSOM4bf5w"}
+{"country":"argentina","year":1972,"country_code":"arg","land_agriculture":52.1739130434783,"types_land":1,"index":0.2,"_id":"zCZJV1tClPx1QQ7g"}
+{"country ":"australia","year":1973,"country_code":"aus","land_agriculture":41.2748424624333,"types_land":0,"index":0.1,"_id":"o1fs3YfrB9RW9UsF"}
+{"country":"bahamas","year":1989,"country_code":"bhs","land_agriculture":0.999000999000999,"types_land":3,"index":0.5,"_id":"wGYHdWt74nQhFdHZ"}
+{"country ":"Afghanistan","year":1967,"country_code":"afg","land_agriculture":58.1550158686353,"types_land":0,"index":1.5,"_id":"RgLORtZoeFKsJzK5"}
+{"country ":"Afghanistan","year":1968,"country_code":"afg","land_agriculture":57.9550158686353,"types_land":0,"index":1,"_id":"omvuEu54SDmAOKDI"}
+{"country":"bolivia","year":1981,"country_code":"bol"," land_agriculture":33.0779055731558,"types_land":0,"index":1,"_id":"APgU16WhEX2xpGkQ"}
+{"country ":"bermuda "," year":1986,"country_code":"bhs","land_agriculture":58.123668031216,"types_land":2,"index":1,"_id":"fwCXcWN62yj0He5g"}
+{"country":"tests","year":2026,"country_code":"tst","land_agriculture":57.955,"types_land":0,"index":1,"_id":"IhjlaQPVwMAgZ1ml"}
+{"country":"angola","year":1969,"country_code2":"ago","land_agriculture":69.4,"types_land":2,"index":0.99,"_id":"4EpJaccqeFupyvPs","country_code":"esp"}
+{"$$deleted":true,"_id":"IhjlaQPVwMAgZ1ml"}
