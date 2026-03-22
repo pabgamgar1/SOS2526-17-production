@@ -2,20 +2,18 @@
 import Datastore from 'nedb';
 import fs from 'fs';
 
-let BASE_URL_API = "/api/v1/water-productivities";
-
 // 1. Creamos la DB con persistencia en la carpeta /db
 const db = new Datastore({ filename: './src/db/water-productivities.db', autoload: true });
 
-// 2. Leemos los datos iniciales (Asegúrate de que la ruta al archivo .json es correcta)
+// 2. Leemos los datos iniciales
 const jsonRawData = fs.readFileSync('./datos-mrg.json', 'utf8');
 const dataMRG = JSON.parse(jsonRawData);
 
-function loadBackendMRG(app) {
+function setupAPI(app, versionRuta, isV2 = false) {
     // API RESTful
 
     // Cargar datos iniciales
-    app.get(BASE_URL_API + "/loadInitialData", (req, res) => {
+    app.get(versionRuta + "/loadInitialData", (req, res) => {
         db.find({}, (err, stats) => {
             if (stats.length === 0) {
                 db.insert(dataMRG);
@@ -26,13 +24,19 @@ function loadBackendMRG(app) {
         });
     });
 
-    // GET a la documentación (Debe coincidir con el Readme)
-    app.get(BASE_URL_API + "/docs", (req, res) => {
-        res.redirect("https://documenter.getpostman.com/view/52393924/2sBXigMDbc");
+    // GET a la documentación (Dinámico según la versión)
+    app.get(versionRuta + "/docs", (req, res) => {
+        if (isV2) {
+            // Pon aquí el enlace de Postman de tu colección V2
+            res.redirect("https://documenter.getpostman.com/view/52393924/2sBXijJXCR");
+        } else {
+            // Este es el enlace de tu V1 actual
+            res.redirect("https://documenter.getpostman.com/view/52393924/2sBXigMDbc");
+        }
     });
 
     // GET a la lista de recursos (con filtros, limpieza de _id y PAGINACIÓN)
-    app.get(BASE_URL_API, (req, res) => {
+    app.get(versionRuta, (req, res) => {
         const { country, year, countryCode, waterProductivity, waterStress, annualFreshwater, from, to } = req.query;
 
         // Parámetros de paginación
@@ -58,12 +62,19 @@ function loadBackendMRG(app) {
             }
 
             // Limpiamos _id y enviamos
-            res.status(200).json(filteredData.map(d => { delete d._id; return d; }));
+            res.status(200).json(filteredData.map(d => { 
+                delete d._id; 
+                // MEJORA V2: Añadimos un campo calculado de eficiencia
+                if(isV2) {
+                    d.efficiency_ratio = d.waterStress > 0 ? (d.waterProductivity / d.waterStress).toFixed(2) : 0;
+                }
+                return d; 
+            }));
         });
     });
 
     // GET de un país con rango (Ej: /Spain?from=2000&to=2010) y PaGINACIÓN
-    app.get(BASE_URL_API + "/:country", (req, res) => {
+    app.get(versionRuta + "/:country", (req, res) => {
         let country = req.params.country;
         let { from, to } = req.query;
         let limit = parseInt(req.query.limit);
@@ -80,12 +91,16 @@ function loadBackendMRG(app) {
                 filteredData = filteredData.slice(offset, offset + limit);
             }
 
-            res.status(200).json(filteredData.map(d => { delete d._id; return d; }));
+            res.status(200).json(filteredData.map(d => { 
+                delete d._id; 
+                if(isV2) d.efficiency_ratio = d.waterStress > 0 ? (d.waterProductivity / d.waterStress).toFixed(2) : 0;
+                return d; 
+            }));
         });
     });
 
     // POST: Crear nuevo recurso
-    app.post(BASE_URL_API, (req, res) => {
+    app.post(versionRuta, (req, res) => {
         let newData = req.body;
 
         if (!newData.country ||
@@ -110,26 +125,25 @@ function loadBackendMRG(app) {
     });
 
     // PUT sobre la lista (NO PERMITIDO)
-    app.put(BASE_URL_API, (req, res) => {
+    app.put(versionRuta, (req, res) => {
         res.sendStatus(405);
     });
 
     // DELETE de toda la lista
-    app.delete(BASE_URL_API, (req, res) => {
-        //if (req.query.admin !== "true") return res.sendStatus(401);
-
+    app.delete(versionRuta, (req, res) => {
         db.remove({}, { multi: true }, (err, numRemoved) => {
             res.sendStatus(200);
         });
     });
 
-    // GET Recurso específico (Ej: /api/v1/water-productivities/Spain/2000)
-    app.get(BASE_URL_API + "/:country/:year", (req, res) => {
+    // GET Recurso específico
+    app.get(versionRuta + "/:country/:year", (req, res) => {
         let { country, year } = req.params;
         db.find({ country: country, year: parseInt(year) }, (err, stats) => {
             if (stats.length > 0) {
                 const resource = stats[0];
-                delete resource._id; // Limpiamos el recurso único
+                delete resource._id;
+                if(isV2) resource.efficiency_ratio = resource.waterStress > 0 ? (resource.waterProductivity / resource.waterStress).toFixed(2) : 0;
                 res.status(200).json(resource);
             } else {
                 res.sendStatus(404);
@@ -138,10 +152,10 @@ function loadBackendMRG(app) {
     });
 
     // POST Recurso específico (NO PERMITIDO)
-    app.post(BASE_URL_API + "/:country/:year", (req, res) => res.sendStatus(405));
+    app.post(versionRuta + "/:country/:year", (req, res) => res.sendStatus(405));
 
     // PUT Recurso específico
-    app.put(BASE_URL_API + "/:country/:year", (req, res) => {
+    app.put(versionRuta + "/:country/:year", (req, res) => {
         let { country, year } = req.params;
         let updatedData = req.body;
 
@@ -172,7 +186,7 @@ function loadBackendMRG(app) {
     });
 
     // DELETE Recurso específico
-    app.delete(BASE_URL_API + "/:country/:year", (req, res) => {
+    app.delete(versionRuta + "/:country/:year", (req, res) => {
         let { country, year } = req.params;
         db.remove({ country: country, year: parseInt(year) }, {}, (err, numRemoved) => {
             if (numRemoved === 0) {
@@ -184,4 +198,12 @@ function loadBackendMRG(app) {
     });
 }
 
-export { loadBackendMRG };
+// --- EXPORTACIÓN DE FUNCIONES POR VERSIÓN ---
+
+export function loadBackendMRG(app) {
+    setupAPI(app, "/api/v1/water-productivities", false);
+}
+
+export function loadBackendMRG_v2(app) {
+    setupAPI(app, "/api/v2/water-productivities", true);
+}

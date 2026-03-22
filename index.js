@@ -6,7 +6,7 @@ import {handler} from "./src/front/build/handler.js";
 
 import path from "path";
 
-import { loadBackendMRG } from "./src/back-MRG/index.js";
+import { loadBackendMRG, loadBackendMRG_v2 } from "./src/back-MRG/index.js";
 import { loadBackendFMM } from "./src/back-FMM/index.js";
 import { loadBackendPGG } from "./src/back-PGG/index.js";
 
@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 
 
 loadBackendMRG(app);
+loadBackendMRG_v2(app);
 loadBackendFMM(app);
 loadBackendPGG(app);
 
