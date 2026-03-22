@@ -15,12 +15,17 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies
+      # 1. Instalamos dependencias del backend
+      - name: Install backend dependencies
         run: npm install
 
+      # 2. Instalamos y construimos el frontend
+      - name: Build Frontend
+        run: |
+          cd src/front
+          npm install
+          npm run build
+
+      # 3. Teteamos el backend con Newman
       - name: Run Newman Tests
         run: npm test
-
-
-
-        
