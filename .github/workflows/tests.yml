@@ -15,10 +15,13 @@ jobs:
       - name: Install Backend dependencies
         run: npm install
 
-      - name: Install Frontend dependencies
+      - name: Build Frontend
         run: |
           cd src/front
-          npm install --no-engine-strict
+          npm install
+          npm run build
+          echo "CONTENIDO DE LA CARPETA BUILD:"
+          find build -maxdepth 2
 
       - name: Run all tests
         run: npm test
