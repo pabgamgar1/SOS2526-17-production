@@ -1,12 +1,11 @@
 <script>
-    // DATOS DEL EQUIPO - Rellena esto con los datos reales de tus compañeros
     const team = [
         { 
-            name: "Tu Nombre", 
+            name: "Mario Ramírez García", 
             resource: "water-productivities", 
             frontend: "/water-productivities",
             api: "/api/v1/water-productivities",
-            postman: "https://documenter.getpostman.com/view/..." // Tu link de Postman
+            postman: "https://sos2526-17.onrender.com/api/v1/water-productivities/docs"
         },
         { 
             name: "Compañero 2", 
@@ -42,7 +41,7 @@
                     <tr>
                         <th>Integrante</th>
                         <th>Fuente de Datos (Recurso)</th>
-                        <th>Acciones</th>
+                        <th>Enlaces</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,8 +50,8 @@
                             <td class="member-name">{member.name}</td>
                             <td class="resource-cell"><code>{member.resource}</code></td>
                             <td class="actions-cell">
-                                <a href={member.frontend} class="btn btn-frontend">Ver Front-end</a>
-                                <a href={member.api} target="_blank" class="btn btn-api">Ver API (v1)</a>
+                                <a href={member.frontend} class="btn btn-frontend">Front-end</a>
+                                <a href={member.api} target="_blank" class="btn btn-api">API (v1)</a>
                                 <a href={member.postman} target="_blank" class="btn btn-postman">Postman</a>
                             </td>
                         </tr>
@@ -109,7 +108,7 @@
     section { margin-bottom: 40px; }
     h2 { color: #2c3e50; border-left: 5px solid #34495e; padding-left: 15px; margin-bottom: 25px; }
 
-    /* Estilo de la Tabla (Adaptado de la gestión de datos) */
+    /* Estilo de la Tabla */
     .table-container {
         background: white;
         padding: 10px;
@@ -131,18 +130,18 @@
     
     /* Cabecera Oscura */
     th { 
-        background-color: #34495e; /* Mismo color oscuro que antes */
+        background-color: #34495e; 
         color: white; 
         text-transform: uppercase; 
         font-size: 0.85rem; 
         letter-spacing: 1px;
     }
 
-    /* Filas y Efectos */
-    tr:nth-child(even) { background-color: #f8f9fa; } /* Filas alternas */
-    tr:hover { background-color: #eaeaea; } /* Efecto hover */
+    
+    tr:nth-child(even) { background-color: #f8f9fa; } 
+    tr:hover { background-color: #eaeaea; } 
 
-    /* Celdas Específicas */
+    
     .member-name { font-weight: bold; color: #2c3e50; }
     .resource-cell code { 
         background-color: #ecf0f1; 
@@ -157,7 +156,6 @@
         flex-wrap: wrap;
     }
 
-    /* Botones de la Tabla (Estilo limpio) */
     .btn { 
         padding: 8px 12px; 
         border-radius: 4px; 
