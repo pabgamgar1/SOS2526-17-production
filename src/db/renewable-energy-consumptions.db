@@ -1,12 +1,11 @@
-{"country":"Afghanistan","code":"AFG","year":2000,"wind":0,"hydro":0.31,"solar":0,"other":0,"_id":"4r5p8IvAMNCgQX5V"}
-{"country":"Afghanistan","code":"AFG","year":2001,"wind":0,"hydro":0.5,"solar":0,"other":0,"_id":"uebY2415vV6xraig"}
-{"country":"Albania","code":"ALB","year":1990,"wind":0,"hydro":2.85,"solar":0,"other":0,"_id":"cYoUMklWm7nZEb9w"}
-{"country":"Algeria","code":"DZA","year":1965,"wind":0,"hydro":0.4,"solar":0,"other":0,"_id":"p9h2ApSwoOd4koIA"}
 {"country":"American Samoa","code":"ASM","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"2ztoUQx7XqvX8FjF"}
-{"country":"Angola","code":"AGO","year":2000,"wind":0,"hydro":0.9,"solar":0,"other":0,"_id":"hmA16FLibkyM8gXG"}
-{"country":"Antigua and Barbuda","code":"ATG","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"rBy6WSu00QJjUpzk"}
-{"country":"Argentina","code":"ARG","year":1965,"wind":0,"hydro":1.225,"solar":0,"other":0,"_id":"WtEGk1C1g3jpGxaq"}
-{"country":"Armenia","code":"ARM","year":2000,"wind":0,"hydro":1.25,"solar":0,"other":0,"_id":"75QjDGicPKGuMiLx"}
-{"country":"Aruba","code":"ABW","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"bfamKS0eIS5ZFlIq"}
-{"country":"Testland","code":"TST","year":2099,"wind":12.3,"hydro":4.5,"solar":6.7,"other":0.1,"_id":"3h9VyDIleNb6abLW"}
 {"country":"Testland","code":"TST","year":2099,"wind":20,"hydro":5.5,"solar":7.7,"other":0.2,"_id":"3h9VyDIleNb6abLW"}
+{"country":"Afghanistan","code":"AFG","year":2000,"wind":0,"hydro":0.31,"solar":0,"other":0,"_id":"4r5p8IvAMNCgQX5V"}
+{"country":"Armenia","code":"ARM","year":2000,"wind":0,"hydro":1.25,"solar":0,"other":0,"_id":"75QjDGicPKGuMiLx"}
+{"country":"Argentina","code":"ARG","year":1965,"wind":0,"hydro":1.225,"solar":0,"other":0,"_id":"WtEGk1C1g3jpGxaq"}
+{"country":"Aruba","code":"ABW","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"bfamKS0eIS5ZFlIq"}
+{"country":"Albania","code":"ALB","year":1990,"wind":0,"hydro":2.85,"solar":0,"other":0,"_id":"cYoUMklWm7nZEb9w"}
+{"country":"Angola","code":"AGO","year":2000,"wind":0,"hydro":0.9,"solar":0,"other":0,"_id":"hmA16FLibkyM8gXG"}
+{"country":"Algeria","code":"DZA","year":1965,"wind":0,"hydro":0.4,"solar":0,"other":0,"_id":"p9h2ApSwoOd4koIA"}
+{"country":"Antigua and Barbuda","code":"ATG","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"rBy6WSu00QJjUpzk"}
+{"country":"Afghanistan","code":"AFG","year":2001,"wind":0,"hydro":0.5,"solar":0,"other":0,"_id":"uebY2415vV6xraig"}

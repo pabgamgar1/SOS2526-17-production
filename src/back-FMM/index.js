@@ -7,10 +7,24 @@ let BASE_URL_API = "/api/v1/agriculture-land";
 const db = new Datastore({ filename: './src/db/agriculture-land.db', autoload: true });
 const jsonRawData = fs.readFileSync('./datos-fmm.json', 'utf8');
 const initialAgricultureData = JSON.parse(jsonRawData);
+import util from 'util';
 
+// PARCHE 1: Para que NeDB no explote al buscar
+if (typeof util.isRegExp !== 'function') {
+    util.isRegExp = function (obj) {
+        return Object.prototype.toString.call(obj) === '[object Date]' || obj instanceof RegExp;
+    };
+}
+
+// PARCHE 2: Por si acaso para las fechas
+if (typeof util.isDate !== 'function') {
+    util.isDate = function (obj) {
+        return Object.prototype.toString.call(obj) === '[object Date]';
+    };
+}
 function loadBackendFMM(app) {
 
-
+/*
 app.get(BASE_URL_API + "/loadInitialData", (req, res) => {
     // 1. Borramos todo
     db.remove({}, { multi: true }, (err, numRemoved) => {
@@ -26,6 +40,22 @@ app.get(BASE_URL_API + "/loadInitialData", (req, res) => {
                 }
             });
         }
+    });
+});*/
+app.get(BASE_URL_API + "/loadInitialData", (req, res) => {
+    db.remove({}, { multi: true }, (err, numRemoved) => {
+        if (err) return res.status(500).send("Error limpiando DB");
+
+        // Insertamos los datos
+        db.insert(initialAgricultureData, (err, newDocs) => {
+            if (err) {
+                // ESTO ES LO IMPORTANTE: ver el error en la terminal
+                console.log("Fallo real al insertar:", err); 
+                return res.status(500).send("Error insertando datos iniciales: " + err);
+            } else {
+                return res.status(201).send(`✅ Éxito: ${newDocs.length} registros cargados.`);
+            }
+        });
     });
 });
 
@@ -68,7 +98,7 @@ app.get(BASE_URL_API, (req, res) => {
       });
 });
 
-
+/*
 app.get(BASE_URL_API + "/:country/:year", (req, res) => {
     const { country, year } = req.params;
 
@@ -87,9 +117,36 @@ app.get(BASE_URL_API + "/:country/:year", (req, res) => {
         }
     });
 });
+*/
+app.get(BASE_URL_API + "/:country/:year", (req, res) => {
+    const { country, year } = req.params;
 
+    // Buscamos el recurso. 
+    // Usamos parseInt para el año porque en la DB es un número.
+    db.find({ 
+        $or: [{ country: country }, { "country ": country }], 
+        year: parseInt(year) 
+    }, (err, docs) => {
+        if (err) {
+            console.error("Error en DB:", err);
+            return res.sendStatus(500);
+        }
 
-
+        if (docs && docs.length > 0) {
+            // Si lo encuentra:
+            // 1. Clonamos el objeto para no modificar la DB original
+            const resource = JSON.parse(JSON.stringify(docs[0]));
+            // 2. Borramos el campo _id que NeDB mete automáticamente
+            delete resource._id;
+            // 3. Respondemos con 200 OK
+            return res.status(200).json(resource);
+        } else {
+            // Si NO lo encuentra:
+            // Respondemos con 404 Not Found (esto arregla el test "404 Get")
+            return res.sendStatus(404);
+        }
+    });
+});
 // --- POST GENERAL ---
 // recursos nuevos
 app.post(BASE_URL_API, (req, res) => {
