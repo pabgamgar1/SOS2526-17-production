@@ -10,15 +10,16 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20' 
+          node-version: '20'
 
       - name: Install Backend dependencies
         run: npm install
 
-      - name: Install Frontend dependencies
+      - name: Build Frontend (Svelte)
         run: |
           cd src/front
           npm install --no-engine-strict
-
-      - name: Run all tests
+          npm run build  
+          
+      - name: Run Newman Tests
         run: npm test
