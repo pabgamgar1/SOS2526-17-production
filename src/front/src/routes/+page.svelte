@@ -1,140 +1,81 @@
-<div class="container">
-    <h1>SOS2526-17 API Dashboard</h1>
-    
-    <div class="description">
-        <strong>Descripción del Proyecto:</strong> Nuestro proyecto analizará el impacto del agua y las energías renovables en la productividad agrícola de los países.
-    </div>
+<script>
+    // Datos del equipo (Rellena esto con los de tus compañeros)
+    const team = [
+        { 
+            name: "Tu Nombre", 
+            resource: "water-productivities", 
+            frontend: "/water-productivities",
+            api: "/api/v1/water-productivities",
+            postman: "https://documenter.getpostman.com/view/..." // Tu link de Postman
+        },
+        { 
+            name: "Compañero 2", 
+            resource: "agriculture-land", 
+            frontend: "/agriculture-land",
+            api: "/api/v1/agriculture-land",
+            postman: "LINK_POSTMAN_2" 
+        },
+        { 
+            name: "Compañero 3", 
+            resource: "renewable-energy", 
+            frontend: "/renewable-energy",
+            api: "/api/v1/renewable-energy",
+            postman: "LINK_POSTMAN_3" 
+        }
+    ];
 
-    <div class="team-section">
-        <p>Desarrollado por nuestro equipo de 3 miembros.</p>
-        <a href="https://github.com/gti-sos/SOS2526-17" target="_blank">Repositorio de GitHub</a>
-    </div>
+    const githubRepo = "https://github.com/gti-sos/SOS2526-17";
+</script>
 
-    <h3>API Endpoints (v1)</h3>
-    <div class="api-grid">
-        <div class="api-card">
-            <h4>Water Productivities</h4>
-            <p>Análisis de la eficiencia del uso del agua por país.</p>
-            <div class="links">
-                <a href="https://sos2526-17.onrender.com/api/v1/water-productivities" class="btn" target="_blank">Ver API (v1)</a>
-                <a href="/water-productivities" class="btn btn-front">Ver Front-end</a>
-            </div>
+<main>
+    <header>
+        <h1>SOS2526-17 - Gestión de Recursos</h1>
+        <p>Proyecto de la asignatura Sistemas de Operación y Servicios</p>
+    </header>
+
+    <section class="team-section">
+        <h2>Componentes del Equipo</h2>
+        <div class="card-container">
+            {#each team as member}
+                <div class="card">
+                    <h3>{member.name}</h3>
+                    <p><strong>Fuente de datos:</strong> <code>{member.resource}</code></p>
+                    <hr>
+                    <div class="links">
+                        <a href={member.frontend} class="btn">Ver Front-end</a>
+                        <a href={member.api} target="_blank" class="btn secondary">Ver API (v1)</a>
+                        <a href={member.postman} target="_blank" class="btn postman">Documentación Postman</a>
+                    </div>
+                </div>
+            {/each}
         </div>
+    </section>
 
-        <div class="api-card">
-            <h4>Renewable Energy</h4>
-            <p>Estadísticas de consumo de energía renovable.</p>
-            <div class="links">
-                <a href="https://sos2526-17.onrender.com/api/v1/renewable-energy-consumptions" class="btn" target="_blank">Ver API (v1)</a>
-                <a href="/renewable-energy" class="btn btn-front">Ver Front-end</a>
-            </div>
-        </div>
-
-        <div class="api-card">
-            <h4>Agriculture Land</h4>
-            <p>Distribución y uso de tierras agrícolas.</p>
-            <div class="links">
-                <a href="https://sos2526-17.onrender.com/api/v1/agriculture-land" class="btn" target="_blank">Ver API (v1)</a>
-                <a href="/agriculture-land" class="btn btn-front">Ver Front-end</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-links">
-        <a href="/about" class="btn btn-about">Sobre el Proyecto (About)</a>
-    </div>
-
-    <footer>
-        <p>&copy; 2026 Equipo SOS2526-17 | Desplegado en Render</p>
-    </footer>
-</div>
+    <section class="global-links">
+        <h2>Enlaces del Proyecto</h2>
+        <a href={githubRepo} target="_blank" class="github-link">
+            📦 Repositorio de GitHub
+        </a>
+    </section>
+</main>
 
 <style>
-    :global(body) {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        color: #333;
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #f0f2f5;
-    }
-
-    .container {
-        background: white;
-        padding: 40px;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        text-align: center;
-    }
-
-    h1 { color: #1a3a5a; margin-bottom: 10px; }
-
-    .description {
-        font-style: italic;
-        color: #444;
-        background: #eef9fe;
-        padding: 15px;
-        border-left: 5px solid #3498db;
-        margin: 20px 0;
-        text-align: left;
-    }
-
-    .team-section { 
-        margin: 25px 0; 
-        padding: 15px; 
-        border-top: 1px solid #eee; 
-    }
+    :global(body) { background-color: #f0f2f5; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    main { max-width: 1000px; margin: 0 auto; padding: 40px 20px; text-align: center; }
+    header { margin-bottom: 50px; }
+    h1 { color: #1a202c; font-size: 2.5rem; }
     
-    .api-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-        margin-top: 30px;
-    }
-
-    .api-card {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-        border: 1px solid #e1e4e8;
-        transition: transform 0.2s;
-    }
-
-    .api-card:hover { 
-        transform: translateY(-5px); 
-        border-color: #3498db; 
-    }
+    .card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
+    .card { background: white; padding: 25px; border-radius: 12px; shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
+    .card h3 { margin-top: 0; color: #2d3748; }
     
-    .api-card h4 { margin-top: 0; color: #2980b9; }
+    .links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .btn { padding: 10px; border-radius: 6px; text-decoration: none; font-weight: bold; transition: 0.3s; }
+    .btn { background-color: #4a90e2; color: white; }
+    .btn.secondary { background-color: #edf2f7; color: #4a5568; }
+    .btn.postman { background-color: #ef5b25; color: white; }
+    .btn:hover { opacity: 0.8; }
 
-    .links {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        margin-top: 15px;
-    }
-    
-    .btn {
-        display: inline-block;
-        text-decoration: none;
-        color: white;
-        background: #3498db;
-        padding: 8px 12px;
-        border-radius: 4px;
-        font-size: 0.85em;
-    }
-
-    .btn-front { background: #2ecc71; }
-
-    .btn-about { 
-        background: #7f8c8d; 
-        margin-top: 20px; 
-    }
-
-    footer { 
-        margin-top: 40px; 
-        font-size: 0.85em; 
-        color: #95a5a6; 
-    }
+    .github-link { display: inline-block; margin-top: 30px; font-size: 1.2rem; color: #2d3748; text-decoration: none; font-weight: bold; border: 2px solid #2d3748; padding: 10px 20px; border-radius: 8px; }
+    .github-link:hover { background: #2d3748; color: white; }
 </style>
