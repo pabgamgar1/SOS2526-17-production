@@ -277,5 +277,44 @@ app.get(BASE_URL_API + "/docs", (req, res) => {
 });
 
 }
+// --- COPIA ESTO AL FINAL DE TU ARCHIVO DE BACKEND ---
+function loadBackendFMM_v2(app) {
+    let BASE_URL_API_V2 = "/api/v2/agriculture-land";
 
-export { loadBackendFMM };
+    // GET GENERAL v2 (Con soporte para Svelte)
+    app.get(BASE_URL_API_V2, (req, res) => {
+        db.find({}, (err, docs) => {
+            if (err) return res.sendStatus(500);
+            const result = docs.map(d => {
+                const copy = { ...d };
+                delete copy._id;
+                return copy;
+            });
+            res.status(200).json(result);
+        });
+    });
+
+    // POST v2 (Más permisivo con los tipos de datos)
+    app.post(BASE_URL_API_V2, (req, res) => {
+        const newData = req.body;
+        // Aquí no somos tan estrictos con la estructura exacta para que Svelte no sufra
+        db.insert(newData, (err) => {
+            if (err) return res.sendStatus(500);
+            res.sendStatus(201);
+        });
+    });
+
+    // loadInitialData v2
+    app.get(BASE_URL_API_V2 + "/loadInitialData", (req, res) => {
+        db.remove({}, { multi: true }, () => {
+            db.insert(initialAgricultureData, () => {
+                res.sendStatus(201);
+            });
+        });
+    });
+}
+
+// No olvides exportar AMBAS funciones
+export { loadBackendFMM, loadBackendFMM_v2 };
+
+
