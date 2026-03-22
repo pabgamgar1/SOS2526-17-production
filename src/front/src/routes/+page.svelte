@@ -1,5 +1,5 @@
 <script>
-    // Datos del equipo (Rellena esto con los de tus compañeros)
+    // DATOS DEL EQUIPO - Rellena esto con los datos reales de tus compañeros
     const team = [
         { 
             name: "Tu Nombre", 
@@ -30,52 +30,174 @@
 <main>
     <header>
         <h1>SOS2526-17 - Gestión de Recursos</h1>
-        <p>Proyecto de la asignatura Sistemas de Operación y Servicios</p>
+        <p class="subtitle">Proyecto de la asignatura Sistemas de Operación y Servicios (SOS)</p>
     </header>
 
     <section class="team-section">
-        <h2>Componentes del Equipo</h2>
-        <div class="card-container">
-            {#each team as member}
-                <div class="card">
-                    <h3>{member.name}</h3>
-                    <p><strong>Fuente de datos:</strong> <code>{member.resource}</code></p>
-                    <hr>
-                    <div class="links">
-                        <a href={member.frontend} class="btn">Ver Front-end</a>
-                        <a href={member.api} target="_blank" class="btn secondary">Ver API (v1)</a>
-                        <a href={member.postman} target="_blank" class="btn postman">Documentación Postman</a>
-                    </div>
-                </div>
-            {/each}
+        <h2>Componentes del Equipo y Fuentes de Datos</h2>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Integrante</th>
+                        <th>Fuente de Datos (Recurso)</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#each team as member}
+                        <tr>
+                            <td class="member-name">{member.name}</td>
+                            <td class="resource-cell"><code>{member.resource}</code></td>
+                            <td class="actions-cell">
+                                <a href={member.frontend} class="btn btn-frontend">Ver Front-end</a>
+                                <a href={member.api} target="_blank" class="btn btn-api">Ver API (v1)</a>
+                                <a href={member.postman} target="_blank" class="btn btn-postman">Postman</a>
+                            </td>
+                        </tr>
+                    {/each}
+                </tbody>
+            </table>
         </div>
     </section>
 
     <section class="global-links">
-        <h2>Enlaces del Proyecto</h2>
-        <a href={githubRepo} target="_blank" class="github-link">
-            📦 Repositorio de GitHub
-        </a>
+        <h2>Enlaces Globales del Proyecto</h2>
+        <div class="links-row">
+            <a href={githubRepo} target="_blank" class="btn-github">
+                <span class="icon">📦</span> Repositorio de GitHub
+            </a>
+            </div>
     </section>
 </main>
 
 <style>
-    :global(body) { background-color: #f0f2f5; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    main { max-width: 1000px; margin: 0 auto; padding: 40px 20px; text-align: center; }
-    header { margin-bottom: 50px; }
-    h1 { color: #1a202c; font-size: 2.5rem; }
-    
-    .card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
-    .card { background: white; padding: 25px; border-radius: 12px; shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
-    .card h3 { margin-top: 0; color: #2d3748; }
-    
-    .links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-    .btn { padding: 10px; border-radius: 6px; text-decoration: none; font-weight: bold; transition: 0.3s; }
-    .btn { background-color: #4a90e2; color: white; }
-    .btn.secondary { background-color: #edf2f7; color: #4a5568; }
-    .btn.postman { background-color: #ef5b25; color: white; }
-    .btn:hover { opacity: 0.8; }
+    /* Estilos Globales y Reset */
+    :global(body) { 
+        background-color: #f4f7f6; /* Gris muy suave de fondo */
+        margin: 0; 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        color: #333;
+    }
 
-    .github-link { display: inline-block; margin-top: 30px; font-size: 1.2rem; color: #2d3748; text-decoration: none; font-weight: bold; border: 2px solid #2d3748; padding: 10px 20px; border-radius: 8px; }
-    .github-link:hover { background: #2d3748; color: white; }
+    main { 
+        max-width: 1000px; 
+        margin: 0 auto; 
+        padding: 40px 20px; 
+    }
+
+    /* Cabecera */
+    header { 
+        text-align: center; 
+        margin-bottom: 50px; 
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 20px;
+    }
+    h1 { 
+        color: #2c3e50; 
+        font-size: 2.5rem; 
+        margin-bottom: 5px;
+    }
+    .subtitle {
+        color: #7f8c8d;
+        font-size: 1.1rem;
+        margin-top: 0;
+    }
+
+    /* Secciones */
+    section { margin-bottom: 40px; }
+    h2 { color: #2c3e50; border-left: 5px solid #34495e; padding-left: 15px; margin-bottom: 25px; }
+
+    /* Estilo de la Tabla (Adaptado de la gestión de datos) */
+    .table-container {
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        border: 1px solid #e0e0e0;
+    }
+
+    table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        background: white; 
+    }
+    th, td { 
+        border: 1px solid #eee; 
+        padding: 15px; 
+        text-align: left; 
+    }
+    
+    /* Cabecera Oscura */
+    th { 
+        background-color: #34495e; /* Mismo color oscuro que antes */
+        color: white; 
+        text-transform: uppercase; 
+        font-size: 0.85rem; 
+        letter-spacing: 1px;
+    }
+
+    /* Filas y Efectos */
+    tr:nth-child(even) { background-color: #f8f9fa; } /* Filas alternas */
+    tr:hover { background-color: #eaeaea; } /* Efecto hover */
+
+    /* Celdas Específicas */
+    .member-name { font-weight: bold; color: #2c3e50; }
+    .resource-cell code { 
+        background-color: #ecf0f1; 
+        padding: 4px 8px; 
+        border-radius: 4px; 
+        color: #c0392b; 
+        font-size: 0.9rem;
+    }
+    .actions-cell {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    /* Botones de la Tabla (Estilo limpio) */
+    .btn { 
+        padding: 8px 12px; 
+        border-radius: 4px; 
+        text-decoration: none; 
+        font-size: 0.85rem;
+        font-weight: bold;
+        transition: background-color 0.2s;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-frontend { background-color: #27ae60; color: white; } /* Verde como "Añadir" */
+    .btn-frontend:hover { background-color: #219150; }
+
+    .btn-api { background-color: #2980b9; color: white; } /* Azul como "Cargar" */
+    .btn-api:hover { background-color: #216a9a; }
+
+    .btn-postman { background-color: #ef5b25; color: white; } /* Color Postman */
+    .btn-postman:hover { background-color: #d35400; }
+
+    /* Enlaces Globales */
+    .links-row {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .btn-github { 
+        display: inline-block; 
+        padding: 12px 24px; 
+        color: #34495e; 
+        text-decoration: none; 
+        font-weight: bold; 
+        border: 2px solid #34495e; 
+        border-radius: 8px; 
+        font-size: 1.1rem;
+        transition: 0.3s;
+    }
+    .btn-github:hover { 
+        background: #34495e; 
+        color: white; 
+    }
+    .btn-github .icon { margin-right: 8px; }
 </style>
