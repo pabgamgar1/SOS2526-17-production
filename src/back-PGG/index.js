@@ -16,13 +16,18 @@ const initialData = JSON.parse(jsonRawData);
 function loadBackendPGG(app) {
   // Cargar datos iniciales
   app.get(BASE_URL_API + "/loadInitialData", (req, res) => {
-    db.find({}, (err, stats) => {
-      if (stats.length === 0) {
-        db.insert(initialData);
-        res.status(200).send("Datos iniciales cargados con éxito.");
-      } else {
-        res.status(400).send("Bad Request: Data already exists");
+    db.remove({}, { multi: true }, (removeErr) => {
+      if (removeErr) {
+        return res.status(500).send("Error clearing data");
       }
+
+      db.insert(initialData, (insertErr) => {
+        if (insertErr) {
+          return res.status(500).send("Error loading initial data");
+        }
+
+        return res.status(200).send("Datos iniciales cargados con éxito.");
+      });
     });
   });
 
