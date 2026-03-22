@@ -10,18 +10,17 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20' 
+          node-version: '20'
 
       - name: Install Backend dependencies
         run: npm install
 
-      - name: Build Frontend
+
+      - name: Build Frontend (Svelte)
         run: |
           cd src/front
-          npm install
-          npm run build
-          echo "CONTENIDO DE LA CARPETA BUILD:"
-          find build -maxdepth 2
-
-      - name: Run all tests
+          npm install --no-engine-strict
+          npm run build  
+          
+      - name: Run Newman Tests
         run: npm test
