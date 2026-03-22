@@ -1,31 +1,24 @@
-name: SOS CI Tests
-
+name: SOS2526-Tests
 on: [push]
 
 jobs:
-  run-tests:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20' 
 
-      # 1. Instalamos dependencias del backend
-      - name: Install backend dependencies
+      - name: Install Backend dependencies
         run: npm install
 
-      # 2. Instalamos y construimos el frontend
-      - name: Build Frontend
+      - name: Install Frontend dependencies
         run: |
           cd src/front
-          npm install
-          npm run build
+          npm install --no-engine-strict
 
-      # 3. Teteamos el backend con Newman
-      - name: Run Newman Tests
+      - name: Run all tests
         run: npm test
