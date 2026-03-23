@@ -8,14 +8,14 @@
 			postman: 'https://sos2526-17.onrender.com/api/v1/water-productivities/docs'
 		},
 		{
-			name: 'Compañero 2',
+			name: 'Felipe Morgado Martinez',
 			resource: 'agriculture-land',
 			frontend: '/agriculture-land',
 			api: '/api/v1/agriculture-land',
 			postman: 'LINK_POSTMAN_2'
 		},
 		{
-			name: 'Compañero 3',
+			name: 'Pablo Gamero García',
 			resource: 'renewable-energy-consumptions',
 			frontend: 'renewable-energy-consumptions',
 			api: '/api/v1/renewable-energy-consumptions',
@@ -29,7 +29,9 @@
 <main>
 	<header>
 		<h1>SOS2526-17 - Gestión de Recursos</h1>
-		<p class="subtitle">Proyecto de la asignatura Sistemas de Operación y Servicios (SOS)</p>
+		<p class="Pablo Gamero García">
+			Proyecto de la asignatura Sistemas de Operación y Servicios (SOS)
+		</p>
 	</header>
 
 	<section class="team-section">
@@ -51,11 +53,8 @@
 							<td class="resource-cell"><code>{member.resource}</code></td>
 							<td class="actions-cell">
 								<a href={member.frontend} class="btn btn-frontend">Front-end</a>
-								<a href={member.api} target="_blank" class="btn btn-api">API (v1)</a
-								>
-								<a href={member.postman} target="_blank" class="btn btn-postman"
-									>Postman</a
-								>
+								<a href={member.api} target="_blank" class="btn btn-api">API (v1)</a>
+								<a href={member.postman} target="_blank" class="btn btn-postman">Postman</a>
 							</td>
 						</tr>
 					{/each}

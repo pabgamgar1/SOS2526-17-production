@@ -20,9 +20,9 @@
     "build": "cd src/front && npm run build",
     "dev-front": "cd src/front && npm run dev -- --open",
     "test-all-apis": "npm run test-agriculture-land && npm run test-water-productivities && npm run test-renewable-energy-consumptions  --reporters cli",
-    "test-agriculture-land": "npx newman run tests/api-FMM/test-agriculture-land.json --reporters cli",
-    "test-renewable-energy-consumptions": "npx newman run tests/api-PGG/api-tests.json -e tests/api-PGG/api-test-env-local.json",
-    "test-water-productivities": "npx newman run tests/api-MRG/api-tests.json -e tests/api-MRG/api-test-env-local.json",
+    "test-agriculture-land": "newman run tests/api-FMM/test-agriculture-land.json --reporters cli",
+    "test-renewable-energy-consumptions": "newman run tests/api-PGG/api-tests.json -e tests/api-PGG/api-test-env-local.json",
+    "test-water-productivities": "newman run tests/api-MRG/api-tests.json -e tests/api-MRG/api-test-env-local.json",
     "test": "start-server-and-test start http://localhost:3000 test-all-apis"
   },
   "dependencies": {
