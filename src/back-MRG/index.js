@@ -27,7 +27,6 @@ function setupAPI(app, versionRuta, isV2 = false) {
     // GET a la documentación (Dinámico según la versión)
     app.get(versionRuta + "/docs", (req, res) => {
         if (isV2) {
-            // Pon aquí el enlace de Postman de tu colección V2
             res.redirect("https://documenter.getpostman.com/view/52393924/2sBXijJXCR");
         } else {
             // Este es el enlace de tu V1 actual
