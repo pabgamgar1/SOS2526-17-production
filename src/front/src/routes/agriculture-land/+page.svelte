@@ -21,22 +21,24 @@
     }
 
     async function cargarDatos() {
-        const res = await fetch("/api/v1/agriculture-land");
-        if (res.ok) {
-            data = await res.json();
-        } else {
-            notificar("⚠️ No se han podido cargar los datos.", "error");
+        try {
+            const res = await fetch("/api/v1/agriculture-land");
+            if (res.ok) {
+                data = await res.json();
+            } else {
+                notificar("⚠️ No se han podido cargar los datos.", "error");
+            }
+        } catch (e) {
+            notificar("❌ Error de conexión con el servidor.", "error");
         }
     }
 
     async function crearDato() {
-        // Validamos que no haya campos vacíos antes de enviar
         if (!nuevoRegistro["country "].trim() || !nuevoRegistro.year) {
             notificar("Por favor, rellena los campos obligatorios.", "error");
             return;
         }
 
-        // Construimos el objeto exacto que pide la v1 (con campos de relleno para evitar el 400)
         const registroParaV1 = {
             "country": nuevoRegistro["country "], 
             "year": parseInt(nuevoRegistro.year),
@@ -54,14 +56,11 @@
 
         if (res.status === 201) {
             notificar("✅ Registro guardado con éxito", "exito");
-            // Limpiar formulario
             nuevoRegistro = { "country ": "", "year": "", "land_agriculture": "" };
             cargarDatos();
-        } else if (res.status === 409) {
-            notificar("❌ Error: Ese país y año ya existen.", "error");
         } else {
             const errorMsg = await res.text();
-            notificar("❌ Error al guardar: " + (errorMsg || "Datos incorrectos"), "error");
+            notificar("❌ Error: " + (errorMsg || "Datos incorrectos"), "error");
         }
     }
 
@@ -75,12 +74,22 @@
         }
     }
 
+    // --- CORRECCIÓN AQUÍ: Función borrarTodo arreglada ---
     async function borrarTodo() {
-        if (confirm("🚨 ¿BORRAR TODO? Esta acción es irreversible.")) {
-            const res = await fetch("/api/v1/agriculture-land", { method: "DELETE" });
-            if (res.ok) {
-                notificar("Base de datos vaciada.", "exito");
-                data = [];
+        if (confirm("🚨 ¿BORRAR TODOS LOS DATOS? Esta acción no se puede deshacer.")) {
+            try {
+                const res = await fetch("/api/v1/agriculture-land", { 
+                    method: "DELETE" 
+                });
+
+                if (res.ok) {
+                    notificar("✨ Base de datos vaciada correctamente.", "exito");
+                    data = []; // Limpiamos la tabla en pantalla
+                } else {
+                    notificar("❌ El servidor rechazó el borrado total.", "error");
+                }
+            } catch (error) {
+                notificar("❌ Error de red al intentar borrar.", "error");
             }
         }
     }
@@ -207,37 +216,29 @@
         border: 1px solid #cbd5e1; 
         border-radius: 6px; 
         font-size: 1rem;
-        transition: border-color 0.2s;
     }
-    input:focus { outline: none; border-color: #3b82f6; ring: 2px solid #bfdbfe; }
 
     table { width: 100%; border-collapse: collapse; }
-    th { background-color: #f8fafc; color: #475569; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; padding: 15px; border-bottom: 2px solid #e2e8f0; text-align: left; }
+    th { background-color: #f8fafc; color: #475569; padding: 15px; border-bottom: 2px solid #e2e8f0; text-align: left; }
     td { padding: 15px; border-bottom: 1px solid #f1f5f9; color: #1e293b; }
-    tr:hover { background-color: #f1f5f9; }
 
     button { 
         cursor: pointer; 
         font-weight: 600; 
-        transition: all 0.2s; 
         border-radius: 6px; 
         border: none;
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        transition: 0.2s;
     }
 
     .btn-crear { background: #22c55e; color: white; padding: 10px 24px; height: 42px; }
-    .btn-crear:hover { background: #16a34a; transform: translateY(-1px); }
-
-    .btn-load { background: #3b82f6; color: white; padding: 10px; width: 100%; font-size: 0.9rem; }
-    .btn-load:hover { background: #2563eb; }
-
-    .btn-borrar { background: #fee2e2; color: #dc2626; padding: 6px 12px; font-size: 0.85rem; }
-    .btn-borrar:hover { background: #fecaca; }
-
+    .btn-load { background: #3b82f6; color: white; padding: 10px; width: 100%; margin-top: 10px; }
+    .btn-borrar { background: #fee2e2; color: #dc2626; padding: 6px 12px; }
     .btn-borrar-todo { background: #1e293b; color: white; padding: 12px; width: 100%; margin-top: 20px; }
-    .btn-borrar-todo:hover { background: #0f172a; }
+
+    button:hover { opacity: 0.85; transform: scale(0.98); }
 
     .text-center { text-align: center; }
 

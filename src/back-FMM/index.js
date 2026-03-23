@@ -238,18 +238,12 @@ app.put(BASE_URL_API, (req, res) => {
 });
 
 // --- DELETE GENERAL  ---
+// --- DELETE GENERAL ACTUALIZADO ---
 app.delete(BASE_URL_API, (req, res) => {
-    if (req.query.admin !== "true") {
-        return res.sendStatus(401); // Unauthorized
-    }
-
+    // Hemos quitado el IF del admin
     db.remove({}, { multi: true }, (err, numRemoved) => {
-        if (err) {
-            res.sendStatus(500);
-        } else {
-            
-            res.sendStatus(200);
-        }
+        if (err) return res.sendStatus(500);
+        res.sendStatus(200);
     });
 });
 
