@@ -23,7 +23,8 @@
     "test-agriculture-land": "newman run tests/api-FMM/test-agriculture-land.json --reporters cli",
     "test-renewable-energy-consumptions": "newman run tests/api-PGG/api-tests.json -e tests/api-PGG/api-test-env-local.json",
     "test-water-productivities": "newman run tests/api-MRG/api-tests.json -e tests/api-MRG/api-test-env-local.json",
-    "test": "start-server-and-test start http://localhost:3000 test-all-apis"
+    "test-e2e": "npx playwright test",
+    "test": "start-server-and-test start http://localhost:3000 \"npm run test-all-apis && npm run test-e2e\""
   },
   "dependencies": {
     "body-parser": "^2.2.2",
@@ -33,6 +34,7 @@
     "nedb": "^1.8.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@sveltejs/adapter-node": "^5.5.4",
     "newman": "^6.2.2",
     "start-server-and-test": "^2.1.5"

@@ -5,22 +5,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Use Node.js
-        uses: actions/setup-node@v3
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
       - name: Install Backend dependencies
         run: npm install
 
-
-      - name: Build Frontend (Svelte)
+      - name: Build Frontend
         run: |
           cd src/front
           npm install --no-engine-strict
           npm run build  
           
-      - name: Run Newman Tests
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run All Tests
         run: npm test
