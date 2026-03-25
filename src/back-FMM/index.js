@@ -9,14 +9,13 @@ const jsonRawData = fs.readFileSync('./datos-fmm.json', 'utf8');
 const initialAgricultureData = JSON.parse(jsonRawData);
 import util from 'util';
 
-// PARCHE 1: Para que NeDB no explote al buscar
 if (typeof util.isRegExp !== 'function') {
     util.isRegExp = function (obj) {
         return Object.prototype.toString.call(obj) === '[object Date]' || obj instanceof RegExp;
     };
 }
 
-// PARCHE 2: Por si acaso para las fechas
+// PARCHE 2:
 if (typeof util.isDate !== 'function') {
     util.isDate = function (obj) {
         return Object.prototype.toString.call(obj) === '[object Date]';
@@ -46,10 +45,10 @@ app.get(BASE_URL_API + "/loadInitialData", (req, res) => {
     db.remove({}, { multi: true }, (err, numRemoved) => {
         if (err) return res.status(500).send("Error limpiando DB");
 
-        // Insertamos los datos
+        
         db.insert(initialAgricultureData, (err, newDocs) => {
             if (err) {
-                // ESTO ES LO IMPORTANTE: ver el error en la terminal
+            
                 console.log("Fallo real al insertar:", err); 
                 return res.status(500).send("Error insertando datos iniciales: " + err);
             } else {
@@ -63,23 +62,22 @@ app.get(BASE_URL_API + "/loadInitialData", (req, res) => {
 
 // GET General: Soporta 
 app.get(BASE_URL_API, (req, res) => {
-    // 1. Extraemos todos los posibles parámetros
+  
     let { country, year, country_code, land_agriculture, types_land, index, limit, offset } = req.query;
     
-    // 2. Construimos el objeto de búsqueda 
+
     let query = {};
 
-    // Filtros de texto
+  
     if (country) query.country = country;
     if (country_code) query.country_code = country_code;
 
-    // Filtros numéricos 
+
     if (year) query.year = parseInt(year);
     if (land_agriculture) query.land_agriculture = parseFloat(land_agriculture);
     if (types_land) query.types_land = parseInt(types_land);
     if (index) query.index = parseFloat(index);
 
-    // 3. Ejecutamos la consulta con Paginación 
     db.find(query)
       .skip(parseInt(offset) || 0) 
       .limit(parseInt(limit) || 0)
@@ -87,7 +85,7 @@ app.get(BASE_URL_API, (req, res) => {
           if (err) {
               res.sendStatus(500);
           } else {
-              // Limpiamos el campo _id
+            
               const result = docs.map((d) => {
                   const cleanedDoc = { ...d };
                   delete cleanedDoc._id;
@@ -121,8 +119,7 @@ app.get(BASE_URL_API + "/:country/:year", (req, res) => {
 app.get(BASE_URL_API + "/:country/:year", (req, res) => {
     const { country, year } = req.params;
 
-    // Buscamos el recurso. 
-    // Usamos parseInt para el año porque en la DB es un número.
+   
     db.find({ 
         $or: [{ country: country }, { "country ": country }], 
         year: parseInt(year) 
@@ -133,49 +130,45 @@ app.get(BASE_URL_API + "/:country/:year", (req, res) => {
         }
 
         if (docs && docs.length > 0) {
-            // Si lo encuentra:
-            // 1. Clonamos el objeto para no modificar la DB original
+          
             const resource = JSON.parse(JSON.stringify(docs[0]));
-            // 2. Borramos el campo _id que NeDB mete automáticamente
+           
             delete resource._id;
-            // 3. Respondemos con 200 OK
+         
             return res.status(200).json(resource);
         } else {
-            // Si NO lo encuentra:
-            // Respondemos con 404 Not Found (esto arregla el test "404 Get")
+            
             return res.sendStatus(404);
         }
     });
 });
 // --- POST GENERAL ---
-// recursos nuevos
+
 app.post(BASE_URL_API, (req, res) => {
     const newData = req.body;
 
-    // 1. VALIDACIÓN DE ESTRUCTURA 
-    // campos esperamos 
     const camposEsperados = ["country", "year", "country_code", "land_agriculture", "types_land", "index"];
     const camposRecibidos = Object.keys(newData);
 
-    // Comprobamos que están todos los campos 
+    
     const tieneEstructuraExacta = camposEsperados.every(f => camposRecibidos.includes(f)) 
                                   && camposRecibidos.length === camposEsperados.length;
 
     if (!tieneEstructuraExacta) {
-        // Si el JSON es raro 
+       
         return res.sendStatus(400); 
     }
 
     // 2. VALIDACIÓN DE DUPLICADOS 
-    // No podemos tener dos recursos con el mismo país y año
+   
     db.find({ country: newData.country, year: newData.year }, (err, docs) => {
         if (err) return res.sendStatus(500);
 
         if (docs.length > 0) {
-            // Si ya existe, devolvemos 409 (Conflict)
+   
             res.sendStatus(409); 
         } else {
-            // 3. INSERCIÓN 
+     
             db.insert(newData, (err, doc) => {
                 if (err) return res.sendStatus(500);
                 res.sendStatus(201); 
@@ -186,7 +179,7 @@ app.post(BASE_URL_API, (req, res) => {
 
 // --- POST ESPECÍFICO ---
 app.post(BASE_URL_API + "/:country/:year", (req, res) => {
-    // Devolvemos 405 (Method Not Allowed)
+
     res.sendStatus(405); 
 });
 
@@ -197,7 +190,7 @@ app.put(BASE_URL_API + "/:country/:year", (req, res) => {
     const { country, year } = req.params;
     const updatedData = req.body;
 
-    // 1. VALIDACIÓN DE ESTRUCTURA 
+    
     const camposEsperados = ["country", "year", "country_code", "land_agriculture", "types_land", "index"];
     const camposRecibidos = Object.keys(updatedData);
 
@@ -205,12 +198,11 @@ app.put(BASE_URL_API + "/:country/:year", (req, res) => {
                                   && camposRecibidos.length === camposEsperados.length;
 
     if (!tieneEstructuraExacta) {
-        // Si el JSON tiene campos de más o le falta alguno: 400
+    
         return res.sendStatus(400); 
     }
 
-    // 2. VALIDACIÓN DE IDENTIDAD 
-    // Evitamos que intenten actualizar 'Spain/2020' enviando un JSON de 'France/2021'
+
     if (country !== updatedData.country || parseInt(year) !== updatedData.year) {
         return res.sendStatus(400);
     }
@@ -225,22 +217,24 @@ app.put(BASE_URL_API + "/:country/:year", (req, res) => {
             // Si encontró el recurso y lo actualizó: 200 OK
             res.sendStatus(200);
         } else {
-            // Si no encontró el recurso con ese país y año: 404 Not Found
+       
             res.sendStatus(404);
         }
     });
 });
 
 // --- PUT GENERAL ---
-// No se permite actualizar toda la colección de golpe
 app.put(BASE_URL_API, (req, res) => {
     res.sendStatus(405); 
 });
 
 // --- DELETE GENERAL  ---
-// --- DELETE GENERAL ACTUALIZADO ---
 app.delete(BASE_URL_API, (req, res) => {
-    // Hemos quitado el IF del admin
+    
+    if (req.query.admin !== "true") {
+        return res.sendStatus(401); 
+    }
+
     db.remove({}, { multi: true }, (err, numRemoved) => {
         if (err) return res.sendStatus(500);
         res.sendStatus(200);
@@ -271,11 +265,10 @@ app.get(BASE_URL_API + "/docs", (req, res) => {
 });
 
 }
-// --- COPIA ESTO AL FINAL DE TU ARCHIVO DE BACKEND ---
+
 function loadBackendFMM_v2(app) {
     let BASE_URL_API_V2 = "/api/v2/agriculture-land";
 
-    // GET GENERAL v2 (Con soporte para Svelte)
     app.get(BASE_URL_API_V2, (req, res) => {
         db.find({}, (err, docs) => {
             if (err) return res.sendStatus(500);
@@ -288,10 +281,10 @@ function loadBackendFMM_v2(app) {
         });
     });
 
-    // POST v2 (Más permisivo con los tipos de datos)
+
     app.post(BASE_URL_API_V2, (req, res) => {
         const newData = req.body;
-        // Aquí no somos tan estrictos con la estructura exacta para que Svelte no sufra
+        
         db.insert(newData, (err) => {
             if (err) return res.sendStatus(500);
             res.sendStatus(201);
@@ -308,7 +301,7 @@ function loadBackendFMM_v2(app) {
     });
 }
 
-// No olvides exportar AMBAS funciones
+
 export { loadBackendFMM, loadBackendFMM_v2 };
 
 

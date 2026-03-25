@@ -1,7 +1,6 @@
 <script>
     import { onMount } from 'svelte';
 
-    // --- ESTADO (Svelte 5) ---
     let data = $state([]);
     let nuevoRegistro = $state({ 
         "country ": "", 
@@ -74,25 +73,26 @@
         }
     }
 
-    // --- CORRECCIÓN AQUÍ: Función borrarTodo arreglada ---
-    async function borrarTodo() {
-        if (confirm("🚨 ¿BORRAR TODOS LOS DATOS? Esta acción no se puede deshacer.")) {
-            try {
-                const res = await fetch("/api/v1/agriculture-land", { 
-                    method: "DELETE" 
-                });
+   
+   async function borrarTodo() {
+    if (confirm("🚨 ¿BORRAR TODOS LOS DATOS?")) {
+        try {
+            // Añadimos ?admin=true a la URL para saltarnos el candado que acabamos de poner
+            const res = await fetch("/api/v1/agriculture-land?admin=true", { 
+                method: "DELETE" 
+            });
 
-                if (res.ok) {
-                    notificar("✨ Base de datos vaciada correctamente.", "exito");
-                    data = []; // Limpiamos la tabla en pantalla
-                } else {
-                    notificar("❌ El servidor rechazó el borrado total.", "error");
-                }
-            } catch (error) {
-                notificar("❌ Error de red al intentar borrar.", "error");
+            if (res.ok) {
+                notificar("✨ Base de datos vaciada.", "exito");
+                data = [];
+            } else {
+                notificar("❌ Error de permisos o de servidor.", "error");
             }
+        } catch (error) {
+            notificar("❌ No se pudo conectar con el servidor.", "error");
         }
     }
+}
 
     async function cargarIniciales() {
         const res = await fetch("/api/v1/agriculture-land/loadInitialData");
