@@ -12,7 +12,7 @@
 			resource: 'agriculture-land',
 			frontend: '/agriculture-land',
 			api: '/api/v1/agriculture-land',
-			postman: 'LINK_POSTMAN_2'
+			postman: 'https://sos2526-17.onrender.com/api/v1/agriculture-land/docs'
 		},
 		{
 			name: 'Pablo Gamero García',
