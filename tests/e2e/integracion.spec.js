@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const URL_BASE = 'https://sos2526-17.onrender.com/';
+const URL_BASE = 'http://localhost:3000/';
 
 test('Prueba E2E Front-ends del Grupo', async ({ page }) => {
    test.setTimeout(60000);
