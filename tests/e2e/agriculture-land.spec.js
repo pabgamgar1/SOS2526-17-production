@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-const URL_BASE = 'http://localhost:5173/agriculture-land'; 
-
+//const URL_BASE = 'http://localhost:5173/agriculture-land'; 
+const URL_BASE = 'http://localhost:3000/agriculture-land'; 
 test.describe('Agriculture Land E2E Tests', () => {
 
     test.beforeEach(async ({ page }) => {
@@ -18,23 +18,22 @@ test.describe('Agriculture Land E2E Tests', () => {
     });
 
     test('should search resources using filters (Argentina Case)', async ({ page }) => {
-        // 1. Cargar datos iniciales
+       
         await page.click('.btn-load');
-        // Esperamos a que la tabla tenga contenido real
+      
         await page.waitForSelector('table tbody tr:not(.empty)');
 
         // 2. Buscamos el input de país usando tu placeholder exacto
         const searchInput = page.locator('input[placeholder="País (ej: Spain)"]');
         await searchInput.fill('argentina'); 
         
-        // 3. Clic en buscar y esperar a que el servidor responda (200 OK)
+      
         await Promise.all([
             page.waitForResponse(resp => resp.url().includes('agriculture-land') && resp.status() === 200),
             page.click('.btn-search')
         ]);
 
-        // 4. Verificación: La primera fila debe contener "argentina"
-        // Usamos /argentina/i para que no importe si es mayúscula o minúscula
+      
         const firstRow = page.locator('table tbody tr').first();
         await expect(firstRow).toContainText(/argentina/i, { timeout: 10000 });
     });
