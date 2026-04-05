@@ -1,249 +1,338 @@
 <script>
-    import { onMount } from 'svelte';
+	import { onMount } from 'svelte';
 
-    let data = $state([]);
-    let nuevoRegistro = $state({ 
-        "country ": "", 
-        "year": "", 
-        "land_agriculture": "" 
-    });
+	// Tu ruta de API
+	let API = '/api/v1/agriculture-land';
+
+	/** @type {any[]} */
+	let data = $state([]);
+	let message = $state('');
+	let messageType = $state('');
+
+	// Variables para FILTROS (Punto vi)
+	let searchCountry = $state('');
+	let searchYear = $state('');
+	let searchFrom = $state(''); 
+	let searchTo = $state('');
+
+	// Formulario con TUS campos (respetando el espacio en "country ")
+	let newEntry = $state({
+		"country ": '',
+		year: '',
+		country_code: '',
+		land_agriculture: '',
+		types_land: '',
+		index: ''
+	});
+
+	// Manejo de errores basado en el estilo de tu colega
+	function handleResponseError(status, action) {
+		messageType = 'error';
+		if (status === 404) message = 'No se ha encontrado el recurso solicitado.';
+		else if (status === 409)
+			message = `El registro de ${newEntry["country "]} para el año ${newEntry.year} ya existe.`;
+		else if (status === 400) message = 'Error: Faltan datos o el formato es incorrecto.';
+		else message = `Error ${status} al intentar ${action}.`;
+        setTimeout(() => message = "", 5000);
+	}
+
+	// --- LISTAR RECURSOS (Con tus filtros de agricultura) ---
+	async function getData() {
+		let url = API;
+		const queryParams = new URLSearchParams();
+
+		if (searchCountry) queryParams.append('country', searchCountry.trim());
+		if (searchYear) queryParams.append('year', searchYear);
+		if (searchFrom) queryParams.append('from', searchFrom);
+		if (searchTo) queryParams.append('to', searchTo);
+
+		if (queryParams.toString()) url += '?' + queryParams.toString();
+
+		try {
+			const res = await fetch(url);
+			if (res.ok) {
+				data = await res.json();
+				if (searchCountry || searchYear || searchFrom || searchTo) {
+					message = data.length > 0 ? 'Búsqueda finalizada.' : 'No hay resultados.';
+					messageType = data.length > 0 ? 'info' : 'error';
+				}
+			} else {
+				handleResponseError(res.status, 'obtener los datos');
+			}
+		} catch (e) {
+			message = 'Error: No se puede conectar con el servidor.';
+			messageType = 'error';
+		}
+	}
+
+	// --- CARGAR DATOS INICIALES ---
+	async function loadInitialData() {
+		const res = await fetch(`${API}/loadInitialData`);
+		if (res.ok) {
+			message = '✅ Datos de agricultura cargados con éxito.';
+			messageType = 'success';
+			getData();
+		} else {
+			message = 'Error al cargar datos iniciales.';
+			messageType = 'error';
+		}
+        setTimeout(() => message = "", 5000);
+	}
+
+	// --- CREAR RECURSO ---
+	async function addEntry() {
+		const res = await fetch(API, {
+			method: 'POST',
+			body: JSON.stringify({
+				country: newEntry["country "].trim(),
+				year: parseInt(newEntry.year),
+				country_code: newEntry.country_code,
+				land_agriculture: parseFloat(newEntry.land_agriculture),
+				types_land: parseInt(newEntry.types_land),
+				index: parseInt(newEntry.index)
+			}),
+			headers: { 'Content-Type': 'application/json' }
+		});
+
+		if (res.status === 201) {
+			message = `✅ ¡Hecho! Se ha añadido ${newEntry["country "]} correctamente.`;
+			messageType = 'success';
+			newEntry = { "country ": '', year: '', country_code: '', land_agriculture: '', types_land: '', index: '' };
+			getData();
+		} else {
+			handleResponseError(res.status, 'crear el registro');
+		}
+	}
+
+	// --- ACCIÓN: BORRAR UNO ---
+	async function deleteEntry(country, year) {
+    // .trim() elimina el espacio fantasma: "Spain " -> "Spain"
+    const p = String(country).trim(); 
     
-    let mensajeUsuario = $state("");
-    let tipoAlerta = $state("");
-
-    // --- FUNCIONES ---
-
-    function notificar(texto, tipo) {
-        mensajeUsuario = texto;
-        tipoAlerta = tipo;
-        setTimeout(() => mensajeUsuario = "", 5000);
-    }
-
-    async function cargarDatos() {
-        try {
-            const res = await fetch("/api/v1/agriculture-land");
-            if (res.ok) {
-                data = await res.json();
-            } else {
-                notificar("⚠️ No se han podido cargar los datos.", "error");
-            }
-        } catch (e) {
-            notificar("❌ Error de conexión con el servidor.", "error");
-        }
-    }
-
-    async function crearDato() {
-        if (!nuevoRegistro["country "].trim() || !nuevoRegistro.year) {
-            notificar("Por favor, rellena los campos obligatorios.", "error");
-            return;
-        }
-
-        const registroParaV1 = {
-            "country": nuevoRegistro["country "], 
-            "year": parseInt(nuevoRegistro.year),
-            "country_code": "n/a", 
-            "land_agriculture": parseFloat(nuevoRegistro.land_agriculture) || 0,
-            "types_land": 1,
-            "index": 1
-        };
-
-        const res = await fetch("/api/v1/agriculture-land", {
-            method: "POST",
-            body: JSON.stringify(registroParaV1),
-            headers: { "Content-Type": "application/json" }
-        });
-
-        if (res.status === 201) {
-            notificar("✅ Registro guardado con éxito", "exito");
-            nuevoRegistro = { "country ": "", "year": "", "land_agriculture": "" };
-            cargarDatos();
-        } else {
-            const errorMsg = await res.text();
-            notificar("❌ Error: " + (errorMsg || "Datos incorrectos"), "error");
-        }
-    }
-
-    async function borrarUno(pais, anyo) {
-        if (confirm(`¿Eliminar el registro de ${pais} en ${anyo}?`)) {
-            const res = await fetch(`/api/v1/agriculture-land/${pais}/${anyo}`, { method: "DELETE" });
-            if (res.ok) {
-                notificar("Registro eliminado.", "exito");
-                cargarDatos();
-            }
-        }
-    }
-
-   
-   async function borrarTodo() {
-    if (confirm("🚨 ¿BORRAR TODOS LOS DATOS?")) {
-        try {
-            // Añadimos ?admin=true a la URL para saltarnos el candado que acabamos de poner
-            const res = await fetch("/api/v1/agriculture-land?admin=true", { 
-                method: "DELETE" 
-            });
-
-            if (res.ok) {
-                notificar("✨ Base de datos vaciada.", "exito");
-                data = [];
-            } else {
-                notificar("❌ Error de permisos o de servidor.", "error");
-            }
-        } catch (error) {
-            notificar("❌ No se pudo conectar con el servidor.", "error");
-        }
+    if (!confirm(`¿Seguro que quieres eliminar ${p} (${year})?`)) return;
+    
+    // Ahora la URL irá limpia y el servidor la reconocerá
+    const res = await fetch(`${API}/${p}/${year}`, { method: 'DELETE' });
+    
+    if (res.ok) {
+        message = '✅ Registro eliminado correctamente.';
+        messageType = 'success';
+        getData(); // Recargamos la tabla
+    } else {
+        handleResponseError(res.status, 'borrar el registro');
     }
 }
 
-    async function cargarIniciales() {
-        const res = await fetch("/api/v1/agriculture-land/loadInitialData");
-        if (res.ok) {
-            notificar("✅ Datos iniciales cargados.", "exito");
-            cargarDatos();
-        } else {
-            notificar("Error al cargar datos iniciales.", "error");
-        }
-    }
+	// --- ACCIÓN: BORRAR TODO ---
+	async function deleteAll() {
+		if (confirm('🚨 ¿Seguro que quieres borrar todos los datos de agricultura?')) {
+			const res = await fetch(`${API}?admin=true`, { method: 'DELETE' });
+			if (res.ok) {
+				message = 'Base de datos vaciada con éxito.';
+				messageType = 'success';
+				data = [];
+			}
+		}
+	}
 
-    onMount(cargarDatos);
+	onMount(getData);
 </script>
 
 <main>
-    <header>
-        <h1>🌍 Gestión de Tierras Agrícolas</h1>
-        <p>Panel de administración de datos FMM</p>
-    </header>
+	<header>
+		<h1>🌍 Agriculture Land</h1>
+		<p>Administración de recursos de tierras agrícolas (SOS2526-17)</p>
+	</header>
 
-    {#if mensajeUsuario}
-        <div class="alerta {tipoAlerta}" role="alert">
-            {mensajeUsuario}
-        </div>
-    {/if}
+	{#if message}
+		<div class="alert {messageType}">
+			{message}
+		</div>
+	{/if}
 
-    <section class="card formulario">
-        <h2>➕ Nuevo registro</h2>
-        <div class="campos">
-            <div class="input-group">
-                <label for="country">País</label>
-                <input id="country" bind:value={nuevoRegistro["country "]} placeholder="Ej: Spain" />
-            </div>
-            <div class="input-group">
-                <label for="year">Año</label>
-                <input id="year" type="number" bind:value={nuevoRegistro.year} placeholder="2024" />
-            </div>
-            <div class="input-group">
-                <label for="land">Superficie %</label>
-                <input id="land" type="number" step="0.01" bind:value={nuevoRegistro.land_agriculture} placeholder="45.2" />
-            </div>
-            <button onclick={crearDato} class="btn-crear">Guardar</button>
-        </div>
-        <button onclick={cargarIniciales} class="btn-load">⚡ Cargar datos de ejemplo</button>
-    </section>
+	<section class="card shadow search-box">
+		<h4>🔍 Búsqueda Avanzada</h4>
+		<div class="filter-row">
+			<input bind:value={searchCountry} placeholder="País (ej: Spain)" />
+			<input type="number" bind:value={searchYear} placeholder="Año exacto" />
+			<div class="range-group">
+				<input type="number" bind:value={searchFrom} placeholder="Desde año" />
+				<input type="number" bind:value={searchTo} placeholder="Hasta año" />
+			</div>
+			<div class="btn-group">
+				<button class="btn-search" onclick={getData}>Filtrar</button>
+				<button class="btn-clear" onclick={() => { searchCountry=''; searchYear=''; searchFrom=''; searchTo=''; getData(); }}>Limpiar</button>
+			</div>
+		</div>
+	</section>
 
-    <section class="card">
-        <table>
-            <thead>
-                <tr>
-                    <th>País</th>
-                    <th>Año</th>
-                    <th>Superficie (%)</th>
-                    <th class="text-center">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {#each data as d}
-                    <tr>
-                        <td><strong>{d["country "] || d.country}</strong></td>
-                        <td>{d.year}</td>
-                        <td>{d.land_agriculture}%</td>
-                        <td class="text-center">
-                            <button onclick={() => borrarUno(d["country "] || d.country, d.year)} class="btn-borrar">
-                                🗑️ Eliminar
-                            </button>
-                        </td>
-                    </tr>
-                {:else}
-                    <tr>
-                        <td colspan="4" class="text-center">No hay datos disponibles.</td>
-                    </tr>
-                {/each}
-            </tbody>
-        </table>
-    </section>
+	<div class="main-layout">
+		<aside class="card shadow form-sidebar">
+			<h4>➕ Nuevo Registro</h4>
+			<div class="vertical-form">
+				<label>País <input bind:value={newEntry["country "]} /></label>
+				<label>Año <input type="number" bind:value={newEntry.year} /></label>
+				<label>Código <input bind:value={newEntry.country_code} /></label>
+				<label>Superficie % <input type="number" step="0.01" bind:value={newEntry.land_agriculture} /></label>
+				<label>Tipo Tierra <input type="number" bind:value={newEntry.types_land} /></label>
+				<label>Índice <input type="number" bind:value={newEntry.index} /></label>
+				<button class="btn-add" onclick={addEntry}>Guardar Registro</button>
+			</div>
+		</aside>
 
-    <footer>
-        <button onclick={borrarTodo} class="btn-borrar-todo">🧨 Vaciar toda la base de datos</button>
-    </footer>
+		<div class="table-wrapper">
+			<div class="table-toolbar card">
+				<h4>📊 Listado de Tierras</h4>
+				<div class="table-actions">
+					<button class="btn-load" onclick={loadInitialData}>📥 Cargar Iniciales</button>
+					<button class="btn-danger" onclick={deleteAll}>🗑️ Borrar Todo</button>
+				</div>
+			</div>
+			<div class="table-container shadow">
+				<table>
+					<thead>
+						<tr>
+							<th>País</th>
+							<th>Año</th>
+							<th>Código</th>
+							<th>Sup. %</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						{#each data as entry}
+							<tr>
+								<td class="bold">{entry["country "] || entry.country}</td>
+								<td><span class="badge-year">{entry.year}</span></td>
+								<td><span class="badge-code">{entry.country_code}</span></td>
+								<td class="text-green">{entry.land_agriculture}%</td>
+								<td class="actions-cell">
+									<a href="/agriculture-land/{String(entry['country '] || entry.country).trim()}/{entry.year}" class="btn-edit">Editar</a>
+									<button class="btn-del" onclick={() => deleteEntry(entry["country "] || entry.country, entry.year)}>Borrar</button>
+								</td>
+							</tr>
+						{:else}
+							<tr><td colspan="5" class="empty">No hay datos disponibles. Prueba a cargar los iniciales.</td></tr>
+						{/each}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </main>
 
 <style>
-    :global(body) { background-color: #f0f2f5; margin: 0; }
-    
-    main { 
-        font-family: 'Inter', system-ui, sans-serif; 
-        max-width: 1000px; 
-        margin: 40px auto; 
-        padding: 20px; 
-    }
+	:global(body) {
+		background-color: #0f172a; /* Fondo ultra oscuro */
+		color: #f1f5f9;
+		margin: 0;
+	}
+	main {
+		max-width: 1300px;
+		margin: 2rem auto;
+		font-family: 'Inter', system-ui, sans-serif;
+		padding: 0 1.5rem;
+	}
 
-    header { text-align: center; margin-bottom: 30px; }
-    h1 { color: #1a365d; margin-bottom: 5px; }
-    header p { color: #64748b; margin-top: 0; }
+	header { text-align: center; margin-bottom: 2.5rem; }
+	header h1 { color: #f8fafc; font-size: 2.5rem; margin: 0; }
+	header p { color: #94a3b8; }
 
-    .card { 
-        background: white; 
-        padding: 25px; 
-        border-radius: 12px; 
-        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); 
-        margin-bottom: 20px; 
-    }
+	/* ALERTAS */
+	.alert {
+		padding: 1rem;
+		border-radius: 8px;
+		margin-bottom: 1.5rem;
+		font-weight: bold;
+		text-align: center;
+		border: 1px solid;
+	}
+	.success { background: rgba(22, 101, 52, 0.2); color: #86efac; border-color: #166534; }
+	.error { background: rgba(153, 27, 27, 0.2); color: #fca5a5; border-color: #991b1b; }
+	.info { background: rgba(30, 64, 175, 0.2); color: #93c5fd; border-color: #1e40af; }
 
-    .alerta { 
-        padding: 15px; 
-        margin-bottom: 20px; 
-        border-radius: 8px; 
-        text-align: center; 
-        font-weight: 600; 
-        animation: slideDown 0.4s ease-out; 
-    }
-    .exito { background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-    .error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+	.card {
+		background: #1e293b;
+		border: 1px solid #334155;
+		padding: 1.5rem;
+		border-radius: 12px;
+	}
+	.shadow { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); }
 
-    .campos { display: flex; gap: 15px; align-items: flex-end; margin-bottom: 20px; }
-    .input-group { display: flex; flex-direction: column; flex: 1; gap: 5px; }
-    label { font-size: 0.85rem; font-weight: 600; color: #475569; }
-    input { 
-        padding: 10px; 
-        border: 1px solid #cbd5e1; 
-        border-radius: 6px; 
-        font-size: 1rem;
-    }
+	h4 {
+		margin: 0 0 1rem 0;
+		color: #cbd5e1;
+		border-bottom: 1px solid #334155;
+		padding-bottom: 8px;
+	}
 
-    table { width: 100%; border-collapse: collapse; }
-    th { background-color: #f8fafc; color: #475569; padding: 15px; border-bottom: 2px solid #e2e8f0; text-align: left; }
-    td { padding: 15px; border-bottom: 1px solid #f1f5f9; color: #1e293b; }
+	/* FILTROS */
+	.filter-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+	.range-group { display: flex; gap: 5px; }
+	.btn-group { display: flex; gap: 10px; }
 
-    button { 
-        cursor: pointer; 
-        font-weight: 600; 
-        border-radius: 6px; 
-        border: none;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        transition: 0.2s;
-    }
+	/* LAYOUT */
+	.main-layout {
+		display: grid;
+		grid-template-columns: 280px 1fr;
+		gap: 2rem;
+		margin-top: 1.5rem;
+	}
 
-    .btn-crear { background: #22c55e; color: white; padding: 10px 24px; height: 42px; }
-    .btn-load { background: #3b82f6; color: white; padding: 10px; width: 100%; margin-top: 10px; }
-    .btn-borrar { background: #fee2e2; color: #dc2626; padding: 6px 12px; }
-    .btn-borrar-todo { background: #1e293b; color: white; padding: 12px; width: 100%; margin-top: 20px; }
+	.vertical-form { display: flex; flex-direction: column; gap: 12px; }
+	.vertical-form label { display: flex; flex-direction: column; gap: 4px; font-size: 0.8rem; color: #94a3b8; font-weight: bold; }
 
-    button:hover { opacity: 0.85; transform: scale(0.98); }
+	/* TABLA */
+	.table-wrapper { display: flex; flex-direction: column; }
+	.table-toolbar { display: flex; justify-content: space-between; align-items: center; border-radius: 12px 12px 0 0; border-bottom: none; }
+	.table-actions { display: flex; gap: 10px; }
+	.table-container { background: #1e293b; border-radius: 0 0 12px 12px; overflow: hidden; border: 1px solid #334155; }
 
-    .text-center { text-align: center; }
+	table { width: 100%; border-collapse: collapse; }
+	th { background: #0f172a; color: #94a3b8; padding: 15px; text-align: left; font-size: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #334155; }
+	td { padding: 15px; border-bottom: 1px solid #334155; font-size: 0.9rem; }
+	tr:hover { background: rgba(255, 255, 255, 0.03); }
 
-    @keyframes slideDown { 
-        from { transform: translateY(-10px); opacity: 0; } 
-        to { transform: translateY(0); opacity: 1; } 
-    }
+	.bold { font-weight: bold; color: #f8fafc; }
+	.badge-year { background: #1e3a8a; color: #bfdbfe; padding: 2px 8px; border-radius: 4px; font-weight: bold; }
+	.badge-code { background: #334155; color: #f1f5f9; padding: 2px 8px; border-radius: 4px; font-family: monospace; }
+	.text-green { color: #10b981; font-weight: bold; }
+
+	/* INPUTS */
+	input {
+		background: #0f172a;
+		border: 1px solid #475569;
+		color: white;
+		padding: 10px;
+		border-radius: 6px;
+	}
+	input:focus { border-color: #3b82f6; outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
+
+	/* BOTONES */
+	button, .btn-edit {
+		cursor: pointer;
+		border-radius: 6px;
+		border: none;
+		padding: 10px 16px;
+		font-weight: bold;
+		transition: 0.2s;
+		text-decoration: none;
+		font-size: 0.85rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.btn-search { background: #3b82f6; color: white; }
+	.btn-clear { background: #475569; color: white; }
+	.btn-add { background: #10b981; color: white; margin-top: 10px; }
+	.btn-load { background: #6366f1; color: white; }
+	.btn-danger { background: #991b1b; color: white; }
+	.btn-del { background: rgba(239, 68, 68, 0.1); color: #f87171; }
+	.btn-del:hover { background: #ef4444; color: white; }
+	.btn-edit { background: rgba(251, 191, 36, 0.1); color: #fbbf24; margin-right: 5px; }
+	.btn-edit:hover { background: #f59e0b; color: white; }
+
+	button:hover { filter: brightness(1.2); transform: translateY(-1px); }
+	.empty { text-align: center; padding: 3rem; color: #64748b; font-style: italic; }
 </style>
