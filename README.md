@@ -22,6 +22,7 @@ Our project is going to analyse the impact of water and renewable energy on agri
 
 ## APIs
 
-- [Renewable Energy Consumptions](https://sos2526-17.onrender.com/api/v1/renewable-energy-consumptions/docs) (developed by Pablo Gamero García)
+- [Renewable Energy Consumptions v1](https://sos2526-17.onrender.com/api/v1/renewable-energy-consumptions/docs) (developed by Pablo Gamero García)
+- [Renewable Energy Consumptions v2](https://sos2526-17.onrender.com/api/v2/renewable-energy-consumptions/docs) (developed by Pablo Gamero García)
 - [Agriculture Land](https://sos2526-17.onrender.com/api/v1/agriculture-land/docs) (developed by Felipe Morgado Martinez)
 - [Water Productivities](https://sos2526-17.onrender.com/api/v1/water-productivities/docs) (developed by Mario Ramírez García)

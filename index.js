@@ -2,13 +2,12 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import {handler} from "./src/front/build/handler.js";
-//import cool from "cool-ascii-faces";
 
 import path from "path";
 
 import { loadBackendMRG } from "./src/back-MRG/index.js";
-import { loadBackendFMM } from "./src/back-FMM/index.js";
-import { loadBackendPGG } from "./src/back-PGG/index.js";
+import { loadBackendFMM, loadBackendFMM_v2 } from "./src/back-FMM/index.js";
+import { loadBackendPGG, loadBackendPGG_v2 } from "./src/back-PGG/index.js";
 
 const port = process.env.PORT || 3000;
 
@@ -20,7 +19,9 @@ app.use(bodyParser.json());
 
 loadBackendMRG(app);
 loadBackendFMM(app);
+loadBackendFMM_v2(app);
 loadBackendPGG(app);
+loadBackendPGG_v2(app);
 
 app.use(handler);
 
