@@ -17,9 +17,11 @@
 		{
 			name: 'Pablo Gamero García',
 			resource: 'renewable-energy-consumptions',
-			frontend: 'renewable-energy-consumptions',
+			frontend: '/renewable-energy-consumptions',
 			api: '/api/v1/renewable-energy-consumptions',
-			postman: 'https://sos2526-17.onrender.com/api/v1/renewable-energy-consumptions/docs'
+			postman: 'https://sos2526-17.onrender.com/api/v1/renewable-energy-consumptions/docs',
+			apiv2: '/api/v2/renewable-energy-consumptions',
+			postmanv2: 'https://sos2526-17.onrender.com/api/v2/renewable-energy-consumptions/docs'
 		}
 	];
 
@@ -29,9 +31,7 @@
 <main>
 	<header>
 		<h1>SOS2526-17 - Gestión de Recursos</h1>
-		<p class="Pablo Gamero García">
-			Proyecto de la asignatura Sistemas de Operación y Servicios (SOS)
-		</p>
+		<p>Proyecto de la asignatura Sistemas de Operación y Servicios (SOS)</p>
 	</header>
 
 	<section class="team-section">
@@ -53,8 +53,14 @@
 							<td class="resource-cell"><code>{member.resource}</code></td>
 							<td class="actions-cell">
 								<a href={member.frontend} class="btn btn-frontend">Front-end</a>
-								<a href={member.api} target="_blank" class="btn btn-api">API (v1)</a>
-								<a href={member.postman} target="_blank" class="btn btn-postman">Postman</a>
+								<a href={member.api} target="_blank" class="btn btn-api">API v1</a>
+								<a href={member.postman} target="_blank" class="btn btn-postman">Docs v1</a>
+								{#if member.apiv2}
+									<a href={member.apiv2} target="_blank" class="btn btn-api2">API v2</a>
+								{/if}
+								{#if member.postmanv2}
+									<a href={member.postmanv2} target="_blank" class="btn btn-postman2">Docs v2</a>
+								{/if}
 							</td>
 						</tr>
 					{/each}
@@ -74,9 +80,8 @@
 </main>
 
 <style>
-	/* Estilos Globales y Reset */
 	:global(body) {
-		background-color: #f4f7f6; /* Gris muy suave de fondo */
+		background-color: #f4f7f6;
 		margin: 0;
 		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 		color: #333;
@@ -88,7 +93,6 @@
 		padding: 40px 20px;
 	}
 
-	/* Cabecera */
 	header {
 		text-align: center;
 		margin-bottom: 50px;
@@ -100,13 +104,7 @@
 		font-size: 2.5rem;
 		margin-bottom: 5px;
 	}
-	.subtitle {
-		color: #7f8c8d;
-		font-size: 1.1rem;
-		margin-top: 0;
-	}
 
-	/* Secciones */
 	section {
 		margin-bottom: 40px;
 	}
@@ -117,7 +115,6 @@
 		margin-bottom: 25px;
 	}
 
-	/* Estilo de la Tabla */
 	.table-container {
 		background: white;
 		padding: 10px;
@@ -138,7 +135,6 @@
 		text-align: left;
 	}
 
-	/* Cabecera Oscura */
 	th {
 		background-color: #34495e;
 		color: white;
@@ -147,12 +143,8 @@
 		letter-spacing: 1px;
 	}
 
-	tr:nth-child(even) {
-		background-color: #f8f9fa;
-	}
-	tr:hover {
-		background-color: #eaeaea;
-	}
+	tr:nth-child(even) { background-color: #f8f9fa; }
+	tr:hover { background-color: #eaeaea; }
 
 	.member-name {
 		font-weight: bold;
@@ -182,31 +174,22 @@
 		cursor: pointer;
 	}
 
-	.btn-frontend {
-		background-color: #27ae60;
-		color: white;
-	} /* Verde como "Añadir" */
-	.btn-frontend:hover {
-		background-color: #219150;
-	}
+	.btn-frontend { background-color: #27ae60; color: white; }
+	.btn-frontend:hover { background-color: #219150; }
 
-	.btn-api {
-		background-color: #2980b9;
-		color: white;
-	} /* Azul como "Cargar" */
-	.btn-api:hover {
-		background-color: #216a9a;
-	}
+	.btn-api { background-color: #2980b9; color: white; }
+	.btn-api:hover { background-color: #216a9a; }
 
-	.btn-postman {
-		background-color: #ef5b25;
-		color: white;
-	} /* Color Postman */
-	.btn-postman:hover {
-		background-color: #d35400;
-	}
+	.btn-postman { background-color: #ef5b25; color: white; }
+	.btn-postman:hover { background-color: #d35400; }
 
-	/* Enlaces Globales */
+	/* v2: tonos más oscuros para distinguirlos visualmente */
+	.btn-api2 { background-color: #1a5276; color: white; }
+	.btn-api2:hover { background-color: #154360; }
+
+	.btn-postman2 { background-color: #a04000; color: white; }
+	.btn-postman2:hover { background-color: #7e3200; }
+
 	.links-row {
 		display: flex;
 		justify-content: center;
@@ -223,11 +206,6 @@
 		font-size: 1.1rem;
 		transition: 0.3s;
 	}
-	.btn-github:hover {
-		background: #34495e;
-		color: white;
-	}
-	.btn-github .icon {
-		margin-right: 8px;
-	}
+	.btn-github:hover { background: #34495e; color: white; }
+	.btn-github .icon { margin-right: 8px; }
 </style>
