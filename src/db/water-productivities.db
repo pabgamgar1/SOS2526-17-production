@@ -1,0 +1,23 @@
+{"country":"Afghanistan","year":2000,"countryCode":"AFG","waterProductivity":0.3,"waterStress":28.68,"annualFreshwater":22.69,"_id":"pZap18pqWsSgpG41"}
+{"country":"Angola","year":1988,"countryCode":"AGO","waterProductivity":63.2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"jd5k2RJ4ni25jsSK"}
+{"country":"Albania","year":1991,"countryCode":"ALB","waterProductivity":4.6,"waterStress":28.68,"annualFreshwater":22.69,"_id":"vM6nZtQcJmVs2IC1"}
+{"country":"Argentina","year":1977,"countryCode":"ARG","waterProductivity":9.1,"waterStress":28.68,"annualFreshwater":22.69,"_id":"GXRkDdwRri1u0K5c"}
+{"country":"United Arab Emirates","year":1981,"countryCode":"ARE","waterProductivity":132.1,"waterStress":28.68,"annualFreshwater":22.69,"_id":"WxwpUYi0bAmd0bpn"}
+{"country":"Afghanistan","year":2014,"countryCode":"AFG","waterProductivity":1.2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"eSQMMnPcBzjjj0Xq"}
+{"country":"Barbados","year":1963,"countryCode":"BRB","waterProductivity":74.2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"dAR52TgVkcdVWg6Q"}
+{"country":"Denmark","year":1971,"countryCode":"DNK","waterProductivity":180.4,"waterStress":28.68,"annualFreshwater":22.69,"_id":"KP9S2l5bBEOmk6Kt"}
+{"country":"Spain","year":2000,"countryCode":"ESP","waterProductivity":14,"waterStress":28.68,"annualFreshwater":22.69,"_id":"BAhDT8XMEkuuiiB3"}
+{"country":"Afghanistan","year":2016,"countryCode":"AFG","waterProductivity":2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"pqXEXUI5hgBCWmFT"}
+{"$$deleted":true,"_id":"BAhDT8XMEkuuiiB3"}
+{"$$deleted":true,"_id":"GXRkDdwRri1u0K5c"}
+{"$$deleted":true,"_id":"KP9S2l5bBEOmk6Kt"}
+{"$$deleted":true,"_id":"WxwpUYi0bAmd0bpn"}
+{"$$deleted":true,"_id":"dAR52TgVkcdVWg6Q"}
+{"$$deleted":true,"_id":"eSQMMnPcBzjjj0Xq"}
+{"$$deleted":true,"_id":"jd5k2RJ4ni25jsSK"}
+{"$$deleted":true,"_id":"pZap18pqWsSgpG41"}
+{"$$deleted":true,"_id":"pqXEXUI5hgBCWmFT"}
+{"$$deleted":true,"_id":"vM6nZtQcJmVs2IC1"}
+{"country":"TestCountry","year":2026,"countryCode":"TC","waterProductivity":55.5,"waterStress":10,"annualFreshwater":1000,"_id":"FVOkCQXGtI1T4xJi"}
+{"country":"TestCountry","year":2026,"countryCode":"NEWCODE123","waterProductivity":55.5,"waterStress":10,"annualFreshwater":1000,"_id":"FVOkCQXGtI1T4xJi"}
+{"$$deleted":true,"_id":"FVOkCQXGtI1T4xJi"}
