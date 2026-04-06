@@ -48,33 +48,32 @@ test.describe('Agriculture Land E2E Tests', () => {
         await expect(page.locator('table tbody')).toContainText('Testland');
     });
 
-   test('should navigate to edit view and update', async ({ page }) => {
-        // 1. Cargar 
+  test('should navigate to edit view and update', async ({ page }) => {
+        // 1. Carga
         await page.click('.btn-load');
-        const btnEdit = page.locator('.btn-edit').first();
-        await expect(btnEdit).toBeVisible({ timeout: 10000 });
+        await page.waitForSelector('.btn-edit', { state: 'visible', timeout: 10000 });
         
         // 2. Click 
-        await btnEdit.click();
+        await page.click('.btn-edit >> nth=0');
+        
+        // 3. Esperamos 
         await page.waitForURL(/\/agriculture-land\/.+\/\d+/, { timeout: 10000 });
         
-        // 3. CLAVE:
+        // 4. CRÍTICO:
         const inputEditable = page.locator('input:not([readonly])').first();
-        await expect(inputEditable).not.toHaveValue('', { timeout: 10000 });
+        await expect(inputEditable).not.toHaveValue('', { timeout: 15000 });
         
-        // 4. Limpiar y rellenar
+        // 5. Limpiamos 
         await inputEditable.click();
-        await inputEditable.fill('EDITADO-TEST'); 
+        await inputEditable.fill('EDITADO-FINAL'); 
         
-        // 5. Click 
+        // 6. Click 
         await page.click('.btn-update'); 
+        await expect(page.locator('.alert.success')).toBeVisible({ timeout: 10000 });
         
-        
-        await expect(page.locator('.alert.success')).toBeVisible();
+        // 7. Volvemos 
         await page.waitForURL(/\/agriculture-land$/, { timeout: 10000 });
-        
-       
-        await expect(page.locator('table')).toContainText('EDITADO-TEST');
+        await expect(page.locator('table')).toContainText('EDITADO-FINAL');
     });
   test('should delete a specific resource', async ({ page }) => {
         // 1. Aseguramos 
