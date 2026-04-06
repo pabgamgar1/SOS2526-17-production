@@ -13,14 +13,12 @@ test.describe('Renewable Energy Consumptions E2E Tests', () => {
     });
 
     test('should load initial data and then delete all', async ({ page }) => {
-        // Cargar datos iniciales
         await page.click('button:has-text("Cargar datos iniciales")');
         await expect(page.locator('[role="alert"]')).toBeVisible({ timeout: 8000 });
 
-        // Borrar todo
         page.on('dialog', dialog => dialog.accept());
         await page.click('button:has-text("Borrar todo")');
-        await expect(page.locator('[role="alert"]')).toContainText('eliminados');
+        await expect(page.locator('[role="alert"]')).toContainText('eliminados', { timeout: 8000 });
     });
 
     test('should create a new resource', async ({ page }) => {
@@ -46,7 +44,6 @@ test.describe('Renewable Energy Consumptions E2E Tests', () => {
 
         await expect(page.locator('[role="alert"]')).toBeVisible({ timeout: 8000 });
 
-        // Todos los años visibles deben estar en el rango indicado
         const yearCells = page.locator('table tbody td:nth-child(3)');
         const count = await yearCells.count();
         for (let i = 0; i < count; i++) {
@@ -58,16 +55,13 @@ test.describe('Renewable Energy Consumptions E2E Tests', () => {
     });
 
     test('should navigate to edit view and update a resource', async ({ page }) => {
-        // Aseguramos que hay datos cargados
         await page.click('button:has-text("Cargar datos iniciales")');
-        await page.waitForSelector('table tbody tr:not(:has(.vacio))', { timeout: 8000 });
 
-        // Navegar a la vista de edición del primer registro
+        await expect(page.locator('a:has-text("Editar")').first()).toBeVisible({ timeout: 8000 });
+
         await page.click('a:has-text("Editar") >> nth=0');
-
         await page.waitForURL(/\/renewable-energy-consumptions\/.+\/\d+/);
 
-        // Modificar el campo código
         const inputCode = page.locator('#code');
         await inputCode.fill('NEWCODE');
 
@@ -77,41 +71,49 @@ test.describe('Renewable Energy Consumptions E2E Tests', () => {
     });
 
     test('should delete a specific resource', async ({ page }) => {
-        // Aseguramos datos disponibles
         await page.click('button:has-text("Cargar datos iniciales")');
-        await page.waitForSelector('table tbody tr:not(:has(.vacio))', { timeout: 8000 });
+
+        await expect(page.locator('button:has-text("Eliminar")').first()).toBeVisible({ timeout: 8000 });
 
         const initialRows = await page.locator('table tbody tr').count();
 
-        if (initialRows > 0) {
-            page.on('dialog', dialog => dialog.accept());
-            await page.click('button:has-text("Eliminar") >> nth=0');
+        // Registrar el handler ANTES del click para no perder el dialog
+        page.on('dialog', dialog => dialog.accept());
 
-            await expect(page.locator('[role="alert"]')).toContainText('eliminado', { timeout: 8000 });
+        const deleteBtn = page.locator('button:has-text("Eliminar")').first();
+        await deleteBtn.waitFor({ state: 'visible' });
+        await deleteBtn.click();
 
-            const finalRows = await page.locator('table tbody tr').count();
-            if (initialRows === 1) {
-                await expect(page.locator('.vacio')).toBeVisible();
-            } else {
-                expect(finalRows).toBeLessThan(initialRows);
-            }
+        await expect(page.locator('[role="alert"]')).toContainText('eliminado', { timeout: 10000 });
+
+        await page.waitForTimeout(300);
+
+        const finalRows = await page.locator('table tbody tr').count();
+        if (initialRows === 1) {
+            await expect(page.locator('.vacio')).toBeVisible();
+        } else {
+            expect(finalRows).toBeLessThan(initialRows);
         }
     });
 
     test('should search by country filter', async ({ page }) => {
-        // Cargar datos para asegurar que hay algo que buscar
         await page.click('button:has-text("Cargar datos iniciales")');
-        await page.waitForSelector('table tbody tr:not(:has(.vacio))', { timeout: 8000 });
+
+        await expect(page.locator('a:has-text("Editar")').first()).toBeVisible({ timeout: 8000 });
 
         await page.fill('#filter-country', 'Afghanistan');
         await page.click('button:has-text("Aplicar filtros")');
 
         await expect(page.locator('[role="alert"]')).toBeVisible({ timeout: 8000 });
 
-        const rows = page.locator('table tbody td.country');
-        const count = await rows.count();
-        for (let i = 0; i < count; i++) {
-            await expect(rows.nth(i)).toContainText('Afghanistan');
+        // Esperar a que la primera celda tenga el texto correcto antes de leer todo
+        await expect(page.locator('table tbody td.country').first()).toContainText('Afghanistan', { timeout: 8000 });
+
+        // Leer todos los textos de golpe para evitar condiciones de carrera al iterar con nth
+        const countryTexts = await page.locator('table tbody td.country').allInnerTexts();
+        expect(countryTexts.length).toBeGreaterThan(0);
+        for (const text of countryTexts) {
+            expect(text).toBe('Afghanistan');
         }
     });
 });
