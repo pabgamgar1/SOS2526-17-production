@@ -7,7 +7,7 @@ import path from "path";
 
 import { loadBackendMRG } from "./src/back-MRG/index.js";
 import { loadBackendFMM, loadBackendFMM_v2 } from "./src/back-FMM/index.js";
-import { loadBackendPGG, loadBackendPGG_v2 } from "./src/back-PGG/index.js";
+import { loadBackendPGG } from "./src/back-PGG/index.js";
 
 const port = process.env.PORT || 3000;
 
@@ -16,12 +16,10 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-
 loadBackendMRG(app);
 loadBackendFMM(app);
 loadBackendFMM_v2(app);
 loadBackendPGG(app);
-loadBackendPGG_v2(app);
 
 app.use(handler);
 
