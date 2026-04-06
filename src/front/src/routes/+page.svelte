@@ -19,9 +19,7 @@
 			resource: 'renewable-energy-consumptions',
 			frontend: '/renewable-energy-consumptions',
 			api: '/api/v1/renewable-energy-consumptions',
-			postman: 'https://sos2526-17.onrender.com/api/v1/renewable-energy-consumptions/docs',
-			apiv2: '/api/v2/renewable-energy-consumptions',
-			postmanv2: 'https://sos2526-17.onrender.com/api/v2/renewable-energy-consumptions/docs'
+			postman: 'https://sos2526-17.onrender.com/api/v1/renewable-energy-consumptions/docs'
 		}
 	];
 
@@ -53,14 +51,8 @@
 							<td class="resource-cell"><code>{member.resource}</code></td>
 							<td class="actions-cell">
 								<a href={member.frontend} class="btn btn-frontend">Front-end</a>
-								<a href={member.api} target="_blank" class="btn btn-api">API v1</a>
-								<a href={member.postman} target="_blank" class="btn btn-postman">Docs v1</a>
-								{#if member.apiv2}
-									<a href={member.apiv2} target="_blank" class="btn btn-api2">API v2</a>
-								{/if}
-								{#if member.postmanv2}
-									<a href={member.postmanv2} target="_blank" class="btn btn-postman2">Docs v2</a>
-								{/if}
+								<a href={member.api} target="_blank" class="btn btn-api">API (v1)</a>
+								<a href={member.postman} target="_blank" class="btn btn-postman">Postman</a>
 							</td>
 						</tr>
 					{/each}
@@ -182,13 +174,6 @@
 
 	.btn-postman { background-color: #ef5b25; color: white; }
 	.btn-postman:hover { background-color: #d35400; }
-
-	/* v2: tonos más oscuros para distinguirlos visualmente */
-	.btn-api2 { background-color: #1a5276; color: white; }
-	.btn-api2:hover { background-color: #154360; }
-
-	.btn-postman2 { background-color: #a04000; color: white; }
-	.btn-postman2:hover { background-color: #7e3200; }
 
 	.links-row {
 		display: flex;
