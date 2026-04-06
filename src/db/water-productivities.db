@@ -44,3 +44,26 @@
 {"country":"TestCountry","year":2026,"countryCode":"TC","waterProductivity":55.5,"waterStress":10,"annualFreshwater":1000,"_id":"gBBxdBLPmbf4FWUp"}
 {"country":"TestCountry","year":2026,"countryCode":"NEWCODE123","waterProductivity":55.5,"waterStress":10,"annualFreshwater":1000,"_id":"gBBxdBLPmbf4FWUp"}
 {"$$deleted":true,"_id":"gBBxdBLPmbf4FWUp"}
+{"country":"Afghanistan","year":2000,"countryCode":"AFG","waterProductivity":0.3,"waterStress":28.68,"annualFreshwater":22.69,"_id":"UzRqg7IhHWW1Kpgw"}
+{"country":"Angola","year":1988,"countryCode":"AGO","waterProductivity":63.2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"16qQQMxTVaGM9OPy"}
+{"country":"Albania","year":1991,"countryCode":"ALB","waterProductivity":4.6,"waterStress":28.68,"annualFreshwater":22.69,"_id":"kXHfYvS9vSDmcYeU"}
+{"country":"Argentina","year":1977,"countryCode":"ARG","waterProductivity":9.1,"waterStress":28.68,"annualFreshwater":22.69,"_id":"1pSlecuCEnconD1b"}
+{"country":"United Arab Emirates","year":1981,"countryCode":"ARE","waterProductivity":132.1,"waterStress":28.68,"annualFreshwater":22.69,"_id":"HJ2uEElEveFBLExD"}
+{"country":"Afghanistan","year":2014,"countryCode":"AFG","waterProductivity":1.2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"5wLHC7vFCt4cQqVi"}
+{"country":"Barbados","year":1963,"countryCode":"BRB","waterProductivity":74.2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"mLjy9ey6bP9nZZqo"}
+{"country":"Denmark","year":1971,"countryCode":"DNK","waterProductivity":180.4,"waterStress":28.68,"annualFreshwater":22.69,"_id":"k6JOMbVmV7N0dI0m"}
+{"country":"Spain","year":2000,"countryCode":"ESP","waterProductivity":14,"waterStress":28.68,"annualFreshwater":22.69,"_id":"TXocZlDUkf48i0P8"}
+{"country":"Afghanistan","year":2016,"countryCode":"AFG","waterProductivity":2,"waterStress":28.68,"annualFreshwater":22.69,"_id":"ReFKN49ZfaNzyX0x"}
+{"$$deleted":true,"_id":"16qQQMxTVaGM9OPy"}
+{"$$deleted":true,"_id":"1pSlecuCEnconD1b"}
+{"$$deleted":true,"_id":"5wLHC7vFCt4cQqVi"}
+{"$$deleted":true,"_id":"HJ2uEElEveFBLExD"}
+{"$$deleted":true,"_id":"ReFKN49ZfaNzyX0x"}
+{"$$deleted":true,"_id":"TXocZlDUkf48i0P8"}
+{"$$deleted":true,"_id":"UzRqg7IhHWW1Kpgw"}
+{"$$deleted":true,"_id":"k6JOMbVmV7N0dI0m"}
+{"$$deleted":true,"_id":"kXHfYvS9vSDmcYeU"}
+{"$$deleted":true,"_id":"mLjy9ey6bP9nZZqo"}
+{"country":"TestCountry","year":2026,"countryCode":"TC","waterProductivity":55.5,"waterStress":10,"annualFreshwater":1000,"_id":"o7Ikj6cFHlbMqetO"}
+{"country":"TestCountry","year":2026,"countryCode":"NEWCODE123","waterProductivity":55.5,"waterStress":10,"annualFreshwater":1000,"_id":"o7Ikj6cFHlbMqetO"}
+{"$$deleted":true,"_id":"o7Ikj6cFHlbMqetO"}
