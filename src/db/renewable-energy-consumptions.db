@@ -8,3 +8,86 @@
 {"country":"Armenia","code":"ARM","year":2000,"wind":0,"hydro":1.25,"solar":0,"other":0,"_id":"sMTMLNQrLloyPjYe"}
 {"country":"Angola","code":"AGO","year":2000,"wind":0,"hydro":0.9,"solar":0,"other":0,"_id":"wmbYWD4CI66OGXXV"}
 {"country":"Argentina","code":"ARG","year":1965,"wind":0,"hydro":1.225,"solar":0,"other":0,"_id":"x9gIcEwGn02qYCjp"}
+{"$$deleted":true,"_id":"4cLUU6WGgu8PeL50"}
+{"$$deleted":true,"_id":"PI9A70TSrnMZLTl5"}
+{"$$deleted":true,"_id":"UxXzvgz09YjM1NIz"}
+{"$$deleted":true,"_id":"aQF4CRJ4osA40Kpm"}
+{"$$deleted":true,"_id":"jrS25Xd9SJXxnJ42"}
+{"$$deleted":true,"_id":"ko7Db6fsOrta5sed"}
+{"$$deleted":true,"_id":"oCGxvoAFHXfC9tJe"}
+{"$$deleted":true,"_id":"sMTMLNQrLloyPjYe"}
+{"$$deleted":true,"_id":"wmbYWD4CI66OGXXV"}
+{"$$deleted":true,"_id":"x9gIcEwGn02qYCjp"}
+{"country":"Afghanistan","code":"AFG","year":2000,"wind":0,"hydro":0.31,"solar":0,"other":0,"_id":"ohUW0nxgR95BfMaK"}
+{"country":"Afghanistan","code":"AFG","year":2001,"wind":0,"hydro":0.5,"solar":0,"other":0,"_id":"e2GkF3EN93Is8t3E"}
+{"country":"Albania","code":"ALB","year":1990,"wind":0,"hydro":2.85,"solar":0,"other":0,"_id":"PBesChYCJ2M2UNSP"}
+{"country":"Algeria","code":"DZA","year":1965,"wind":0,"hydro":0.4,"solar":0,"other":0,"_id":"VcT1fBKvi1AmJL6G"}
+{"country":"American Samoa","code":"ASM","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"EAm3BF40etMIp7ZN"}
+{"country":"Angola","code":"AGO","year":2000,"wind":0,"hydro":0.9,"solar":0,"other":0,"_id":"DIrdSG719ULFeIlY"}
+{"country":"Antigua and Barbuda","code":"ATG","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"xwMdiYf2WH1Im1X8"}
+{"country":"Argentina","code":"ARG","year":1965,"wind":0,"hydro":1.225,"solar":0,"other":0,"_id":"tEP4RYWz3pnWpI0F"}
+{"country":"Armenia","code":"ARM","year":2000,"wind":0,"hydro":1.25,"solar":0,"other":0,"_id":"8XlYifFFN70h07iv"}
+{"country":"Aruba","code":"ABW","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"KwGJRvzn8nql3BnX"}
+{"$$deleted":true,"_id":"8XlYifFFN70h07iv"}
+{"$$deleted":true,"_id":"DIrdSG719ULFeIlY"}
+{"$$deleted":true,"_id":"EAm3BF40etMIp7ZN"}
+{"$$deleted":true,"_id":"KwGJRvzn8nql3BnX"}
+{"$$deleted":true,"_id":"PBesChYCJ2M2UNSP"}
+{"$$deleted":true,"_id":"VcT1fBKvi1AmJL6G"}
+{"$$deleted":true,"_id":"e2GkF3EN93Is8t3E"}
+{"$$deleted":true,"_id":"ohUW0nxgR95BfMaK"}
+{"$$deleted":true,"_id":"tEP4RYWz3pnWpI0F"}
+{"$$deleted":true,"_id":"xwMdiYf2WH1Im1X8"}
+{"country":"TestCountry","code":"TST","year":2030,"wind":12.5,"hydro":8.3,"solar":5.1,"other":1,"_id":"QUG0YFPkJuztmOnR"}
+{"$$deleted":true,"_id":"QUG0YFPkJuztmOnR"}
+{"country":"Afghanistan","code":"AFG","year":2000,"wind":0,"hydro":0.31,"solar":0,"other":0,"_id":"y2yCj1uzGt9xtxpO"}
+{"country":"Afghanistan","code":"AFG","year":2001,"wind":0,"hydro":0.5,"solar":0,"other":0,"_id":"KbliGAV6togJsrvQ"}
+{"country":"Albania","code":"ALB","year":1990,"wind":0,"hydro":2.85,"solar":0,"other":0,"_id":"RsEmevBJbBqsFnVR"}
+{"country":"Algeria","code":"DZA","year":1965,"wind":0,"hydro":0.4,"solar":0,"other":0,"_id":"UuL3UBQRDWiLcVPu"}
+{"country":"American Samoa","code":"ASM","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"AG2s2agAwsfmwJjT"}
+{"country":"Angola","code":"AGO","year":2000,"wind":0,"hydro":0.9,"solar":0,"other":0,"_id":"JA9JwfT2fJO4ZavX"}
+{"country":"Antigua and Barbuda","code":"ATG","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"Ef8DUIIHsQLbRBBf"}
+{"country":"Argentina","code":"ARG","year":1965,"wind":0,"hydro":1.225,"solar":0,"other":0,"_id":"VDIb479ku0ZIbojp"}
+{"country":"Armenia","code":"ARM","year":2000,"wind":0,"hydro":1.25,"solar":0,"other":0,"_id":"ZyFGpvLPP3i8kYt5"}
+{"country":"Aruba","code":"ABW","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"E3TxASwToSDHNpLY"}
+{"country":"American Samoa","code":"NEWCODE","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"AG2s2agAwsfmwJjT"}
+{"$$deleted":true,"_id":"AG2s2agAwsfmwJjT"}
+{"$$deleted":true,"_id":"E3TxASwToSDHNpLY"}
+{"$$deleted":true,"_id":"Ef8DUIIHsQLbRBBf"}
+{"$$deleted":true,"_id":"JA9JwfT2fJO4ZavX"}
+{"$$deleted":true,"_id":"KbliGAV6togJsrvQ"}
+{"$$deleted":true,"_id":"RsEmevBJbBqsFnVR"}
+{"$$deleted":true,"_id":"UuL3UBQRDWiLcVPu"}
+{"$$deleted":true,"_id":"VDIb479ku0ZIbojp"}
+{"$$deleted":true,"_id":"ZyFGpvLPP3i8kYt5"}
+{"$$deleted":true,"_id":"y2yCj1uzGt9xtxpO"}
+{"country":"Afghanistan","code":"AFG","year":2000,"wind":0,"hydro":0.31,"solar":0,"other":0,"_id":"2gRrdSjuuxqjiLg8"}
+{"country":"Afghanistan","code":"AFG","year":2001,"wind":0,"hydro":0.5,"solar":0,"other":0,"_id":"annPMUhPYHAnmiVk"}
+{"country":"Albania","code":"ALB","year":1990,"wind":0,"hydro":2.85,"solar":0,"other":0,"_id":"dTx1J4Q4MC8wrPDR"}
+{"country":"Algeria","code":"DZA","year":1965,"wind":0,"hydro":0.4,"solar":0,"other":0,"_id":"fXbkf7grJBEGXhVn"}
+{"country":"American Samoa","code":"ASM","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"6CGRHywXs0Rpe1JM"}
+{"country":"Angola","code":"AGO","year":2000,"wind":0,"hydro":0.9,"solar":0,"other":0,"_id":"prOjnb3UBJoENghL"}
+{"country":"Antigua and Barbuda","code":"ATG","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"cRjB5RtfSzZXQEh5"}
+{"country":"Argentina","code":"ARG","year":1965,"wind":0,"hydro":1.225,"solar":0,"other":0,"_id":"XaEPybsLfm1YZ7YF"}
+{"country":"Armenia","code":"ARM","year":2000,"wind":0,"hydro":1.25,"solar":0,"other":0,"_id":"DIrPzV91pM2IzghY"}
+{"country":"Aruba","code":"ABW","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"s2jWIPTBGfzxQxu9"}
+{"$$deleted":true,"_id":"2gRrdSjuuxqjiLg8"}
+{"$$deleted":true,"_id":"6CGRHywXs0Rpe1JM"}
+{"$$deleted":true,"_id":"DIrPzV91pM2IzghY"}
+{"$$deleted":true,"_id":"XaEPybsLfm1YZ7YF"}
+{"$$deleted":true,"_id":"annPMUhPYHAnmiVk"}
+{"$$deleted":true,"_id":"cRjB5RtfSzZXQEh5"}
+{"$$deleted":true,"_id":"dTx1J4Q4MC8wrPDR"}
+{"$$deleted":true,"_id":"fXbkf7grJBEGXhVn"}
+{"$$deleted":true,"_id":"prOjnb3UBJoENghL"}
+{"$$deleted":true,"_id":"s2jWIPTBGfzxQxu9"}
+{"country":"Afghanistan","code":"AFG","year":2000,"wind":0,"hydro":0.31,"solar":0,"other":0,"_id":"PGm92NbnWMj2li9y"}
+{"country":"Afghanistan","code":"AFG","year":2001,"wind":0,"hydro":0.5,"solar":0,"other":0,"_id":"EriIFYLDPNkRgja4"}
+{"country":"Albania","code":"ALB","year":1990,"wind":0,"hydro":2.85,"solar":0,"other":0,"_id":"FWjwpmYOzKIzjwDI"}
+{"country":"Algeria","code":"DZA","year":1965,"wind":0,"hydro":0.4,"solar":0,"other":0,"_id":"yVJ2YNWPR0rqQPUv"}
+{"country":"American Samoa","code":"ASM","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"t0qJaN8acPr94ata"}
+{"country":"Angola","code":"AGO","year":2000,"wind":0,"hydro":0.9,"solar":0,"other":0,"_id":"2uNrdZG7DdS8Vl7P"}
+{"country":"Antigua and Barbuda","code":"ATG","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"sauToakLEW3z9dSz"}
+{"country":"Argentina","code":"ARG","year":1965,"wind":0,"hydro":1.225,"solar":0,"other":0,"_id":"MSJw3hNKhkt3pMOR"}
+{"country":"Armenia","code":"ARM","year":2000,"wind":0,"hydro":1.25,"solar":0,"other":0,"_id":"lSuf5QRz6Kr6rHnE"}
+{"country":"Aruba","code":"ABW","year":2000,"wind":0,"hydro":0,"solar":0,"other":0,"_id":"7ELUruuBjF2hNK1f"}

@@ -49,15 +49,29 @@ test.describe('Agriculture Land E2E Tests', () => {
     });
 
     test('should navigate to edit view and update', async ({ page }) => {
+        // 1. Cargamos 
         await page.click('.btn-load');
-        await page.waitForSelector('.btn-edit');
-        await page.click('.btn-edit >> nth=0');
-        await page.waitForURL(/\/agriculture-land\/.+\/\d+/);
+        const btnEdit = page.locator('.btn-edit').first();
+        await expect(btnEdit).toBeVisible({ timeout: 10000 });
+        
+        // 2. Click
+        await btnEdit.click();
+        await page.waitForURL(/\/agriculture-land\/.+\/\d+/, { timeout: 10000 });
+        
+        // 3. Esperamos 
         const inputEditable = page.locator('input:not([readonly])').first();
-        await inputEditable.fill('EDITADO-CODE'); 
+        await expect(inputEditable).not.toHaveValue('', { timeout: 10000 });
+        
+        // 4. Limpiamos 
+        await inputEditable.click();
+        await inputEditable.fill('EDITADO-ARG'); 
+        
+        // 5. Click en actualizar
         await page.click('.btn-update'); 
+        
+        // 6. Verificamos éxito y vuelta atrás
         await expect(page.locator('.alert.success')).toBeVisible();
-        await page.waitForURL(/\/agriculture-land/);
+        await page.waitForURL(/\/agriculture-land$/, { timeout: 10000 });
     });
 
     test('should delete a specific resource', async ({ page }) => {
