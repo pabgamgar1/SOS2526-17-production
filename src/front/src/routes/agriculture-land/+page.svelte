@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 
-	// Tu ruta de API
+	// 
 	let API = '/api/v1/agriculture-land';
 
 	/** @type {any[]} */
@@ -15,7 +15,7 @@
 	let searchFrom = $state(''); 
 	let searchTo = $state('');
 
-	// Formulario con TUS campos (respetando el espacio en "country ")
+	// Formulario 
 	let newEntry = $state({
 		"country ": '',
 		year: '',
@@ -25,7 +25,7 @@
 		index: ''
 	});
 
-	// Manejo de errores basado en el estilo de tu colega
+	// Manejo de errores 
 	function handleResponseError(status, action) {
 		messageType = 'error';
 		if (status === 404) message = 'No se ha encontrado el recurso solicitado.';
@@ -36,7 +36,7 @@
         setTimeout(() => message = "", 5000);
 	}
 
-	// --- LISTAR RECURSOS (Con tus filtros de agricultura) ---
+	// --- LISTAR RECURSOS 
 	async function getData() {
 		let url = API;
 		const queryParams = new URLSearchParams();
