@@ -25,7 +25,7 @@
     "test-water-productivities": "newman run tests/api-MRG/api-tests.json -e tests/api-MRG/api-test-env-local.json",
     "test-e2e": "npx playwright test --workers=1",
     "test": "start-server-and-test start http://localhost:3000 \"npm run test-all-apis && npm run test-e2e\"",
-    "test:coverage": "npm test -- --reporter=lcov"
+    "test:coverage": "npx c8 --reporter=lcov npm test"
   },
   "dependencies": {
     "body-parser": "^2.2.2",
