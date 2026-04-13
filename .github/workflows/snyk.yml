@@ -5,8 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        continue-on-error: true 
+      
       - name: Snyk Test
         uses: snyk/actions/node@master
+        continue-on-error: true  
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
