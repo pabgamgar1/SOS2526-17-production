@@ -27,7 +27,7 @@ Our project is going to analyse the impact of water and renewable energy on agri
 - [Water Productivities](https://sos2526-17.onrender.com/api/v1/water-productivities/docs) (developed by Mario Ramírez García)
 
 
-## Badge
+## Badges
 
 ![Snyk](https://github.com/gti-sos/SOS2526-17/actions/workflows/snyk.yml/badge.svg)
 ![Codecov](https://codecov.io/gh/gti-sos/SOS2526-17/graph/badge.svg?token=aVtJ3fyYxy)
