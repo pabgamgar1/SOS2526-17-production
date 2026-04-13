@@ -54,7 +54,7 @@ function isLogged(req, res, next) {
     res.status(401).send("🚫 Error: Debes identificarte con GitHub en /auth/github para usar esta función.");
 }
 
-//-----------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------
 
 
 let BASE_URL_API = "/api/v1/agriculture-land";
