@@ -29,6 +29,6 @@ Our project is going to analyse the impact of water and renewable energy on agri
 
 ## Badge
 
-![Snyk Security Scan](https://github.com/gti-sos/SOS2526-17/actions/workflows/snyk.yml/badge.svg)
-[![codecov](https://codecov.io/gh/gti-sos/SOS2526-17/graph/badge.svg?token=${{ secrets.CODECOV_TOKEN }})](https://codecov.io/gh/gti-sos/SOS2526-17)
-![Tests Analysis](https://github.com/gti-sos/SOS2526-17/actions/workflows/tests.yml/badge.svg)
+![Snyk](https://github.com/gti-sos/SOS2526-17/actions/workflows/snyk.yml/badge.svg)
+![Codecov](https://codecov.io/gh/gti-sos/SOS2526-17/graph/badge.svg?token=aVtJ3fyYxy)
+![Tests](https://github.com/gti-sos/SOS2526-17/actions/workflows/tests.yml/badge.svg)
