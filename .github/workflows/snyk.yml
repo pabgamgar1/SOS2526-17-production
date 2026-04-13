@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        continue-on-error: true 
       - name: Snyk Test
         uses: snyk/actions/node@master
         env:
