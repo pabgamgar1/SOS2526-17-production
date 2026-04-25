@@ -6,8 +6,8 @@
 
         // --- 1. CARGA DE LAS 3 APIs DEL GRUPO 17 ---
         
-        // MIEMBRO 1: (Compañero A)
-        const res1 = await fetch('/api/v1/PONER_RUTA_COMPAÑERO_1');
+        // MIEMBRO 1: (Water Productivities)
+        const res1 = await fetch('/api/v1/water-productivities');
         const data1 = res1.ok ? await res1.json() : [];
 
         // MIEMBRO 2: (Compañero B)
@@ -55,6 +55,7 @@
                 useHTML: true,
                 headerFormat: '<span style="font-size:12px; font-weight:bold; color:#2c3e50">{point.key}</span><br/>',
                 borderWidth: 1,
+                valueDecimals: 2,
                 borderColor: '#eee'
             },
             plotOptions: {
@@ -69,12 +70,12 @@
             },
             series: [
                 {
-                    name: 'Dato Miembro 1',
+                    name: 'Productividad del Agua',
                     data: categories.map(c => {
                         const d = data1.find(item => item.country.trim().toLowerCase() === c.toLowerCase());
-                        return d ? parseFloat(d.valor || 0) : 0;
+                        return d ? parseFloat(d.waterProductivity || 0) : 0;
                     }),
-                    color: '#82a0bc' // Azul Acero Apagado
+                    color: '#4895ef'
                 },
                 {
                     name: 'Dato Miembro 2',
