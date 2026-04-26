@@ -103,6 +103,11 @@
     <div class="container">
         <div class="glass-card">
             <div id="grafica-grupal-17"></div>
+            <div class="analytics-links">
+                <a class="analytics-link" href="/analytics/water-productivities">Productividad del agua</a>
+                <a class="analytics-link" href="/analytics/agriculture-land">Tierra agrícola</a>
+                <a class="analytics-link" href="/analytics/renewable-energy-consumptions">Energías renovables</a>
+            </div>
             <div class="footer-note">
                 <span class="badge">Grupo 17</span>
                 <p>Visualización Conjunta - Datos Sincronizados</p>
@@ -165,5 +170,31 @@
         color: #a0aec0;
         font-size: 13px;
         margin: 0;
+    }
+
+    .analytics-links {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+
+    .analytics-link {
+        text-decoration: none;
+        color: #2c3e50;
+        background: #f7f9fb;
+        border: 1px solid #e6edf3;
+        padding: 10px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .analytics-link:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 20px rgba(44, 62, 80, 0.08);
+        background: #ffffff;
     }
 </style>
