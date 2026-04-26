@@ -1,12 +1,12 @@
 <script>
     import { onMount } from 'svelte';
 
-    let chartReady = false;
-    let chartError = '';
-    let summary = {
+    let chartReady = $state(false);
+    let chartError = $state('');
+    let summary = $state({
         records: 0,
         total: 0
-    };
+    });
 
     onMount(async () => {
         try {
