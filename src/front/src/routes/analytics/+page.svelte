@@ -10,8 +10,8 @@
         const res1 = await fetch('/api/v1/water-productivities');
         const data1 = res1.ok ? await res1.json() : [];
 
-        // MIEMBRO 2: (Compañero B)
-        const res2 = await fetch('/api/v1/PONER_RUTA_COMPAÑERO_2');
+        // MIEMBRO 2: (Renewable Energy Consumptions)
+        const res2 = await fetch('/api/v1/renewable-energy-consumptions');
         const data2 = res2.ok ? await res2.json() : [];
 
         // MIEMBRO 3: (Agriculture Land)
@@ -19,7 +19,44 @@
         const data3 = res3.ok ? await res3.json() : [];
 
         // --- 2. PROCESAMIENTO ---
-        const categories = data3.slice(0, 12).map(d => d.country.trim());
+        const normalizeCountry = (value) => (value || '').trim();
+        const matchCountry = (data, country) =>
+            data.find(item => normalizeCountry(item.country).toLowerCase() === country.toLowerCase());
+        const renewableTotal = (item) =>
+            ['wind', 'hydro', 'solar', 'other'].reduce(
+                (sum, key) => sum + (parseFloat(item?.[key]) || 0),
+                0
+            );
+        const normalizeSeries = (values) => {
+            const max = Math.max(...values, 0);
+            return values.map(value => (max > 0 ? Number(((value / max) * 100).toFixed(2)) : 0));
+        };
+
+        const categories = Array.from(
+            new Set([
+                ...data1.map(d => normalizeCountry(d.country)),
+                ...data2.map(d => normalizeCountry(d.country)),
+                ...data3.map(d => normalizeCountry(d.country))
+            ])
+        )
+            .filter(Boolean)
+            .sort((a, b) => a.localeCompare(b, 'es'))
+            .slice(0, 12);
+
+        const waterProductivityValues = categories.map(country => {
+            const d = matchCountry(data1, country);
+            return d ? parseFloat(d.waterProductivity || 0) : 0;
+        });
+
+        const renewableValues = categories.map(country => {
+            const d = matchCountry(data2, country);
+            return d ? renewableTotal(d) : 0;
+        });
+
+        const agricultureValues = categories.map(country => {
+            const d = matchCountry(data3, country);
+            return d ? parseFloat(d.land_agriculture || 0) : 0;
+        });
 
         Highcharts.chart('grafica-grupal-17', {
             chart: {
@@ -32,7 +69,7 @@
                 style: { color: '#2c3e50', fontWeight: '600', fontSize: '24px' }
             },
             subtitle: {
-                text: 'S.O.S. 2025 - Grupo 17',
+                text: 'Comparativa normalizada entre agua, energías renovables y tierra agrícola',
                 style: { color: '#7f8c8d' }
             },
             xAxis: {
@@ -41,7 +78,7 @@
                 lineColor: '#dcdde1'
             },
             yAxis: {
-                title: { text: 'Impacto Global', style: { color: '#95a5a6' } },
+                title: { text: 'Índice normalizado (0-100)', style: { color: '#95a5a6' } },
                 gridLineColor: '#f0f2f5',
                 labels: { style: { color: '#95a5a6' } }
             },
@@ -60,7 +97,6 @@
             },
             plotOptions: {
                 column: {
-                    stacking: 'normal',
                     borderRadius: 6,
                     borderWidth: 0,
                     dataLabels: {
@@ -71,27 +107,17 @@
             series: [
                 {
                     name: 'Productividad del Agua',
-                    data: categories.map(c => {
-                        const d = data1.find(item => item.country.trim().toLowerCase() === c.toLowerCase());
-                        return d ? parseFloat(d.waterProductivity || 0) : 0;
-                    }),
+                    data: normalizeSeries(waterProductivityValues),
                     color: '#4895ef'
                 },
                 {
-                    name: 'Dato Miembro 2',
-                    data: categories.map(c => {
-                        const d = data2.find(item => item.country.trim().toLowerCase() === c.toLowerCase());
-                        return d ? parseFloat(d.valor || 0) : 0;
-                    }),
-                    color: '#d4a373' // Arcilla / Terracota Suave
+                    name: 'Consumo de Energía Renovable',
+                    data: normalizeSeries(renewableValues),
+                    color: '#f59e0b'
                 },
                 {
-                    // LEYENDA CORREGIDA: Se ha quitado "(Tú)"
                     name: 'Superficie Agrícola (Tierra)', 
-                    data: categories.map(c => {
-                        const d = data3.find(item => item.country.trim().toLowerCase() === c.toLowerCase());
-                        return d ? parseFloat(d.land_agriculture) : 0;
-                    }),
+                    data: normalizeSeries(agricultureValues),
                     color: '#84a59d' // Verde Salvia
                 }
             ]
