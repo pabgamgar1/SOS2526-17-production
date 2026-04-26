@@ -11,6 +11,28 @@ const db = new Datastore({
 const jsonRawData = fs.readFileSync("./datos-pgg.json", "utf8");
 const initialData = JSON.parse(jsonRawData);
 
+function insertDocumentsSequentially(collection, docs, done) {
+  const items = docs.map((doc) => ({ ...doc }));
+
+  const insertNext = (index) => {
+    if (index >= items.length) {
+      done(null);
+      return;
+    }
+
+    collection.insert(items[index], (insertErr) => {
+      if (insertErr) {
+        done(insertErr);
+        return;
+      }
+
+      insertNext(index + 1);
+    });
+  };
+
+  insertNext(0);
+}
+
 function loadBackendPGG(app) {
   // Cargar datos iniciales
   app.get(BASE_URL_API + "/loadInitialData", (req, res) => {
@@ -19,7 +41,7 @@ function loadBackendPGG(app) {
         return res.status(500).send("Error clearing data");
       }
 
-      db.insert(initialData, (insertErr) => {
+      insertDocumentsSequentially(db, initialData, (insertErr) => {
         if (insertErr) {
           return res.status(500).send("Error loading initial data");
         }
