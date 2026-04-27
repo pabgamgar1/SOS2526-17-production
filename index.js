@@ -6,7 +6,7 @@ import {handler} from "./src/front/build/handler.js";
 import path from "path";
 
 import { loadBackendMRG } from "./src/back-MRG/index.js";
-import { loadBackendFMM, loadBackendFMM_v2 } from "./src/back-FMM/index.js";
+import { agricultureLandReady, loadBackendFMM, loadBackendFMM_v2 } from "./src/back-FMM/index.js";
 import { loadBackendPGG } from "./src/back-PGG/index.js";
 
 const port = process.env.PORT || 3000;
@@ -20,6 +20,8 @@ loadBackendMRG(app);
 loadBackendFMM(app);
 loadBackendFMM_v2(app);
 loadBackendPGG(app);
+
+await agricultureLandReady;
 
 app.use(handler);
 
