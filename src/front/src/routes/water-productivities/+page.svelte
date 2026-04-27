@@ -75,7 +75,7 @@
 		if (res.ok) {
 			message = '¡Datos de ejemplo cargados con éxito!';
 			messageType = 'success';
-			getData();
+			await getData();
 		} else {
 			message = 'Los datos ya existen o el servidor ha fallado.';
 			messageType = 'error';
@@ -108,7 +108,7 @@
 				waterStress: '',
 				annualFreshwater: ''
 			};
-			getData();
+			await getData();
 		} else {
 			handleResponseError(res.status, 'crear el registro');
 		}
@@ -120,7 +120,7 @@
 		if (res.ok) {
 			message = `Registro de ${country} (${year}) eliminado.`;
 			messageType = 'success';
-			getData();
+			await getData();
 		} else {
 			handleResponseError(res.status, 'borrar el registro');
 		}
