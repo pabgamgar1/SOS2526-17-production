@@ -57,26 +57,43 @@ test.describe('Water Productivities E2E Tests', () => {
     });
 
     test('should delete a specific resource', async ({ page }) => {
+        // 1. Cargamos los datos iniciales
         await page.click('.btn-load');
-        // Esperamos a que la tabla se llene tras la carga
+        
+        // Esperamos a que la tabla tenga contenido (que no sea la fila "empty")
         await page.waitForSelector('table tbody tr:not(.empty)');
         
         const initialRows = await page.locator('table tbody tr').count();
         
         if (initialRows > 0) {
+            // 2. Hacemos clic en el primer botón de borrar
             await page.click('.btn-del >> nth=0');
             
-            // 2. CLAVE: Esperamos a que aparezca el mensaje de éxito 
-            // Esto garantiza que el borrado ha terminado en el servidor y Svelte ha refrescado
+            // 3. Esperamos a que el mensaje de éxito sea visible
             await expect(page.locator('.success')).toBeVisible();
             
-            // Verificamos que ahora hay una fila menos
+            // 4. SOLUCIÓN: Esperar a que el DOM se actualice realmente.
+            // Usamos expect().toPass() para que Playwright reintente el conteo 
+            // durante unos segundos hasta que la fila desaparezca del HTML.
+            await expect(async () => {
+                const currentRows = await page.locator('table tbody tr').count();
+                
+                if (initialRows === 1) {
+                    // Si solo había una, esperamos que aparezca el mensaje de tabla vacía
+                    await expect(page.locator('.empty')).toBeVisible();
+                } else {
+                    // Si había más de una, esperamos que el número haya bajado
+                    expect(currentRows).toBeLessThan(initialRows);
+                }
+            }).toPass({
+                intervals: [100, 200, 500], // Reintenta cada estos ms
+                timeout: 5000               // Máximo 5 segundos de espera
+            });
+
+            // Verificación final para el reporte del test
             const finalRows = await page.locator('table tbody tr').count();
-            // Si solo había una, debería aparecer la fila con clase .empty
-            if (initialRows === 1) {
-                await expect(page.locator('.empty')).toBeVisible();
-            } else {
-                expect(finalRows).toBeLessThan(initialRows);
+            if (initialRows > 1) {
+                expect(finalRows).toBe(initialRows - 1);
             }
         }
     });
