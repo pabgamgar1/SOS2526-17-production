@@ -14,13 +14,18 @@ function loadBackendMRG(app) {
 
     // Cargar datos iniciales
     app.get(BASE_URL_API + "/loadInitialData", (req, res) => {
-        db.find({}, (err, stats) => {
-            if (stats.length === 0) {
-                db.insert(dataMRG);
-                res.status(200).send("Datos iniciales cargados con éxito.");
-            } else {
-                res.status(400).send("Bad Request: Data already exists");
+        db.remove({}, { multi: true }, (removeErr) => {
+            if (removeErr) {
+                return res.status(500).send("Error limpiando la base de datos");
             }
+
+            db.insert(dataMRG, (insertErr) => {
+                if (insertErr) {
+                    return res.status(500).send("Error cargando datos iniciales");
+                }
+
+                res.status(200).send("Datos iniciales cargados con éxito.");
+            });
         });
     });
 
