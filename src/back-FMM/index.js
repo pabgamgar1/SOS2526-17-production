@@ -61,7 +61,32 @@ let BASE_URL_API = "/api/v1/agriculture-land";
 let BASE_URL_API_V2 = "/api/v2/agriculture-land";
 
 
-const db = new Datastore({ filename: './src/db/agriculture-land.db', autoload: true });
+const db = new Datastore({ filename: './src/db/agriculture-land.db', autoload: false });
+const agricultureLandReady = new Promise((resolve, reject) => {
+    db.loadDatabase((err) => {
+        if (!err) {
+            resolve();
+            return;
+        }
+
+        const message = String(err && err.message ? err.message : err);
+        const isCrashSafeRecoveryError =
+            err && err.code === 'ENOENT' &&
+            message.includes('rename') &&
+            message.includes('agriculture-land.db~');
+
+        if (isCrashSafeRecoveryError) {
+            console.warn('Recovered agriculture-land database after a crash-safe write error.');
+            if (db.executor && typeof db.executor.processBuffer === 'function') {
+                db.executor.processBuffer();
+            }
+            resolve();
+            return;
+        }
+
+        reject(err);
+    });
+});
 const jsonRawData = fs.readFileSync('./datos-fmm.json', 'utf8');
 const initialAgricultureData = JSON.parse(jsonRawData);
 
@@ -352,4 +377,4 @@ function loadBackendFMM_v2(app) {
 }
 
 
-export { loadBackendFMM, loadBackendFMM_v2 };
+export { agricultureLandReady, loadBackendFMM, loadBackendFMM_v2 };
