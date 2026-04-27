@@ -73,9 +73,9 @@
 	async function loadInitialData() {
 		const res = await fetch(`${API}/loadInitialData`);
 		if (res.ok) {
+			await getData();
 			message = '¡Datos de ejemplo cargados con éxito!';
 			messageType = 'success';
-			await getData();
 		} else {
 			message = 'Los datos ya existen o el servidor ha fallado.';
 			messageType = 'error';
@@ -84,6 +84,7 @@
 
 	// --- CREAR RECURSO ---
 	async function addEntry() {
+		const countryName = newEntry.country;
 		const res = await fetch(API, {
 			method: 'POST',
 			body: JSON.stringify({
@@ -98,8 +99,6 @@
 		});
 
 		if (res.status === 201) {
-			message = `¡Hecho! Se ha añadido ${newEntry.country} correctamente.`;
-			messageType = 'success';
 			newEntry = {
 				country: '',
 				year: '',
@@ -109,6 +108,8 @@
 				annualFreshwater: ''
 			};
 			await getData();
+			message = `¡Hecho! Se ha añadido ${countryName} correctamente.`;
+			messageType = 'success';
 		} else {
 			handleResponseError(res.status, 'crear el registro');
 		}
@@ -118,9 +119,9 @@
 	async function deleteEntry(country, year) {
 		const res = await fetch(`${API}/${country}/${year}`, { method: 'DELETE' });
 		if (res.ok) {
+			await getData();
 			message = `Registro de ${country} (${year}) eliminado.`;
 			messageType = 'success';
-			await getData();
 		} else {
 			handleResponseError(res.status, 'borrar el registro');
 		}
