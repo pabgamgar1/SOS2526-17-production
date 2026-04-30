@@ -1,4 +1,6 @@
 <script>
+	let { data } = $props();
+
 	const team = [
 		{
 			name: 'Mario Ramírez García',
@@ -50,9 +52,9 @@
 							<td class="member-name">{member.name}</td>
 							<td class="resource-cell"><code>{member.resource}</code></td>
 							<td class="actions-cell">
-								<a href={member.frontend} class="btn btn-frontend">Front-end</a>
-								<a href={member.api} target="_blank" class="btn btn-api">API (v1)</a>
-								<a href={member.postman} target="_blank" class="btn btn-postman">Postman</a>
+								<a href={`${data.baseUrl}${member.frontend}`} class="btn btn-frontend">Front-end</a>
+								<a href={`${data.baseUrl}${member.api}`} target="_blank" class="btn btn-api">API (v1)</a>
+								<a href={`${data.baseUrl}${member.postman}`} target="_blank" class="btn btn-postman">Postman</a>
 							</td>
 						</tr>
 					{/each}

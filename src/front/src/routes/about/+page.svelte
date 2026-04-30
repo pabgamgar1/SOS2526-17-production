@@ -3,7 +3,7 @@
 </svelte:head>
 
 <script>
-    let { data } = $props();
+    import { APP_BASE_URL } from '../../../../config.js';
 </script>
 
 <main>
@@ -42,7 +42,7 @@
     <section>
         <h2>URL</h2>
         <p>
-            <a href={data.baseUrl}>{data.baseUrl}</a>
+            <a href={APP_BASE_URL}>{APP_BASE_URL}</a>
         </p>
     </section>
 
@@ -50,15 +50,15 @@
         <h2>APIs</h2>
         <ul>
             <li>
-                <a href="/api/v1/water-productivities">Water Productivities API</a>
+                <a href={`${APP_BASE_URL}/api/v1/water-productivities`}>Water Productivities API</a>
                 (Mario Ramírez García)
             </li>
             <li>
-                <a href="/api/v1/renewable-energy-consumptions">Renewable Energy Consumptions API</a>
+                <a href={`${APP_BASE_URL}/api/v1/renewable-energy-consumptions`}>Renewable Energy Consumptions API</a>
                 (Pablo Gamero García)
             </li>
             <li>
-                <a href="/api/v1/agriculture-land">Agricultural land API</a>
+                <a href={`${APP_BASE_URL}/api/v1/agriculture-land`}>Agricultural land API</a>
                 (Felipe Morgado Martinez)
             </li>
         </ul>
