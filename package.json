@@ -17,7 +17,7 @@
   "scripts": {
     "prestart": "npm run build",
     "start": "node index.js",
-    "build": "cd src/front && npm run build",
+    "build": "npm ci --prefix src/front --progress=false && npm run build --prefix src/front",
     "dev-front": "cd src/front && npm run dev -- --open",
     "test-all-apis": "npm run test-agriculture-land && npm run test-water-productivities && npm run test-renewable-energy-consumptions  --reporters cli",
     "test-agriculture-land": "newman run tests/api-FMM/test-agriculture-land.json --reporters cli",
