@@ -4,7 +4,7 @@
 	"values": [
 		{
 			"key": "base_url",
-			"value": "https://sos2526-17.onrender.com",
+			"value": "https://sos2526-17-production.cloudflare-kpgod.workers.dev",
 			"type": "default",
 			"enabled": true
 		}

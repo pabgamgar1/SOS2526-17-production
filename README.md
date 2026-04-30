@@ -14,21 +14,27 @@ Our project is going to analyse the impact of water and renewable energy on agri
 
 ## Repository
 
-[gti-sos/SOS2526-17](https://github.com/gti-sos/SOS2526-17)
+[pabgamgar1/SOS2526-17-production](https://github.com/pabgamgar1/SOS2526-17-production)
 
 ## Deployment
 
-- Render: [https://sos2526-17.onrender.com](https://sos2526-17.onrender.com)
+- Cloudflare deployment: [Open][deployment-url]
+- The backend OAuth callback host is controlled by `APP_BASE_URL` in [src/config.js](/Users/pablo/Desktop/University/US/Sistemas%20Orientados%20a%20Servicios/SOS2526-17-production/src/config.js).
 
 ## APIs
 
-- [Renewable Energy Consumptions](https://sos2526-17.onrender.com/api/v1/renewable-energy-consumptions/docs) (developed by Pablo Gamero García)
-- [Agriculture Land](https://sos2526-17.onrender.com/api/v1/agriculture-land/docs) (developed by Felipe Morgado Martinez)
-- [Water Productivities](https://sos2526-17.onrender.com/api/v1/water-productivities/docs) (developed by Mario Ramírez García)
+- [Renewable Energy Consumptions][renewable-energy-docs] (developed by Pablo Gamero García)
+- [Agriculture Land][agriculture-land-docs] (developed by Felipe Morgado Martinez)
+- [Water Productivities][water-productivities-docs] (developed by Mario Ramírez García)
 
 
 ## Badges
 
-![Snyk](https://github.com/gti-sos/SOS2526-17/actions/workflows/snyk.yml/badge.svg)
-![Codecov](https://codecov.io/gh/gti-sos/SOS2526-17/graph/badge.svg?token=aVtJ3fyYxy)
-![Tests](https://github.com/gti-sos/SOS2526-17/actions/workflows/tests.yml/badge.svg)
+![Snyk](https://github.com/pabgamgar1/SOS2526-17-production/actions/workflows/snyk.yml/badge.svg)
+![Codecov](https://codecov.io/gh/pabgamgar1/SOS2526-17-production/graph/badge.svg?token=aVtJ3fyYxy)
+![Tests](https://github.com/pabgamgar1/SOS2526-17-production/actions/workflows/tests.yml/badge.svg)
+
+[deployment-url]: https://sos2526-17-production.cloudflare-kpgod.workers.dev
+[renewable-energy-docs]: https://sos2526-17-production.cloudflare-kpgod.workers.dev/api/v1/renewable-energy-consumptions/docs
+[agriculture-land-docs]: https://sos2526-17-production.cloudflare-kpgod.workers.dev/api/v1/agriculture-land/docs
+[water-productivities-docs]: https://sos2526-17-production.cloudflare-kpgod.workers.dev/api/v1/water-productivities/docs

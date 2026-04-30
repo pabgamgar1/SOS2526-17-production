@@ -2,6 +2,10 @@
     <title>About - SOS2526-17</title>
 </svelte:head>
 
+<script>
+    let { data } = $props();
+</script>
+
 <main>
     <h1>Project Information (SOS2526-17)</h1>
 
@@ -31,14 +35,14 @@
     <section>
         <h2>Repository</h2>
         <p>
-            <a href="https://github.com/gti-sos/SOS2526-17">gti-sos/SOS2526-17</a>
+            <a href="https://github.com/pabgamgar1/SOS2526-17-production">pabgamgar1/SOS2526-17-production</a>
         </p>
     </section>
 
     <section>
         <h2>URL</h2>
         <p>
-            <a href="https://sos2526-17.onrender.com">https://sos2526-17.onrender.com</a>
+            <a href={data.baseUrl}>{data.baseUrl}</a>
         </p>
     </section>
 

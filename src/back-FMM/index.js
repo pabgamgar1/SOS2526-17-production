@@ -1,6 +1,7 @@
 import Datastore from 'nedb';
 import fs from 'fs';
 import util from 'util';
+import { APP_BASE_URL } from '../config.js';
 
 
 
@@ -24,7 +25,7 @@ function setupOAuth(app) {
     passport.use(new GitHubStrategy({
         clientID: "Ov23li2z75MNZV7bj2bU", 
         clientSecret: "f22b9e24fbaa446c934ed7c88c1c15c4d2752935",
-        callbackURL: "http://localhost:3000/auth/github/callback"
+        callbackURL: `${APP_BASE_URL}/auth/github/callback`
     }, (accessToken, refreshToken, profile, done) => {
         return done(null, profile);
     }));

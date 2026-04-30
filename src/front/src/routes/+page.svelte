@@ -5,25 +5,25 @@
 			resource: 'water-productivities',
 			frontend: '/water-productivities',
 			api: '/api/v1/water-productivities',
-			postman: 'https://sos2526-17.onrender.com/api/v1/water-productivities/docs'
+			postman: '/api/v1/water-productivities/docs'
 		},
 		{
 			name: 'Felipe Morgado Martinez',
 			resource: 'agriculture-land',
 			frontend: '/agriculture-land',
 			api: '/api/v1/agriculture-land',
-			postman: 'https://sos2526-17.onrender.com/api/v1/agriculture-land/docs'
+			postman: '/api/v1/agriculture-land/docs'
 		},
 		{
 			name: 'Pablo Gamero García',
 			resource: 'renewable-energy-consumptions',
 			frontend: '/renewable-energy-consumptions',
 			api: '/api/v1/renewable-energy-consumptions',
-			postman: 'https://sos2526-17.onrender.com/api/v1/renewable-energy-consumptions/docs'
+			postman: '/api/v1/renewable-energy-consumptions/docs'
 		}
 	];
 
-	const githubRepo = 'https://github.com/gti-sos/SOS2526-17';
+	const githubRepo = 'https://github.com/pabgamgar1/SOS2526-17-production';
 </script>
 
 <main>
