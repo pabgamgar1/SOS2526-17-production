@@ -25,7 +25,9 @@
     "test-water-productivities": "newman run tests/api-MRG/api-tests.json -e tests/api-MRG/api-test-env-local.json",
     "test-e2e": "npx playwright test --workers=1",
     "test": "start-server-and-test start http://localhost:3000 \"npm run test-all-apis && npm run test-e2e\"",
-    "test:coverage": "npx c8 --reporter=lcov npm test"
+    "test:coverage": "npx c8 --reporter=lcov npm test",
+    "deploy": "wrangler deploy",
+    "preview": "wrangler dev"
   },
   "dependencies": {
     "body-parser": "^2.2.2",
@@ -43,6 +45,7 @@
     "@sveltejs/adapter-node": "^5.5.4",
     "jest": "^30.3.0",
     "newman": "^6.2.2",
-    "start-server-and-test": "^2.1.5"
+    "start-server-and-test": "^2.1.5",
+    "wrangler": "^4.86.0"
   }
 }
