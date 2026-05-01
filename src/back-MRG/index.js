@@ -1,6 +1,8 @@
 import Datastore from 'nedb';
 import fs from 'fs';
 
+const APP_BASE_URL = 'https://sos2526-17-energy.up.railway.app';
+
 // 1. Configuración base
 const BASE_URL_API = "/api/v1/water-productivities";
 const db = new Datastore({ filename: './src/db/water-productivities.db', autoload: true });
@@ -31,7 +33,20 @@ function loadBackendMRG(app) {
 
     // GET a la documentación
     app.get(BASE_URL_API + "/docs", (req, res) => {
-        res.redirect("https://documenter.getpostman.com/view/52393924/2sBXigMDbc");
+        res.type('html').send(`
+            <main>
+                <h1>Water Productivities API</h1>
+                <p>Base URL: <code>${APP_BASE_URL}${BASE_URL_API}</code></p>
+                <ul>
+                    <li>GET <code>${BASE_URL_API}</code></li>
+                    <li>GET <code>${BASE_URL_API}/:country</code></li>
+                    <li>GET <code>${BASE_URL_API}/:country/:year</code></li>
+                    <li>POST <code>${BASE_URL_API}</code></li>
+                    <li>PUT <code>${BASE_URL_API}/:country/:year</code></li>
+                    <li>DELETE <code>${BASE_URL_API}</code></li>
+                </ul>
+            </main>
+        `);
     });
 
     // GET a la lista de recursos (con filtros, limpieza de _id y PAGINACIÓN)

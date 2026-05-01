@@ -1,6 +1,7 @@
 import Datastore from "nedb";
 import fs from "fs";
 
+const APP_BASE_URL = 'https://sos2526-17-energy.up.railway.app';
 const BASE_URL_API = "/api/v1/renewable-energy-consumptions";
 
 const db = new Datastore({
@@ -53,8 +54,19 @@ function loadBackendPGG(app) {
 
   // Documentación
   app.get(BASE_URL_API + "/docs", (req, res) => {
-    const target = "https://documenter.getpostman.com/view/52407239/2sBXigMYvk";
-    res.redirect(target);
+    res.type("html").send(`
+      <main>
+        <h1>Renewable Energy Consumptions API</h1>
+        <p>Base URL: <code>${APP_BASE_URL}${BASE_URL_API}</code></p>
+        <ul>
+          <li>GET <code>${BASE_URL_API}</code></li>
+          <li>GET <code>${BASE_URL_API}/:country/:year</code></li>
+          <li>POST <code>${BASE_URL_API}</code></li>
+          <li>PUT <code>${BASE_URL_API}/:country/:year</code></li>
+          <li>DELETE <code>${BASE_URL_API}</code></li>
+        </ul>
+      </main>
+    `);
   });
 
   // GET colección (con filtros y paginación básica)

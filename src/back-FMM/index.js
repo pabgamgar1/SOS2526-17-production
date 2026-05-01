@@ -2,6 +2,7 @@ import Datastore from 'nedb';
 import fs from 'fs';
 import util from 'util';
 
+const APP_BASE_URL = 'https://sos2526-17-energy.up.railway.app';
 const BASE_URL_API = '/api/v1/agriculture-land';
 
 const db = new Datastore({ filename: './src/db/agriculture-land.db', autoload: false });
@@ -183,9 +184,21 @@ function loadBackendFMM(app) {
 
     app.post(BASE_URL_API + '/:country/:year', (req, res) => res.sendStatus(405));
     app.put(BASE_URL_API, (req, res) => res.sendStatus(405));
-    app.get(BASE_URL_API + '/docs', (req, res) =>
-        res.redirect('https://documenter.getpostman.com/view/52395584/2sBXigMDSm')
-    );
+    app.get(BASE_URL_API + '/docs', (req, res) => {
+        res.type('html').send(`
+            <main>
+                <h1>Agriculture Land API</h1>
+                <p>Base URL: <code>${APP_BASE_URL}${BASE_URL_API}</code></p>
+                <ul>
+                    <li>GET <code>${BASE_URL_API}</code></li>
+                    <li>GET <code>${BASE_URL_API}/:country/:year</code></li>
+                    <li>POST <code>${BASE_URL_API}</code></li>
+                    <li>PUT <code>${BASE_URL_API}/:country/:year</code></li>
+                    <li>DELETE <code>${BASE_URL_API}</code></li>
+                </ul>
+            </main>
+        `);
+    });
 }
 
 export { agricultureLandReady, loadBackendFMM };
