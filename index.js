@@ -1,6 +1,4 @@
 import express from "express";
-import cors from "cors";
-import bodyParser from "body-parser";
 import {handler} from "./src/front/build/handler.js";
 
 import { loadBackendMRG } from "./src/back-MRG/index.js";
@@ -11,8 +9,7 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 
-app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 loadBackendMRG(app);
 loadBackendFMM(app);

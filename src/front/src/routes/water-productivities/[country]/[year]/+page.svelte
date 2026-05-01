@@ -83,11 +83,9 @@
     :global(body) { background-color: #f8fafc; margin: 0; }
     main { max-width: 800px; margin: 3rem auto; font-family: 'Segoe UI', system-ui, sans-serif; padding: 0 1rem; color: #334155; }
     
-    header { border-bottom: 2px solid #e2e8f0; margin-bottom: 2rem; padding-bottom: 1rem; }
     h1 { color: #1e293b; margin: 0; font-size: 1.8rem; }
     h3 { color: #64748b; margin: 5px 0 0 0; font-weight: 500; }
 
-    /* Alertas (Iguales a las principales) */
     .alert { padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; font-weight: 600; border: 1px solid; }
     .success { background: #f0fdf4; color: #166534; border-color: #bbf7d0; }
     .error { background: #fef2f2; color: #991b1b; border-color: #fecaca; }
@@ -108,7 +106,6 @@
     }
     input:focus { border-color: #3b82f6; outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
     
-    /* Inputs bloqueados (País y Año) */
     input[readonly] { background-color: #f1f5f9; color: #94a3b8; cursor: not-allowed; border-style: dashed; }
 
     .actions { 
@@ -117,7 +114,7 @@
         justify-content: space-between; 
         border-top: 1px solid #f1f5f9; 
         margin-top: 1rem; 
-        padding-top: 1.5rem; /* <-- Corregido aquí */
+        padding-top: 1.5rem;
     }
 
     .btn-update { 
