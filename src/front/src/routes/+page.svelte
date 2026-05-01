@@ -1,198 +1,139 @@
 <script>
-	let { data } = $props();
-
-	const team = [
+	const resources = [
 		{
-			name: 'Mario Ramírez García',
-			resource: 'water-productivities',
-			frontend: '/water-productivities',
+			name: 'Water Productivities',
+			slug: 'water-productivities',
 			api: '/api/v1/water-productivities',
-			postman: '/api/v1/water-productivities/docs'
+			detail: '/water-productivities'
 		},
 		{
-			name: 'Felipe Morgado Martinez',
-			resource: 'agriculture-land',
-			frontend: '/agriculture-land',
+			name: 'Agriculture Land',
+			slug: 'agriculture-land',
 			api: '/api/v1/agriculture-land',
-			postman: '/api/v1/agriculture-land/docs'
+			detail: '/agriculture-land'
 		},
 		{
-			name: 'Pablo Gamero García',
-			resource: 'renewable-energy-consumptions',
-			frontend: '/renewable-energy-consumptions',
+			name: 'Renewable Energy Consumptions',
+			slug: 'renewable-energy-consumptions',
 			api: '/api/v1/renewable-energy-consumptions',
-			postman: '/api/v1/renewable-energy-consumptions/docs'
+			detail: '/renewable-energy-consumptions'
 		}
 	];
-
-	const githubRepo = 'https://github.com/pabgamgar1/SOS2526-17-production';
 </script>
 
-<main>
-	<header>
-		<h1>SOS2526-17 - Gestión de Recursos</h1>
-		<p>Proyecto de la asignatura Sistemas de Operación y Servicios (SOS)</p>
+<svelte:head>
+	<title>SOS2526-17</title>
+</svelte:head>
+
+<main class="page">
+	<header class="intro">
+		<h1>SOS2526-17</h1>
+		<p>Three public APIs and the matching frontend pages.</p>
 	</header>
 
-	<section class="team-section">
-		<h2>Componentes del Equipo y Fuentes de Datos</h2>
-
-		<div class="table-container">
-			<table>
-				<thead>
+	<section class="panel">
+		<table>
+			<thead>
+				<tr>
+					<th>Resource</th>
+					<th>Frontend</th>
+					<th>API</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#each resources as resource}
 					<tr>
-						<th>Integrante</th>
-						<th>Fuente de Datos (Recurso)</th>
-						<th>Enlaces</th>
+						<td>
+							<div class="resource-name">{resource.name}</div>
+							<div class="resource-slug">{resource.slug}</div>
+						</td>
+						<td><a class="link" href={resource.detail}>Open page</a></td>
+						<td><a class="link" href={resource.api} target="_blank" rel="noreferrer">Open API</a></td>
 					</tr>
-				</thead>
-				<tbody>
-					{#each team as member}
-						<tr>
-							<td class="member-name">{member.name}</td>
-							<td class="resource-cell"><code>{member.resource}</code></td>
-							<td class="actions-cell">
-								<a href={`${data.baseUrl}${member.frontend}`} class="btn btn-frontend">Front-end</a>
-								<a href={`${data.baseUrl}${member.api}`} target="_blank" class="btn btn-api">API (v1)</a>
-								<a href={`${data.baseUrl}${member.postman}`} target="_blank" class="btn btn-postman">Postman</a>
-							</td>
-						</tr>
-					{/each}
-				</tbody>
-			</table>
-		</div>
-	</section>
-
-	<section class="global-links">
-		<h2>Enlaces Globales del Proyecto</h2>
-		<div class="links-row">
-			<a href={githubRepo} target="_blank" class="btn-github">
-				<span class="icon">📦</span> Repositorio de GitHub
-			</a>
-		</div>
+				{/each}
+			</tbody>
+		</table>
 	</section>
 </main>
 
 <style>
 	:global(body) {
-		background-color: #f4f7f6;
 		margin: 0;
-		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-		color: #333;
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+		background: #f6f7f9;
+		color: #111827;
 	}
 
-	main {
-		max-width: 1000px;
+	.page {
+		max-width: 1040px;
 		margin: 0 auto;
-		padding: 40px 20px;
+		padding: 40px 20px 60px;
 	}
 
-	header {
-		text-align: center;
-		margin-bottom: 50px;
-		border-bottom: 2px solid #ddd;
-		padding-bottom: 20px;
+	.intro {
+		margin-bottom: 24px;
 	}
+
 	h1 {
-		color: #2c3e50;
-		font-size: 2.5rem;
-		margin-bottom: 5px;
+		margin: 0 0 8px;
+		font-size: 2rem;
+		line-height: 1.1;
 	}
 
-	section {
-		margin-bottom: 40px;
-	}
-	h2 {
-		color: #2c3e50;
-		border-left: 5px solid #34495e;
-		padding-left: 15px;
-		margin-bottom: 25px;
+	p {
+		margin: 0;
+		color: #4b5563;
 	}
 
-	.table-container {
-		background: white;
-		padding: 10px;
-		border-radius: 8px;
-		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-		border: 1px solid #e0e0e0;
+	.panel {
+		background: #fff;
+		border: 1px solid #dbe1e7;
+		border-radius: 12px;
+		overflow: hidden;
 	}
 
 	table {
 		width: 100%;
 		border-collapse: collapse;
-		background: white;
 	}
+
 	th,
 	td {
-		border: 1px solid #eee;
-		padding: 15px;
+		padding: 16px 18px;
+		border-bottom: 1px solid #e5e7eb;
 		text-align: left;
+		vertical-align: middle;
 	}
 
 	th {
-		background-color: #34495e;
-		color: white;
+		font-size: 0.8rem;
 		text-transform: uppercase;
-		font-size: 0.85rem;
-		letter-spacing: 1px;
+		letter-spacing: 0.04em;
+		color: #6b7280;
+		background: #fafafa;
 	}
 
-	tr:nth-child(even) { background-color: #f8f9fa; }
-	tr:hover { background-color: #eaeaea; }
-
-	.member-name {
-		font-weight: bold;
-		color: #2c3e50;
-	}
-	.resource-cell code {
-		background-color: #ecf0f1;
-		padding: 4px 8px;
-		border-radius: 4px;
-		color: #c0392b;
-		font-size: 0.9rem;
-	}
-	.actions-cell {
-		display: flex;
-		gap: 8px;
-		flex-wrap: wrap;
+	tbody tr:last-child td {
+		border-bottom: none;
 	}
 
-	.btn {
-		padding: 8px 12px;
-		border-radius: 4px;
+	.resource-name {
+		font-weight: 600;
+	}
+
+	.resource-slug {
+		font-size: 0.92rem;
+		color: #6b7280;
+		margin-top: 2px;
+	}
+
+	.link {
+		color: #1d4ed8;
 		text-decoration: none;
-		font-size: 0.85rem;
-		font-weight: bold;
-		transition: background-color 0.2s;
-		border: none;
-		cursor: pointer;
+		font-weight: 500;
 	}
 
-	.btn-frontend { background-color: #27ae60; color: white; }
-	.btn-frontend:hover { background-color: #219150; }
-
-	.btn-api { background-color: #2980b9; color: white; }
-	.btn-api:hover { background-color: #216a9a; }
-
-	.btn-postman { background-color: #ef5b25; color: white; }
-	.btn-postman:hover { background-color: #d35400; }
-
-	.links-row {
-		display: flex;
-		justify-content: center;
-		margin-top: 20px;
+	.link:hover {
+		text-decoration: underline;
 	}
-	.btn-github {
-		display: inline-block;
-		padding: 12px 24px;
-		color: #34495e;
-		text-decoration: none;
-		font-weight: bold;
-		border: 2px solid #34495e;
-		border-radius: 8px;
-		font-size: 1.1rem;
-		transition: 0.3s;
-	}
-	.btn-github:hover { background: #34495e; color: white; }
-	.btn-github .icon { margin-right: 8px; }
 </style>

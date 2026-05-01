@@ -19,7 +19,6 @@ Our project is going to analyse the impact of water and renewable energy on agri
 ## Deployment
 
 - Cloudflare deployment: [Open][deployment-url]
-- The backend OAuth callback host is controlled by `APP_BASE_URL` in [src/config.js](/Users/pablo/Desktop/University/US/Sistemas%20Orientados%20a%20Servicios/SOS2526-17-production/src/config.js).
 
 ## APIs
 

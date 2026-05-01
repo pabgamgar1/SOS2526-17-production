@@ -1,13 +1,13 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
+  "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "sos2526-17-production",
   "compatibility_date": "2026-04-30",
   "observability": {
     "enabled": true
   },
-  "main": "src/front/.svelte-kit/cloudflare/_worker.js",
+  "main": ".svelte-kit/cloudflare/_worker.js",
   "assets": {
-    "directory": "src/front/.svelte-kit/cloudflare",
+    "directory": ".svelte-kit/cloudflare",
     "binding": "ASSETS"
   },
   "compatibility_flags": [
